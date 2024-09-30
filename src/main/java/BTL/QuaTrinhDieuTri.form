@@ -89,10 +89,11 @@
                               <Component id="jLabel13" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtcd" min="-2" pref="421" max="-2" attributes="0"/>
-                              <Component id="txtqtdt" alignment="0" min="-2" pref="421" max="-2" attributes="0"/>
-                              <Component id="txtdt" min="-2" pref="421" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtcd" pref="421" max="32767" attributes="0"/>
+                              <Component id="txtqtdt" alignment="0" pref="421" max="32767" attributes="0"/>
+                              <Component id="txtdt" pref="421" max="32767" attributes="0"/>
+                              <Component id="jdcndt" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -125,8 +126,11 @@
                       <Component id="txtmbn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                      <Component id="jdcndt" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtcd" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -186,6 +190,11 @@
         <Component class="javax.swing.JTextField" name="txtqtdt">
         </Component>
         <Component class="javax.swing.JTextField" name="txtdt">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="jdcndt">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -295,6 +304,10 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btsuaMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btsuaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btxoa">
           <Properties>
@@ -308,6 +321,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Tho&#xe1;t"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btthoatActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -328,7 +344,7 @@
                   <Component id="jLabel2" min="-2" pref="110" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jTextField1" min="-2" pref="423" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
                   <Component id="bttimkiem" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
