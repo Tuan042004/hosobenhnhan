@@ -162,8 +162,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        QuaTrinhDieuTri QTDT = new QuaTrinhDieuTri();
-        QTDT.setVisible(true);
+    // Tạo đối tượng của trang QuaTrinhDieuTri
+    QuaTrinhDieuTri QTDT = new QuaTrinhDieuTri();  
+    // Hiển thị trang QuaTrinhDieuTri
+    QTDT.setVisible(true);
+    // Đóng trang hiện tại (Menu)
+    this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
