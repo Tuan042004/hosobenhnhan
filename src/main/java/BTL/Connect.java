@@ -17,10 +17,10 @@ public class Connect {
         Connection con = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://localhost\\Tuandepzai:1433;databaseName=QuanLyBenhNhan;encrypt=true;trustServerCertificate=true";
-            String user = "sa";
-            String pass = "123456";
-            con = DriverManager.getConnection(url, user, pass);
+            String url = config.db_url;
+            String user = config.db_username;
+            String pass = config.db_pass;
+            con = (Connection) DriverManager.getConnection(url, user, pass);
         } catch (SQLException e) {
             throw new SQLException("Lỗi kết nối cơ sở dữ liệu!", e);
         }
