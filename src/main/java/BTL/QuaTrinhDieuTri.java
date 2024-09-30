@@ -8,9 +8,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -78,6 +81,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         txtcd = new javax.swing.JTextField();
         txtqtdt = new javax.swing.JTextField();
         txtdt = new javax.swing.JTextField();
+        jdcndt = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbqtdt = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -108,6 +112,8 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
 
         jLabel13.setText("Đơn thuốc");
 
+        jdcndt.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -122,10 +128,11 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtqtdt, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtdt, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtcd, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                            .addComponent(txtqtdt, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                            .addComponent(txtdt, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                            .addComponent(jdcndt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,8 +155,10 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(txtmbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
-                .addComponent(jLabel10)
-                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jdcndt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,6 +194,16 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         });
 
         btsua.setText("Sửa");
+        btsua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btsuaMouseClicked(evt);
+            }
+        });
+        btsua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btsuaActionPerformed(evt);
+            }
+        });
 
         btxoa.setText("Xóa");
         btxoa.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +213,11 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         });
 
         btthoat.setText("Thoát");
+        btthoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btthoatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -243,7 +267,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(bttimkiem)
                 .addContainerGap())
         );
@@ -301,10 +325,11 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
 
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các compents đưa vào biến 
+        String mqt = txtmqt.getText().trim();
         String mbn = txtmbn.getText().trim();
         
-        //SimpleDateFormat fomat = new SimpleDateFormate("dd/MM/yyyy");
-//        Date ndt = new Date(jdcndt.getDate().getTime());       
+        SimpleDateFormat fomat = new SimpleDateFormat("dd/MM/yyyy");
+        Date ndt = new Date(jdcndt.getDate().getTime());       
         String cd = txtcd.getText().trim();
         String qtdt = txtqtdt.getText().trim();
         String dt = txtdt.getText().trim();
@@ -313,12 +338,12 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         con = Connect.KetnoiDB();
             
             //B3:  Tạp đối tượng Statement để thực hiện lệnh truy vấn 
-//        String sql = "Insert INTO QuaTrinhDieuTri values('"+ mbn +"', '"+ ndt +"', N'"+ cd +"', N'"+ qtdt +"', N'"+ dt +"')";
-//            Statement st = con.createStatement();
-//            st.executeUpdate(sql);
-//            con.close();
-//            load_qtdt();
-//            JOptionPane.showMessageDialog(this, "Thêm mới thành công");       
+        String sql = "Insert INTO QuaTrinhDieuTri values('"+ mqt +"','"+ mbn +"', '"+ ndt +"', N'"+ cd +"', N'"+ qtdt +"', N'"+ dt +"')";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
+            load_qtdt();
+            JOptionPane.showMessageDialog(this, "Thêm mới thành công");       
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
@@ -347,6 +372,54 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
             Logger.getLogger(QuaTrinhDieuTri.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_btxoaActionPerformed
+
+    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
+         try {
+            //B1: Lấy dữu liệu từ các component vào biến 
+            String mqt = txtmqt.getText();
+            String mbn = txtmbn.getText();
+            Date ndt = new Date(jdcndt.getDate().getTime());
+            String cd= txtcd.getText();
+            String qtdt= txtqtdt.getText();
+            String dt = txtdt.getText();
+            //B2: Kết nối đối tượng statement để sửa dữ liệu
+            String sql = "Update QuaTrinhDieuTri Set MaQuaTrinh ='"+mqt+"', MaBenhNhan='"+mbn+"',"
+                    + " NgayDieuTri='"+ndt+"', ChanDoan='"+dt+"', QuaTrinhDieuTri='"+qtdt+"',"
+                    + " DonThuoc=N'"+dt+"' Where MaBenhNhan='"+mbn+"' ";
+
+            Statement st =con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
+            JOptionPane.showMessageDialog(this, "Sửa thành công!");
+            load_qtdt();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btsuaActionPerformed
+
+    private void btsuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btsuaMouseClicked
+        int i=tbqtdt.getSelectedRow();
+        DefaultTableModel tb=(DefaultTableModel)tbqtdt.getModel();
+        txtmqt.setText(tb.getValueAt(i, 0).toString());
+        txtmbn.setText(tb.getValueAt(i, 1).toString());
+        String ngay=tb.getValueAt(i, 2).toString();
+        java.util.Date ngs;
+        try {
+            ngs = new SimpleDateFormat("yyyy-MM-dd").parse(ngay);
+            jdcndt.setDate(ngs);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        txtcd.setText(tb.getValueAt(i, 3).toString());
+        txtqtdt.setText(tb.getValueAt(i, 4).toString());
+        txtdt.setText(tb.getValueAt(i, 5).toString());
+        txtmbn.setEnabled(false);
+    }//GEN-LAST:event_btsuaMouseClicked
+
+    private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
+        dispose();  
+        new Menu().setVisible(true);
+    }//GEN-LAST:event_btthoatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,6 +475,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private com.toedter.calendar.JDateChooser jdcndt;
     private javax.swing.JTable tbqtdt;
     private javax.swing.JTextField txtcd;
     private javax.swing.JTextField txtdt;
