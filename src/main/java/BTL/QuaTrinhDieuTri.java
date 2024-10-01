@@ -184,6 +184,11 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
                 "Mã quá trinh", "Mã bệnh nhân", "Ngày điều trị", "Chuẩn đoán", "Quá trình điều trị", "Đơn thuốc"
             }
         ));
+        tbqtdt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbqtdtMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbqtdt);
 
         btthem.setText("Thêm");
@@ -194,11 +199,6 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         });
 
         btsua.setText("Sửa");
-        btsua.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btsuaMouseClicked(evt);
-            }
-        });
         btsua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btsuaActionPerformed(evt);
@@ -324,30 +324,6 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
-//        // B1: lấy dữ liệu các compents đưa vào biến 
-//        String mqt = txtmqt.getText().trim();
-//        String mbn = txtmbn.getText().trim();
-//        
-//        SimpleDateFormat fomat = new SimpleDateFormat("dd/MM/yyyy");
-//        Date ndt = new Date(jdcndt.getDate().getTime());       
-//        String cd = txtcd.getText().trim();
-//        String qtdt = txtqtdt.getText().trim();
-//        String dt = txtdt.getText().trim();
-//        //B2: Kết nối Database
-//        try {
-//        con = Connect.KetnoiDB();
-//            
-//            //B3:  Tạp đối tượng Statement để thực hiện lệnh truy vấn 
-//        String sql = "Insert INTO QuaTrinhDieuTri values('"+ mqt +"','"+ mbn +"', '"+ ndt +"', N'"+ cd +"', N'"+ qtdt +"', N'"+ dt +"')";
-//            Statement st = con.createStatement();
-//            st.executeUpdate(sql);
-//            con.close();
-//            load_qtdt();
-//            JOptionPane.showMessageDialog(this, "Thêm mới thành công");       
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
-//        }
 
         // B1: lấy dữ liệu các compents đưa vào biến
         String mqt = txtmqt.getText().trim();
@@ -358,6 +334,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         String cd = txtcd.getText().trim();
         String qtdt = txtqtdt.getText().trim();
         String dt = txtdt.getText().trim();
+       
 
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
         if (mqt.isEmpty()) {
@@ -398,7 +375,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
 
         //B2: Kết nối Database
         try {
-            con = Connect.KetnoiDB();
+            con = Connect.KetnoiDB();  
 
             //B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn 
             String sql = "Insert INTO QuaTrinhDieuTri values('"+ mqt +"','"+ mbn +"', '"+ ndt +"', N'"+ cd +"', N'"+ qtdt +"', N'"+ dt +"')";
@@ -406,91 +383,42 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
             st.executeUpdate(sql);
             con.close();
             load_qtdt();
-            JOptionPane.showMessageDialog(this, "Thêm mới thành công");       
+            JOptionPane.showMessageDialog(this, "Thêm mới thành công");    
+            txtmqt.setText("");
+            txtmbn.setText("");
+            jdcndt.setDate(null);
+            txtcd.setText("");
+            txtqtdt.setText("");
+            txtdt.setText("");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-
+        
+        
     }//GEN-LAST:event_btthemActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-//        String mbn = txtmbn.getText();
-//        try {
-//            con = Connect.KetnoiDB();
-//            String sql = "delete from QuaTrinhDieuTri where MaBenhNhan = '"+mbn+"'";
-//            Statement st = con.createStatement();
-//            int response = JOptionPane.showConfirmDialog(null, 
-//                "Bạn có muốn xóa?", 
-//                "Xác nhận", 
-//                JOptionPane.YES_NO_OPTION, 
-//                JOptionPane.QUESTION_MESSAGE);
-//        
-//            if (response == JOptionPane.YES_OPTION) {
-//                st.executeUpdate(sql);
-//                con.close();
-//                JOptionPane.showMessageDialog(this, "Xóa thành công");
-//            }
-//            load_qtdt();
-//        } catch (Exception e) {
-//            Logger.getLogger(QuaTrinhDieuTri.class.getName()).log(Level.SEVERE, null, e);
-//        }
-
-        // B1: lấy dữ liệu từ các components
-        String mbn = txtmbn.getText().trim();
-        String mqt = txtmqt.getText().trim(); // Lấy thêm MaQuaTrinh (khóa chính hoặc khóa duy nhất cho từng quá trình điều trị)
-
-        if (mbn.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống.");
-            txtmbn.requestFocus();
-            return;
-        }
-
-        if (mqt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã quá trình điều trị không được để trống.");
-            txtmqt.requestFocus();
-            return;
-        }
-
+        String mbn = txtmbn.getText();
         try {
-            // Kết nối cơ sở dữ liệu
             con = Connect.KetnoiDB();
-
-            // Câu lệnh SQL để xóa dựa trên MaBenhNhan và MaQuaTrinh
-            String sql = "DELETE FROM QuaTrinhDieuTri WHERE MaBenhNhan = '" + mbn + "' AND MaQuaTrinh = '" + mqt + "'";
-
+            String sql = "delete from QuaTrinhDieuTri where MaBenhNhan = '"+mbn+"'";
             Statement st = con.createStatement();
-
-            // Hiển thị hộp thoại xác nhận xóa
             int response = JOptionPane.showConfirmDialog(null, 
-                "Bạn có chắc chắn muốn xóa quá trình điều trị này?", 
+                "Bạn có muốn xóa?", 
                 "Xác nhận", 
                 JOptionPane.YES_NO_OPTION, 
                 JOptionPane.QUESTION_MESSAGE);
-
-            // Nếu người dùng chọn YES thì thực hiện xóa
+        
             if (response == JOptionPane.YES_OPTION) {
-                int rowsAffected = st.executeUpdate(sql);  // Xóa bản ghi
-
-                // Kiểm tra số bản ghi đã bị xóa
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Xóa thành công");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy bản ghi cần xóa.");
-                }
-
-                // Đóng kết nối cơ sở dữ liệu
+                st.executeUpdate(sql);
                 con.close();
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
             }
-
-            // Load lại danh sách sau khi xóa
             load_qtdt();
-
         } catch (Exception e) {
             Logger.getLogger(QuaTrinhDieuTri.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(this, "Lỗi khi xóa dữ liệu: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
@@ -517,7 +445,12 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btsuaActionPerformed
 
-    private void btsuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btsuaMouseClicked
+    private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
+        dispose();  
+        new Menu().setVisible(true);
+    }//GEN-LAST:event_btthoatActionPerformed
+
+    private void tbqtdtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqtdtMouseClicked
         int i=tbqtdt.getSelectedRow();
         DefaultTableModel tb=(DefaultTableModel)tbqtdt.getModel();
         txtmqt.setText(tb.getValueAt(i, 0).toString());
@@ -534,12 +467,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
         txtqtdt.setText(tb.getValueAt(i, 4).toString());
         txtdt.setText(tb.getValueAt(i, 5).toString());
         txtmbn.setEnabled(false);
-    }//GEN-LAST:event_btsuaMouseClicked
-
-    private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
-        dispose();  
-        new Menu().setVisible(true);
-    }//GEN-LAST:event_btthoatActionPerformed
+    }//GEN-LAST:event_tbqtdtMouseClicked
 
     /**
      * @param args the command line arguments
