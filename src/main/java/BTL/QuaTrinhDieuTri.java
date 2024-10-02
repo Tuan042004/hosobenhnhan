@@ -417,7 +417,7 @@ public class QuaTrinhDieuTri extends javax.swing.JFrame {
             }
             load_qtdt();
         } catch (Exception e) {
-            Logger.getLogger(QuaTrinhDieuTri.class.getName()).log(Level.SEVERE, null, e);
+                e.printStackTrace();
         }
     }//GEN-LAST:event_btxoaActionPerformed
 
