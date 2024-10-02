@@ -4,18 +4,12 @@
  */
 package QLDT;
 
-import BTL.Connect;
 import BTL.Menu;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,28 +17,27 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class Quanliquatrinhdieutri extends javax.swing.JFrame {
+public class Nhanvienyte extends javax.swing.JFrame {
 
     /**
-     * Creates new form Quanliquatrinhdieutri
+     * Creates new form Nhanvienyte
      */
-    public Quanliquatrinhdieutri() {
+    public Nhanvienyte() {
         initComponents();
-        load_qtdt();
- 
+        load_nhanvien();
     }
     
     Connection con;
-    private void load_qtdt(){
+    private void load_nhanvien(){
         try {
-            tbqtdt.removeAll();
+            tbnhanvien.removeAll();
             //B1: Kết nối đến DB
             con= BTL.Connect.KetnoiDB();
             //B2: Tạo đối tượng Statement để thực hiện câu lệnh truy cập
-            String sql = "Select * From QuaTrinhDieuTri";
+            String sql = "Select * From NhanVienYTe";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude={"Mã điều trị", "Mã bệnh nhân","Ngày điều trị","Chẩn đoán điều trị","Phương pháp điều trị","Bác sĩ điều trị"};
+            String[] tieude={"Mã nhân viên", "Họ và tên","Chức Vụ","Khoa","SDT"};
             DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
                     @Override
                     public boolean isCellEditable(int row, int column) {
@@ -55,15 +48,14 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
             
             while(rs.next()){
                 Vector v = new Vector();
-                v.add(rs.getString("MaDieuTri"));
-                v.add(rs.getString("MaBenhNhan"));
-                v.add(rs.getString("NgayDieuTri"));
-                v.add(rs.getString("ChanDoanDieuTri"));
-                v.add(rs.getString("PhuongPhapDieuTri"));
-                v.add(rs.getString("BacSiDieuTri"));
+                v.add(rs.getString("MaNhanVien"));
+                v.add(rs.getString("HoTen"));
+                v.add(rs.getString("ChucVu"));
+                v.add(rs.getString("Khoa"));
+                v.add(rs.getString("SDT"));
                 tb.addRow(v);
             }
-            tbqtdt.setModel(tb);
+            tbnhanvien.setModel(tb);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,18 +79,16 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtmdt = new javax.swing.JTextField();
-        txtmbn = new javax.swing.JTextField();
-        dcndt = new com.toedter.calendar.JDateChooser();
-        txtcd = new javax.swing.JTextField();
-        txtpp = new javax.swing.JTextField();
-        txtbs = new javax.swing.JTextField();
+        txtmnv = new javax.swing.JTextField();
+        txthoten = new javax.swing.JTextField();
+        txtcv = new javax.swing.JTextField();
+        txtkhoa = new javax.swing.JTextField();
+        txtsdt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbqtdt = new javax.swing.JTable();
+        tbnhanvien = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         btthem = new javax.swing.JButton();
         btsua = new javax.swing.JButton();
@@ -107,13 +97,10 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(880, 600));
-        setMinimumSize(new java.awt.Dimension(880, 600));
-        setPreferredSize(new java.awt.Dimension(880, 700));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản lý quá trình điều trị");
+        jLabel1.setText("Nhân viên y tế");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
 
@@ -135,7 +122,7 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Mã bệnh nhân");
+        jLabel8.setText("Mã nhân viên");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -148,7 +135,7 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
                 .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bttimkiem)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,19 +150,15 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin chi tiết"));
 
-        jLabel2.setText("Mã bệnh nhân");
+        jLabel2.setText("Họ và tên");
 
-        jLabel3.setText("Mã điều trị");
+        jLabel3.setText("Mã nhân viên");
 
-        jLabel4.setText("Ngày điều trị");
+        jLabel5.setText("Chức vụ");
 
-        jLabel5.setText("Chẩn đoán điều trị");
+        jLabel6.setText("Khoa ");
 
-        jLabel6.setText("Phương pháp điều trị");
-
-        jLabel7.setText("Bác sĩ điều trị");
-
-        dcndt.setDateFormatString("yyyy-MM-dd");
+        jLabel7.setText("SDT");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -185,27 +168,25 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(dcndt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(txtmbn, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtmdt, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txthoten, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtmnv, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtbs))
+                        .addComponent(txtsdt))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtcv, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtpp)))
+                        .addComponent(txtkhoa)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -214,43 +195,40 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtmdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtmnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(txtmbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txthoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6)
-                    .addComponent(txtpp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtkhoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(txtbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4)
-                    .addComponent(dcndt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        tbqtdt.setModel(new javax.swing.table.DefaultTableModel(
+        tbnhanvien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã điều trị", "Mã bệnh nhân", "Ngày điều trị", "Chuẩn đoán điều trị", "Phương pháp điều trị", "Bác sĩ điều trị"
+                "Mã nhân viên", "Họ và tên", "Chức vụ", "Khoa", "SDT"
             }
         ));
-        tbqtdt.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbnhanvien.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbqtdtMouseClicked(evt);
+                tbnhanvienMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbqtdt);
+        jScrollPane1.setViewportView(tbnhanvien);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -259,12 +237,12 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +254,7 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -363,95 +341,138 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public void xoatrang(){
+            txtmnv.setText("");
+            txthoten.setText("");
+            txtcv.setText("");
+            txtkhoa.setText("");
+            txtsdt.setText("");
+    }    
+    private void txttimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txttimkiemMouseClicked
+        xoatrang();
+    }//GEN-LAST:event_txttimkiemMouseClicked
 
-    private void tbqtdtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqtdtMouseClicked
-        int i=tbqtdt.getSelectedRow();
-        DefaultTableModel tb=(DefaultTableModel)tbqtdt.getModel();
-        txtmdt.setText(tb.getValueAt(i, 0).toString());
-        txtmbn.setText(tb.getValueAt(i, 1).toString());
-        String ngay=tb.getValueAt(i, 2).toString();
-        txtcd.setText(tb.getValueAt(i, 3).toString());
-        txtpp.setText(tb.getValueAt(i, 4).toString());
-        txtbs.setText(tb.getValueAt(i, 5).toString());
-        txtmbn.setEnabled(false);
-        java.util.Date ngs;
+    private void txttimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttimkiemKeyReleased
         try {
-            ngs = new SimpleDateFormat("yyyy-MM-dd").parse(ngay);
-            dcndt.setDate(ngs);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            // Lấy mã bệnh nhân từ trường nhập liệu
+            tbnhanvien.removeAll();
+            String mnv = txttimkiem.getText().trim();  // Mã bệnh nhân
+
+            // Kết nối đến cơ sở dữ liệu
+            con = BTL.Connect.KetnoiDB();
+            Statement st = con.createStatement();
+
+            // Xây dựng câu lệnh SQL cho tìm kiếm
+            String sql = "SELECT * FROM NhanVienYTe WHERE MaNhanVien LIKE '%" + mnv + "%'";
+
+            // Thực hiện truy vấn
+            ResultSet rs = st.executeQuery(sql);
+            String[] tieude = {"Mã nhân viên", "họ tên", "Chức vụ", "Khoa", "SDT"};
+            DefaultTableModel tb = new DefaultTableModel(tieude, 0);
+            tb.setRowCount(0);
+
+            // Duyệt qua kết quả và thêm vào bảng
+            while (rs.next()) {
+                Vector<String> v = new Vector<>();
+                v.add(rs.getString("MaNhanVien"));          
+                v.add(rs.getString("HoTen"));        
+                v.add(rs.getString("ChucVu"));        
+                v.add(rs.getString("Khoa"));    
+                v.add(rs.getString("SDT"));  
+                tb.addRow(v);
+            }
+
+            // Cập nhật bảng hiển thị
+            tbnhanvien.setModel(tb);
+            con.close();  // Đóng kết nối
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Tìm kiếm không thành công");
         }
 
-    }//GEN-LAST:event_tbqtdtMouseClicked
-    
-    public void xoatrang(){
-            txtmdt.setText("");
-            txtmbn.setText("");
-            dcndt.setDate(null);
-            txtcd.setText("");
-            txtpp.setText("");
-            txtbs.setText("");
-    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttimkiemKeyReleased
+
+    private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
+
+    }//GEN-LAST:event_bttimkiemActionPerformed
+
+    private void tbnhanvienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbnhanvienMouseClicked
+        int i = tbnhanvien.getSelectedRow();  // Lấy chỉ số hàng được chọn trong bảng
+        DefaultTableModel tb = (DefaultTableModel) tbnhanvien.getModel();  // Lấy model của bảng
+
+        if (i >= 0) {  // Kiểm tra xem có hàng nào được chọn không
+            txtmnv.setText(tb.getValueAt(i, 0).toString());  // Gán mã nhân viên
+            txthoten.setText(tb.getValueAt(i, 1).toString());  // Gán họ tên
+            txtcv.setText(tb.getValueAt(i, 2).toString());  // Gán chức vụ
+            txtkhoa.setText(tb.getValueAt(i, 3).toString());  // Gán khoa
+            txtsdt.setText(tb.getValueAt(i, 4).toString());  // Gán số điện thoại
+            txtmnv.setEnabled(false);  // Vô hiệu hóa ô nhập mnv
+
+
+            try {
+
+            } catch (Exception ex) {
+                ex.printStackTrace();  
+                JOptionPane.showMessageDialog(this, "Lỗi khi xử lý dữ liệu: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hàng trong bảng.");  // Thông báo nếu không có hàng nào được chọn
+        }
+
+    }//GEN-LAST:event_tbnhanvienMouseClicked
+
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các compents đưa vào biến
-        String mdt = txtmdt.getText().trim();
-        String mbn = txtmbn.getText().trim();
-
-        SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
-        Date ndt = new Date(dcndt.getDate().getTime());       
-        String cd = txtcd.getText().trim();
-        String pp = txtpp.getText().trim();
-        String bs = txtbs.getText().trim();
-       
+        String mnv = txtmnv.getText().trim();
+        String hoten = txthoten.getText().trim();
+        String chucvu = txtcv.getText().trim();
+        String khoa = txtkhoa.getText().trim();
+        String sdt = txtsdt.getText().trim();
 
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
-        if (mdt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã quá trình không được để trống.");
-            txtmdt.requestFocus();
+        if (mnv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống.");
+            txtmnv.requestFocus();
             return;
         }
 
-        if (mbn.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống.");
-            txtmbn.requestFocus();
+        if (hoten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Họ và tên không được để trống.");
+            txthoten.requestFocus();
             return;
         }
 
-        if (ndt == null) {
-            JOptionPane.showMessageDialog(this, "Ngày điều trị không được để trống.");
-            dcndt.requestFocus();
+
+        if (chucvu.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chức vụ không được để trống.");
+            txtcv.requestFocus();
             return;
         }
 
-        if (cd.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chẩn đoán không được để trống.");
-            txtcd.requestFocus();
+        if (khoa.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Khoa không được để trống.");
+            txtkhoa.requestFocus();
             return;
         }
 
-        if (pp.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Quá trình điều trị không được để trống.");
-            txtpp.requestFocus();
-            return;
-        }
-
-        if (bs.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Điều trị không được để trống.");
-            txtbs.requestFocus();
+        if (sdt.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không được để trống.");
+            txtsdt.requestFocus();
             return;
         }
 
         //B2: Kết nối Database
         try {
-            con = BTL.Connect.KetnoiDB();  
+            con = BTL.Connect.KetnoiDB();
 
-            //B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn 
-            String sql = "Insert INTO QuaTrinhDieuTri values('"+ mdt +"','"+ mbn +"', '"+ ndt +"', N'"+ cd +"', N'"+ pp +"', N'"+ bs +"')";
+            //B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
+            String sql = "Insert INTO NhanVienYTe values('"+ mnv +"',N'"+ hoten +"', N'"+ chucvu +"', N'"+ khoa +"', '"+ sdt +"')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
-            load_qtdt();
-            JOptionPane.showMessageDialog(this, "Thêm mới thành công");    
+            load_nhanvien();
+            JOptionPane.showMessageDialog(this, "Thêm mới thành công");
             xoatrang();
         } catch (Exception e) {
             e.printStackTrace();
@@ -459,22 +480,90 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btthemActionPerformed
 
-    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-    String mbn = txtmbn.getText();
-    try {
-        con = Connect.KetnoiDB();
-        String sql = "DELETE FROM QuaTrinhDieuTri WHERE MaBenhNhan = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, mbn);
+    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
+        try {
+    String cd = txtcv.getText();  // Chức vụ
+    String pp = txtkhoa.getText();  // Khoa
+    String bs = txtsdt.getText();  // Số điện thoại
 
-        int response = JOptionPane.showConfirmDialog(null, 
-            "Bạn có muốn xóa?", 
-            "Xác nhận", 
-            JOptionPane.YES_NO_OPTION, 
+    // Kiểm tra nếu các trường không được để trống
+    if (cd.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Không được để trống chức vụ");
+        return;
+    }
+    if (pp.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Không được để trống khoa");
+        return;
+    }
+    if (bs.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Không được để trống số điện thoại");
+        return;
+    }
+
+    // Lấy mã nhân viên và tên nhân viên (giả sử bạn có trường txtmnv và txthoten để nhập)
+    String mdt = txtmnv.getText();  // Mã nhân viên
+    String mbn = txthoten.getText();  // Họ tên
+
+    // Kiểm tra mã nhân viên không được trống
+    if (mdt.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Không được để trống mã nhân viên");
+        return;
+    }
+
+    con = BTL.Connect.KetnoiDB();  // Kết nối tới database
+
+    // Câu lệnh SQL để cập nhật bản ghi trong bảng NhanVienYTe
+    String sql = "UPDATE NhanVienYTe SET "
+            + "HoTen = ?, "
+            + "ChucVu = ?, "
+            + "Khoa = ?, "
+            + "SDT = ? "
+            + "WHERE MaNhanVien = ?";
+
+    // Sử dụng PreparedStatement để tránh SQL Injection
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setString(1, mbn);   // Gán họ tên
+    ps.setString(2, cd);    // Gán chức vụ
+    ps.setString(3, pp);    // Gán khoa
+    ps.setString(4, bs);    // Gán số điện thoại
+    ps.setString(5, mdt);   // Gán mã nhân viên
+
+    // Thực hiện câu lệnh cập nhật
+    int rowsAffected = ps.executeUpdate();
+    if (rowsAffected > 0) {
+        JOptionPane.showMessageDialog(this, "Sửa thành công");
+        load_nhanvien();  // Tải lại dữ liệu sau khi cập nhật
+        xoatrang();   // Xóa trắng các trường nhập
+    } else {
+        JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu để sửa");
+    }
+
+    con.close();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Sửa không thành công");
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_btsuaActionPerformed
+
+    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
+        String mbn = txthoten.getText();  // Lấy mã bệnh nhân từ ô nhập liệu
+try {
+    con = BTL.Connect.KetnoiDB();  // Kết nối tới cơ sở dữ liệu
+    if (con != null) {
+        String sql = "DELETE FROM NhanVienYTe WHERE MaBenhNhan = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, mbn);  // Gán mã bệnh nhân vào câu lệnh SQL
+
+        // Xác nhận từ người dùng trước khi xóa
+        int response = JOptionPane.showConfirmDialog(null,
+            "Bạn có muốn xóa?",
+            "Xác nhận",
+            JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION) {
-            int rowsAffected = ps.executeUpdate();
+            int rowsAffected = ps.executeUpdate();  // Thực thi câu lệnh xóa
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công");
             } else {
@@ -482,151 +571,37 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
             }
         }
 
-        con.close();
-        load_qtdt();  // reload the table to reflect changes
-        // Clear the input fields
-        txtmdt.setText("");
-        txtmbn.setText("");
-        dcndt.setDate(null);
-        txtcd.setText("");
-        txtpp.setText("");
-        txtbs.setText("");
+        // Tải lại dữ liệu sau khi xóa
+        load_nhanvien();
+
+        // Xóa trắng các trường nhập liệu
+        txtmnv.setText("");
+        txthoten.setText("");
+        txtcv.setText("");
+        txtkhoa.setText("");
+        txtsdt.setText("");
+    } else {
+        JOptionPane.showMessageDialog(this, "Kết nối cơ sở dữ liệu không thành công");
+    }
     } catch (Exception e) {
         e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Xóa không thành công do lỗi hệ thống");
+    } finally {
+        try {
+            if (con != null) {
+                con.close();  // Đảm bảo đóng kết nối cơ sở dữ liệu
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
+
     }//GEN-LAST:event_btxoaActionPerformed
 
-    
-    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-            try {
-        String cd = txtcd.getText();  // Chẩn đoán điều trị
-        String pp = txtpp.getText();  // Phương pháp điều trị
-        String bs = txtbs.getText();  // Bác sĩ điều trị
-
-        // Kiểm tra nếu các trường không được để trống
-        if (cd.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống chẩn đoán điều trị");
-            return;
-        }
-        if (pp.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống phương pháp điều trị");
-            return;
-        }
-        if (bs.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống bác sĩ điều trị");
-            return;
-        }
-
-        // Lấy ngày điều trị từ DateChooser
-        Date ndt = new Date (dcndt.getDate().getTime());
-        if (ndt == null) {
-            JOptionPane.showMessageDialog(this, "Không được để trống ngày điều trị");
-            return;
-        }
-
-        // Định dạng ngày điều trị thành kiểu chuỗi
-        java.sql.Date sqlDate = new java.sql.Date(ndt.getTime());
-
-        // Lấy mã điều trị và mã bệnh nhân (giả sử bạn có trường txtmdt và txtmbn để nhập mã)
-        String mdt = txtmdt.getText();  // Mã điều trị
-        String mbn = txtmbn.getText();  // Mã bệnh nhân
-
-        // Kiểm tra mã điều trị không được trống
-        if (mdt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống mã điều trị");
-            return;
-        }
-
-        con = Connect.KetnoiDB();  // Kết nối tới database
-
-        // Câu lệnh SQL để cập nhật bản ghi trong bảng QuaTrinhDieuTri
-        String sql = "UPDATE QuaTrinhDieuTri SET "
-                   + "NgayDieuTri = ?, "
-                   + "ChanDoanDieuTri = ?, "
-                   + "PhuongPhapDieuTri = ?, "
-                   + "BacSiDieuTri = ? "
-                   + "WHERE MaDieuTri = ? AND MaBenhNhan = ?";
-
-        // Sử dụng PreparedStatement để tránh SQL Injection
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setDate(1, sqlDate);  // Gán ngày điều trị
-        ps.setString(2, cd);     // Gán chẩn đoán điều trị
-        ps.setString(3, pp);     // Gán phương pháp điều trị
-        ps.setString(4, bs);     // Gán bác sĩ điều trị
-        ps.setString(5, mdt);    // Gán mã điều trị
-        ps.setString(6, mbn);    // Gán mã bệnh nhân
-
-        // Thực hiện câu lệnh cập nhật
-        int rowsAffected = ps.executeUpdate();
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Sửa thành công");
-            load_qtdt();  // Tải lại dữ liệu sau khi cập nhật
-            xoatrang();  
-        } else {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu để sửa");
-        }
-      
-        con.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Sửa không thành công");
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btsuaActionPerformed
-
-    private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
-
-    }//GEN-LAST:event_bttimkiemActionPerformed
-
-    private void txttimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttimkiemKeyReleased
-                    try {
-           // Lấy mã bệnh nhân từ trường nhập liệu
-           tbqtdt.removeAll();
-           String mbn = txttimkiem.getText().trim();  // Mã bệnh nhân
-
-           // Kết nối đến cơ sở dữ liệu
-           con = BTL.Connect.KetnoiDB(); //dm chó tuấn
-           Statement st = con.createStatement();
-
-           // Xây dựng câu lệnh SQL cho tìm kiếm
-           String sql = "SELECT * FROM QuaTrinhDieuTri WHERE MaBenhNhan LIKE '%" + mbn + "%'";
-
-           // Thực hiện truy vấn
-           ResultSet rs = st.executeQuery(sql);
-           String[] tieude = {"Mã điều trị", "Mã bệnh nhân", "Ngày điều trị", "Chẩn đoán điều trị", "Phương pháp điều trị", "Bác sĩ điều trị"};
-           DefaultTableModel tb = new DefaultTableModel(tieude, 0);
-           tb.setRowCount(0);
-
-           // Duyệt qua kết quả và thêm vào bảng
-           while (rs.next()) {
-               Vector<String> v = new Vector<>();
-               v.add(rs.getString("MaDieuTri"));          // Mã điều trị
-               v.add(rs.getString("MaBenhNhan"));         // Mã bệnh nhân
-               v.add(rs.getString("NgayDieuTri"));        // Ngày điều trị
-               v.add(rs.getString("ChanDoanDieuTri"));    // Chẩn đoán điều trị
-               v.add(rs.getString("PhuongPhapDieuTri"));  // Phương pháp điều trị
-               v.add(rs.getString("BacSiDieuTri"));       // Bác sĩ điều trị
-               tb.addRow(v);
-           }
-
-           // Cập nhật bảng hiển thị
-           tbqtdt.setModel(tb);
-           con.close();  // Đóng kết nối
-       } catch (Exception e) {
-           e.printStackTrace();
-           JOptionPane.showMessageDialog(this, "Tìm kiếm không thành công");
-       }
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txttimkiemKeyReleased
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       dispose();  
+        dispose();
         new Menu().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void txttimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txttimkiemMouseClicked
-        xoatrang();
-    }//GEN-LAST:event_txttimkiemMouseClicked
 
     /**
      * @param args the command line arguments
@@ -645,20 +620,20 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Quanliquatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Nhanvienyte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Quanliquatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Nhanvienyte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Quanliquatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Nhanvienyte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Quanliquatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Nhanvienyte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Quanliquatrinhdieutri().setVisible(true);
+                new Nhanvienyte().setVisible(true);
             }
         });
     }
@@ -668,13 +643,11 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
-    private com.toedter.calendar.JDateChooser dcndt;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -684,12 +657,12 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbqtdt;
-    private javax.swing.JTextField txtbs;
-    private javax.swing.JTextField txtcd;
-    private javax.swing.JTextField txtmbn;
-    private javax.swing.JTextField txtmdt;
-    private javax.swing.JTextField txtpp;
+    private javax.swing.JTable tbnhanvien;
+    private javax.swing.JTextField txtcv;
+    private javax.swing.JTextField txthoten;
+    private javax.swing.JTextField txtkhoa;
+    private javax.swing.JTextField txtmnv;
+    private javax.swing.JTextField txtsdt;
     private javax.swing.JTextField txttimkiem;
     // End of variables declaration//GEN-END:variables
 }
