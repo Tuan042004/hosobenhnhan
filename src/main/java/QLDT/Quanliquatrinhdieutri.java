@@ -615,7 +615,7 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
            String mbn = txttimkiem.getText().trim();  // Mã bệnh nhân
 
            // Kết nối đến cơ sở dữ liệu
-           con = BTL.Connect.KetnoiDB();
+           con = BTL.Connect.KetnoiDB(); //dm chó tuấn
            Statement st = con.createStatement();
 
            // Xây dựng câu lệnh SQL cho tìm kiếm
