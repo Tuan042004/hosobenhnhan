@@ -4,7 +4,6 @@
  */
 package BTL;
 
-import QLDT.Quanliquatrinhdieutri;
 
 /**
  *
@@ -345,9 +344,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
     // Tạo đối tượng của trang QuaTrinhDieuTri
-    QLDT.Quanliquatrinhdieutri QL = new Quanliquatrinhdieutri();  
+    //QLDT.Quanliquatrinhdieutri QL = new Quanliquatrinhdieutri();  
     // Hiển thị trang QuaTrinhDieuTri
-    QL.setVisible(true);
+    //QL.setVisible(true);
     // Đóng trang hiện tại (Menu)
     this.dispose();
     }//GEN-LAST:event_jButton9ActionPerformed

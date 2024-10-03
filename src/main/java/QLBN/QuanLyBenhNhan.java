@@ -654,7 +654,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         dispose();
-        new BTL.Menu().setVisible(true);
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmbnActionPerformed
