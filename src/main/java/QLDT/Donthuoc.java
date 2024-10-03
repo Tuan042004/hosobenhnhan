@@ -100,6 +100,7 @@ public class Donthuoc extends javax.swing.JFrame {
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        btload = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(880, 700));
@@ -306,6 +307,13 @@ public class Donthuoc extends javax.swing.JFrame {
             }
         });
 
+        btload.setText("Load");
+        btload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btloadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -320,6 +328,8 @@ public class Donthuoc extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btload)
+                .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addContainerGap())
         );
@@ -332,7 +342,8 @@ public class Donthuoc extends javax.swing.JFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(btload))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -614,6 +625,11 @@ public class Donthuoc extends javax.swing.JFrame {
         new Menu().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void btloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btloadActionPerformed
+        txtmbn.setEnabled(true);
+        xoatrang();
+    }//GEN-LAST:event_btloadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -650,6 +666,7 @@ public class Donthuoc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btload;
     private javax.swing.JButton btsua;
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
