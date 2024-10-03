@@ -63,7 +63,7 @@ public class Login extends javax.swing.JFrame {
                 btdangnhapActionPerformed(evt);
             }
         });
-        getContentPane().add(btdangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
+        getContentPane().add(btdangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
 
         btthoat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btthoat.setText("Thoát");
@@ -72,7 +72,7 @@ public class Login extends javax.swing.JFrame {
                 btthoatActionPerformed(evt);
             }
         });
-        getContentPane().add(btthoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
+        getContentPane().add(btthoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Hệ Thống Quản Lý Hồ Sơ Bệnh Nhân Nội Trú");
