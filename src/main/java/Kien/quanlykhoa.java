@@ -648,7 +648,7 @@ public class quanlykhoa extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Kien\\Danhsachkhoa.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Kien\\dskhoa.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
