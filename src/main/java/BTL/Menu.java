@@ -4,6 +4,7 @@
  */
 package BTL;
 
+import QLBN.QuanLyBenhNhan;
 import QLDT.Quanliquatrinhdieutri;
 
 /**
