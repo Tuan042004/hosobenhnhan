@@ -44,6 +44,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
      */
     public QuanLyBenhNhan() {
         initComponents();
+        load_qtdt();
     }
     Connection con;
     private void load_qtdt(){
@@ -663,13 +664,8 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        xoatrang();
         txtmbn.setEnabled(true);
-        txthoten.setText("");  // Mã quá trình
-        txtmbn.setText("");    // Mã bệnh nhân
-        cboxgioitinh.setSelectedIndex(0);  // Đặt về giá trị đầu tiên (giả định là "Chọn giới tính")
-        txtdiachi.setText("");  // Địa chỉ
-        txtsdt.setText("");     // Số điện thoại
-        dcngaysinh.setDate(null);
          
          
     }//GEN-LAST:event_jButton4ActionPerformed
