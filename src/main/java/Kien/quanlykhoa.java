@@ -457,7 +457,6 @@ public class quanlykhoa extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         dispose();
-        new Menu().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txtTimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimkiemMouseClicked
