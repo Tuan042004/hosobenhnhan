@@ -715,11 +715,11 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 
             cell = row.createCell(1, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Họ và tên");
+            cell.setCellValue("Mã bệnh nhân");
 
             cell = row.createCell(2, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã bệnh nhân");
+            cell.setCellValue("Họ và tên");
 
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
@@ -762,27 +762,27 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
 
                 cell = row.createCell(1);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("Họ và tên"));
+                cell.setCellValue(rs.getString("MaBenhNhan"));
 
                 cell = row.createCell(2);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("Mã bệnh nhân"));
+                cell.setCellValue(rs.getString("HoTen"));
 
                 cell = row.createCell(3);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("Ngày sinh"));
+                cell.setCellValue(rs.getString("NgaySinh"));
 
                 cell = row.createCell(4);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("Giới tính"));
+                cell.setCellValue(rs.getString("GioiTinh"));
                 
                 cell = row.createCell(5);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("Địa chỉ"));
+                cell.setCellValue(rs.getString("DiaChi"));
                 
                 cell = row.createCell(6);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("Số điện thoại"));
+                cell.setCellValue(rs.getString("SDT"));
                 i++;
             }
             //Hiệu chỉnh độ rộng của cột
@@ -790,7 +790,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachBenhNhan1.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\QLBN\\bêng.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
