@@ -5,13 +5,29 @@
 package QLDT;
 
 import BTL.Menu;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -93,7 +109,7 @@ public class Nhanvienyte extends javax.swing.JFrame {
         btthem = new javax.swing.JButton();
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btxuat = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         btload = new javax.swing.JButton();
 
@@ -280,7 +296,12 @@ public class Nhanvienyte extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("jButton4");
+        btxuat.setText("Xuất Excel");
+        btxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btxuatActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Thoát");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -308,7 +329,7 @@ public class Nhanvienyte extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btxoa)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btxuat)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btload)
                 .addGap(18, 18, 18)
@@ -323,7 +344,7 @@ public class Nhanvienyte extends javax.swing.JFrame {
                     .addComponent(btthem)
                     .addComponent(btsua)
                     .addComponent(btxoa)
-                    .addComponent(jButton4)
+                    .addComponent(btxuat)
                     .addComponent(jButton5)
                     .addComponent(btload))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -618,6 +639,132 @@ try {
        txtmnv.setEnabled(true);
        xoatrang();
     }//GEN-LAST:event_btloadActionPerformed
+    
+    private static CellStyle DinhdangHeader(XSSFSheet sheet) {
+        // Create font
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12); // font size
+        font.setColor(IndexedColors.WHITE.getIndex()); // text color
+
+        // Create CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
+        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setWrapText(true);
+        return cellStyle;
+    }
+    
+    private void btxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxuatActionPerformed
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("Khoa");
+            // register the columns you wish to track and compute the column width
+
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            XSSFRow row = null;
+            Cell cell = null;
+
+            row = spreadsheet.createRow((short) 2);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SÁCH NHÂN VIÊN Y TẾ");
+
+            //Tạo dòng tiêu đều của bảng
+            // create CellStyle
+            CellStyle cellStyle_Head = DinhdangHeader(spreadsheet);
+            row = spreadsheet.createRow((short) 3);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("STT");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Mã Nhân Viên");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Họ Và Tên");
+
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Chức Vụ");
+            
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Khoa");
+            
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("SDT");
+            
+             //Kết nối DB
+            con = BTL.Connect.KetnoiDB();
+            String sql = "Select * From NhanVienYTe";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            //Đổ dữ liệu từ rs vào các ô trong excel
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int tongsocot = rsmd.getColumnCount();
+
+            //Đinh dạng Tạo đường kẻ cho ô chứa dữ liệu
+            CellStyle cellStyle_data = spreadsheet.getWorkbook().createCellStyle();
+            cellStyle_data.setBorderLeft(BorderStyle.THIN);
+            cellStyle_data.setBorderRight(BorderStyle.THIN);
+            cellStyle_data.setBorderBottom(BorderStyle.THIN);
+
+            int i = 0;
+            while (rs.next()) {
+                row = spreadsheet.createRow((short) 4 + i);
+                row.setHeight((short) 400);
+
+                cell = row.createCell(0);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(i + 1);
+
+                cell = row.createCell(1);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("MaNhanVien"));
+
+                cell = row.createCell(2);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("HoTen"));
+                
+                cell = row.createCell(3);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("ChucVu"));
+                
+                cell = row.createCell(4);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("Khoa"));
+                
+                cell = row.createCell(5);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("SDT"));
+
+
+                i++;
+            }
+            //Hiệu chỉnh độ rộng của cột
+            for (int col = 0; col < tongsocot; col++) {
+                spreadsheet.autoSizeColumn(col);
+            }
+
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\QLDT\\DSNVYT.xlsx");
+            FileOutputStream out = new FileOutputStream(f);
+            workbook.write(out);
+            out.close();
+            JOptionPane.showMessageDialog(this, "Xuất Excel thành công!!");
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btxuatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -660,7 +807,7 @@ try {
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btxuat;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
