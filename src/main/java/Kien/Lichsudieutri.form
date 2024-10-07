@@ -256,9 +256,9 @@
                           <Component id="jLabel2" alignment="0" pref="119" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="txtManv" alignment="0" pref="160" max="32767" attributes="0"/>
-                          <Component id="txtMalich" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtMalich" pref="160" max="32767" attributes="0"/>
+                          <Component id="cboTacgia" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -299,9 +299,9 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtManv" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtKq" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cboTacgia" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -331,8 +331,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtMalich">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtManv">
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
                 <Property name="text" type="java.lang.String" value="K&#x1ebf;t Qu&#x1ea3; &#x110;i&#x1ec1;u Tr&#x1ecb;"/>
@@ -351,6 +349,21 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtBacsi">
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cboTacgia">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="Ch&#x1ecd;n M&#xe3; B&#x1ec7;nh Nh&#xe2;n"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboTacgiaItemStateChanged"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
