@@ -19,6 +19,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
