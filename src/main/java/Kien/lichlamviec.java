@@ -4,6 +4,7 @@
  */
 package Kien;
 
+import BTL.Connect;
 import BTL.Menu;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -43,6 +46,7 @@ public class lichlamviec extends javax.swing.JFrame {
     public lichlamviec() {
         initComponents();
         load_qtdt();
+        load_cboTacgia();
     }
 
     /**
@@ -72,10 +76,10 @@ public class lichlamviec extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtMalich = new javax.swing.JTextField();
-        txtManv = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtCalv = new javax.swing.JTextField();
         dcngaysinh = new com.toedter.calendar.JDateChooser();
+        cboTacgia = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbKhoa = new javax.swing.JTable();
 
@@ -218,6 +222,13 @@ public class lichlamviec extends javax.swing.JFrame {
 
         dcngaysinh.setDateFormatString("yyyy-MM-dd");
 
+        cboTacgia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Nhân Viên" }));
+        cboTacgia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTacgiaItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -228,9 +239,9 @@ public class lichlamviec extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtManv, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(txtMalich, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtMalich, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(cboTacgia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -256,9 +267,9 @@ public class lichlamviec extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtManv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCalv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCalv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboTacgia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -330,6 +341,23 @@ public class lichlamviec extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    Map<String,String> tacgia = new HashMap<>();
+    private void load_cboTacgia(){
+        try{
+            con = Connect.KetnoiDB();
+            String sql = "Select * From NhanVienYTe";
+            Statement st=con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            //Đổ dữ liệu vào combobox
+            while(rs.next()){
+                cboTacgia.addItem(rs.getString("MaNhanVien"));
+                tacgia.put(rs.getString("MaNhanVien"), rs.getString("HoTen"));
+            }
+            con.close();;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
     Connection con;
     private void load_qtdt(){
         try {
@@ -365,14 +393,22 @@ public class lichlamviec extends javax.swing.JFrame {
     }
     public void xoatrang(){
             txtMalich.setText("");
-            txtManv.setText("");
+            //txtManv.setText("");
             dcngaysinh.setDate(null);
             txtCalv.setText("");
     }
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các compents đưa vào biến
         String ma = txtMalich.getText().trim();
-        String ten = txtManv.getText().trim();
+        String ten = cboTacgia.getSelectedItem().toString();
+            if(ten.equals("Chọn Mã Bệnh Nhân")){
+                ten="";
+            }
+            if(ten.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập mã Nhân Viên!");
+                return;
+            }
+
         SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
         Date ndt = new Date(dcngaysinh.getDate().getTime());
         String tk = txtCalv.getText().trim();
@@ -383,11 +419,7 @@ public class lichlamviec extends javax.swing.JFrame {
             return;
         }
 
-        if (ten.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống.");
-            txtManv.requestFocus();
-            return;
-        }
+       
         
         if (ndt == null) {
             JOptionPane.showMessageDialog(this, "Ngày làm việc không được để trống.");
@@ -426,11 +458,15 @@ public class lichlamviec extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Phải nhập mã lịch làm việc!");
                 return;
             }
-            String ten = txtManv.getText();
+            String ten = cboTacgia.getSelectedItem().toString();
+            if(ten.equals("Chọn Mã Nhân Viên")){
+                ten="";
+            }
             if(ten.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập mã nhân viên!");
+                JOptionPane.showMessageDialog(this, "Phải nhập mã Nhân Viên!");
                 return;
             }
+
             
             Date ndt = new Date (dcngaysinh.getDate().getTime());
         if (ndt == null) {
@@ -693,7 +729,7 @@ public class lichlamviec extends javax.swing.JFrame {
         int i = tbKhoa.getSelectedRow();
         DefaultTableModel tb = (DefaultTableModel)tbKhoa.getModel();
         txtMalich.setText(tb.getValueAt(i, 0).toString());
-        txtManv.setText(tb.getValueAt(i, 1).toString());
+        cboTacgia.setSelectedItem(tb.getValueAt(i, 1).toString());
         String ngay = tb.getValueAt(i, 2).toString();
         java.util.Date ngs;
         try{
@@ -706,6 +742,12 @@ public class lichlamviec extends javax.swing.JFrame {
         txtCalv.setText(tb.getValueAt(i, 3).toString());
         txtMalich.setEnabled(false);
     }//GEN-LAST:event_tbKhoaMouseClicked
+
+    private void cboTacgiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTacgiaItemStateChanged
+        // TODO add your handling code here:
+        String ten = cboTacgia.getSelectedItem().toString();
+//        txtMalich.setText(tacgia.get(ten));
+    }//GEN-LAST:event_cboTacgiaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -748,6 +790,7 @@ public class lichlamviec extends javax.swing.JFrame {
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
+    private javax.swing.JComboBox<String> cboTacgia;
     private com.toedter.calendar.JDateChooser dcngaysinh;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -765,7 +808,6 @@ public class lichlamviec extends javax.swing.JFrame {
     private javax.swing.JTable tbKhoa;
     private javax.swing.JTextField txtCalv;
     private javax.swing.JTextField txtMalich;
-    private javax.swing.JTextField txtManv;
     private javax.swing.JTextField txtTimkiem;
     // End of variables declaration//GEN-END:variables
 }

@@ -517,6 +517,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
             con.close();
             JOptionPane.showMessageDialog(this, "Sửa thành công");
             load_qtdt();
+            
         }catch (Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Sửa ko thành công");
@@ -777,6 +778,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
         txtKq.setText(tb.getValueAt(i, 3).toString());
         txtBacsi.setText(tb.getValueAt(i, 4).toString());
         txtMalich.setEnabled(false);
+        cboTacgia.setEnabled(false);
     }//GEN-LAST:event_tbKhoaMouseClicked
 
     private void cboTacgiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTacgiaItemStateChanged
