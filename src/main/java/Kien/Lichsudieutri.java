@@ -389,7 +389,6 @@ public class Lichsudieutri extends javax.swing.JFrame {
         String ma = txtMalich.getText().trim();
         String ten = txtManv.getText().trim();
         SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
-        Date ndt = new Date(dcngaysinh.getDate().getTime());
         String tk = txtKq.getText().trim();
         String bs = txtBacsi.getText().trim();
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
@@ -404,7 +403,15 @@ public class Lichsudieutri extends javax.swing.JFrame {
             txtManv.requestFocus();
             return;
         }
-
+        
+        Date ndt = null;
+        try {
+            ndt = new Date(dcngaysinh.getDate().getTime());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Phải nhập ngày điều trị hợp lệ!");
+            dcngaysinh.requestFocus();
+            return;
+        }
         if (ndt == null) {
             JOptionPane.showMessageDialog(this, "Ngày điều trị không được để trống.");
             dcngaysinh.requestFocus();
@@ -454,9 +461,17 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 return;
             }
 
-            Date ndt = new Date (dcngaysinh.getDate().getTime());
+                Date ndt = null;
+            try {
+                ndt = new Date(dcngaysinh.getDate().getTime());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Phải nhập ngày điều trị hợp lệ!");
+                dcngaysinh.requestFocus();
+                return;
+            }
             if (ndt == null) {
-                JOptionPane.showMessageDialog(this, "Không được để trống ngày điều trị");
+                JOptionPane.showMessageDialog(this, "Ngày điều trị không được để trống.");
+                dcngaysinh.requestFocus();
                 return;
             }
 
