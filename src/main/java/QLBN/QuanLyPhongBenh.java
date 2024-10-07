@@ -35,26 +35,26 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author dqduc
  */
-public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
+public class QuanLyPhongBenh extends javax.swing.JFrame {
 
     /**
-     * Creates new form QuanLyHoSoNhapVien
+     * Creates new form QuanLyPhongBenh
      */
-    public QuanLyHoSoNhapVien() {
+    public QuanLyPhongBenh() {
         initComponents();
         load_qtdt();
     }
-    Connection con;
+     Connection con;
     private void load_qtdt(){
         try {
             tbqlbn.removeAll();
             //B1: Kết nối đến DB
             con= BTL.Connect.KetnoiDB();
             //B2: Tạo đối tượng Statement để thực hiện câu lệnh truy cập
-            String sql = "Select * From HoSoNhapVien";
+            String sql = "Select * From PhongBenh";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude={"Mã hồ sơ nhập viện", "Mã bệnh nhân","Ngày nhập viện","Chuẩn đoán","Khoa điều trị"};
+            String[] tieude={"Mã phòng", "Tên phòng","Loại phòng","Số giường"};
             DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
                     @Override
                     public boolean isCellEditable(int row, int column) {
@@ -65,11 +65,10 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
             
             while(rs.next()){
                 Vector v = new Vector();
-                v.add(rs.getString("MaHoSoNhapVien"));
-                v.add(rs.getString("MaBenhNhan"));
-                v.add(rs.getString("NgayNhapVien"));
-                v.add(rs.getString("ChanDoan"));
-                v.add(rs.getString("KhoaDieuTri"));
+                v.add(rs.getString("MaPhong"));
+                v.add(rs.getString("TenPhong"));
+                v.add(rs.getString("LoaiPhong"));
+                v.add(rs.getString("SoGiuong"));
                 tb.addRow(v);
             }
             tbqlbn.setModel(tb);
@@ -79,11 +78,11 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         }
     }
         public void xoatrang() {
-        txtmhs.setText("");      // Xóa trường họ tên
-        txtmbn.setText("");        // Xóa trường mã bệnh nhân
-        dcngaynhapvien.setDate(null);  // Xóa trường ngày sinh
-        txtchuandoan.setText("");     // Xóa trường địa chỉ
-        txtkhoadieutri.setText("");        // Xóa trường số điện thoại
+        txtmp.setText("");      // Xóa trường họ tên
+        txttp.setText("");        // Xóa trường mã bệnh nhân
+        cboloaiphong.setSelectedIndex(0);
+        txtsg.setText("");     // Xóa trường địa chỉ
+
     }
      private static CellStyle DinhdangHeader(XSSFSheet sheet) {
         // Create font
@@ -104,7 +103,6 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         cellStyle.setWrapText(true);
         return cellStyle;
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,14 +128,12 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtmhs = new javax.swing.JTextField();
-        txtmbn = new javax.swing.JTextField();
-        dcngaynhapvien = new com.toedter.calendar.JDateChooser();
-        txtchuandoan = new javax.swing.JTextField();
-        txtkhoadieutri = new javax.swing.JTextField();
+        txtmp = new javax.swing.JTextField();
+        txttp = new javax.swing.JTextField();
+        txtsg = new javax.swing.JTextField();
+        cboloaiphong = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbqlbn = new javax.swing.JTable();
 
@@ -220,7 +216,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản Lý Hồ Sơ Bệnh Nhân");
+        jLabel1.setText("Quản Lý Phòng Bệnh");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
 
@@ -242,7 +238,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Mã bệnh nhân");
+        jLabel8.setText("Mã phòng");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -270,23 +266,21 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin chi tiết"));
 
-        jLabel2.setText("Mã bệnh nhân");
+        jLabel2.setText("Tên phòng");
 
-        jLabel3.setText("Mã hồ sơ nhập viện");
+        jLabel3.setText("Mã phòng");
 
-        jLabel4.setText("Ngày nhập viện");
+        jLabel5.setText("Loại phòng");
 
-        jLabel6.setText("Chuẩn đoán");
+        jLabel6.setText("Số giường");
 
-        jLabel7.setText("Khoa điều trị");
-
-        txtmbn.addActionListener(new java.awt.event.ActionListener() {
+        txttp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtmbnActionPerformed(evt);
+                txttpActionPerformed(evt);
             }
         });
 
-        dcngaynhapvien.setDateFormatString("yyyy-MM-dd");
+        cboloaiphong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn loại phòng", "Phòng cao cấp", "Phòng thường" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -296,63 +290,51 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(dcngaynhapvien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(txtmbn, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtmhs, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txttp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtmp, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(51, 51, 51)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtkhoadieutri))
+                        .addComponent(cboloaiphong, 0, 197, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtchuandoan, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15))
+                        .addComponent(txtsg)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(cboloaiphong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(txtchuandoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtkhoadieutri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtmhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtmbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(dcngaynhapvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txttp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6)
+                    .addComponent(txtsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         tbqlbn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Mã hồ sơ nhập viện", "Mã bệnh nhân", "Ngày nhập viện", "Chuẩn đoán", "Khoa điều trị"
+                "Mã phòng", "Tên phòng", "Loại phòng", "Số giường"
             }
         ));
         tbqlbn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -384,7 +366,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -414,47 +396,33 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
 
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các components đưa vào biến
-        String mhs = txtmhs.getText().trim();
-        String mbn = txtmbn.getText().trim();
-        String cd = txtchuandoan.getText().trim();
-        String dt = txtkhoadieutri.getText().trim();
+        String mp = txtmp.getText().trim();
+        String tp = txttp.getText().trim();
+        String lp = cboloaiphong.getSelectedItem().toString();
+        String sg = txtsg.getText().trim();
 
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
-        if (mhs.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã hồ sơ nhập viện không được để trống.");
-            txtmhs.requestFocus();
+        if (mp.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã phòng không được để trống.");
+            txtmp.requestFocus();
             return;
         }
 
-        if (mbn.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống.");
-            txtmbn.requestFocus();
+        if (tp.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên phòng không được để trống.");
+            txttp.requestFocus();
             return;
         }
-        SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
-        Date ngaynhapvien = null;
-        try {
-            ngaynhapvien = new Date(dcngaynhapvien.getDate().getTime());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Phải nhập ngày nhập viện hợp lệ!");
-            dcngaynhapvien.requestFocus();
+        if (lp.equals("Chọn loại phòng")) {
+            lp = "";
+        }
+        if (lp.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Phải nhập loại phòng!");
             return;
         }
-        if (ngaynhapvien == null) {
-            JOptionPane.showMessageDialog(this, "Ngày nhập viện không được để trống.");
-            dcngaynhapvien.requestFocus();
-            return;
-        }
-
-        if (cd.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Chuẩn đoán không được để trống.");
-            txtchuandoan.requestFocus();
-            return;
-        }
-
-        if (dt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Điều trị không được để trống.");
-            txtkhoadieutri.requestFocus();
+        if (sg.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Số giường không được để trống.");
+            txtsg.requestFocus();
             return;
         }
 
@@ -463,7 +431,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
             con = BTL.Connect.KetnoiDB();
 
             // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
-            String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, NgayNhapVien, ChanDoan, KhoaDieuTri) VALUES (N'"+ mhs +"', '"+ mbn +"', '"+ fomat.format(ngaynhapvien) +"', N'"+ cd +"', '"+ dt +"')";
+            String sql = "INSERT INTO PhongBenh (MaPhong, TenPhong, LoaiPhong, SoGiuong) VALUES (N'" + mp + "', N'" + tp + "', N'" + lp + "', N'" + sg + "')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
@@ -481,82 +449,59 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
     }//GEN-LAST:event_btthemActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-        try {
-       String mhs = txtmhs.getText();  // Mã hồ sơ nhập viện
-       if (mhs.isEmpty()) {
-           JOptionPane.showMessageDialog(this, "Phải nhập mã hồ sơ nhập viện!");
-           return;
-       }
+        try{
+            String mp = txtmp.getText();
+            if(mp.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập mã phòng!");
+                return;
+            }
+            String tp = txttp.getText();
+            if(tp.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập tên phòng!");
+                return;
+            }
+            String lp = cboloaiphong.getSelectedItem().toString();
+            if(lp.equals("Chọn loại phòng")){
+                lp="";
+            }
+            if(lp.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập loại phòng!");
+                return;
+            }
+            String sg = txtsg.getText();
+            if(sg.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập số giường!");
+                return;
+            }
+            con = BTL.Connect.KetnoiDB();
 
-       String mbn = txtmbn.getText();  // Mã bệnh nhân
-       if (mbn.isEmpty()) {
-           JOptionPane.showMessageDialog(this, "Phải nhập mã bệnh nhân!");
-           return;
-       }
-
-       Date ngaynhapvien = new Date(dcngaynhapvien.getDate().getTime());  // Ngày nhập viện
-       if (ngaynhapvien == null) {
-           JOptionPane.showMessageDialog(this, "Phải nhập ngày nhập viện!");
-           return;
-       }
-
-       String cd = txtchuandoan.getText();  // Chẩn đoán
-       if (cd.isEmpty()) {
-           JOptionPane.showMessageDialog(this, "Phải nhập chẩn đoán bệnh!");
-           return;
-       }
-
-       String dt = txtkhoadieutri.getText();  // Khoa điều trị
-       if (dt.isEmpty()) {
-           JOptionPane.showMessageDialog(this, "Phải nhập khoa điều trị!");
-           return;
-       }
-
-       // Kết nối tới database
-       con = BTL.Connect.KetnoiDB();
-
-       // Định dạng ngày theo chuẩn yyyy-MM-dd
-       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-       // Câu lệnh SQL cập nhật thông tin hồ sơ nhập viện
-       String sql = "UPDATE HoSoNhapVien SET MaHoSoNhapVien=N'" + mhs + 
-                    "', NgayNhapVien='" + format.format(ngaynhapvien) + 
-                    "', ChanDoan=N'" + cd + "', KhoaDieuTri=N'" + dt + 
-                    "' WHERE MaBenhNhan='" + mbn + "'";
-
-       // Tạo đối tượng Statement và thực hiện truy vấn
-       Statement st = con.createStatement();
-       st.executeUpdate(sql);
-
-       // Đóng kết nối
-       con.close();
-
-       // Thông báo thành công
-       JOptionPane.showMessageDialog(this, "Sửa thành công");
-
-       // Tải lại dữ liệu (nếu có)
-       load_qtdt();
-
-   } catch (Exception ex) {
-       ex.printStackTrace();
-       JOptionPane.showMessageDialog(this, "Sửa không thành công");
-   }
-
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng ngày theo chuẩn
+            String sql = "UPDATE PhongBenh SET TenPhong=N'" + tp + "', LoaiPhong=N'" + lp + "', SoGiuong=N'" + sg + 
+            "' WHERE MaPhong='" + mp + "'";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
+            JOptionPane.showMessageDialog(this, "Sửa thành công");
+            load_qtdt();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Sửa ko thành công");
+        }
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
         try {
-            String mbn = txtmbn.getText().trim(); // Lấy mã bệnh nhân từ trường nhập
+            String mp = txtmp.getText().trim(); // Lấy mã bệnh nhân từ trường nhập
 
             // Kiểm tra xem mã bệnh nhân có trống không
-            if (mbn.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống.");
-                txtmbn.requestFocus();
+            if (mp.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã phòng không được để trống.");
+                txttp.requestFocus();
                 return;
             }
 
             // Hiển thị hộp thoại xác nhận
-            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa bệnh nhân với mã: " + mbn + "?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa phòng với mã: " + mp + "?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
             // Nếu người dùng chọn "Có"
             if (choice == JOptionPane.YES_OPTION) {
@@ -564,11 +509,11 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 Connection con = Connect.KetnoiDB();
 
                 // Câu lệnh SQL để xóa bệnh nhân
-                String sql = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+                String sql = "DELETE FROM PhongBenh WHERE MaPhong = ?";
 
                 // Sử dụng PreparedStatement để tránh SQL Injection
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setInt(1, Integer.parseInt(mbn)); // Chuyển đổi mã bệnh nhân sang kiểu INT và gán
+                ps.setInt(1, Integer.parseInt(mp)); // Chuyển đổi mã bệnh nhân sang kiểu INT và gán
 
                 // Thực hiện câu lệnh xóa
                 int rowsAffected = ps.executeUpdate();
@@ -584,7 +529,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xóa");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Không xóa nữa thì thôi");
+                JOptionPane.showMessageDialog(this, "Không xóa nữa");
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Mã bệnh nhân phải là một số hợp lệ."); // Thông báo lỗi nếu mã không phải số
@@ -597,7 +542,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
-        txtmbn.setEnabled(true);
+        txttp.setEnabled(true);
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -621,7 +566,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
             row = spreadsheet.createRow((short) 2);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("DANH SÁCH HỒ SƠ NHẬP VIỆN");
+            cell.setCellValue("DANH SÁCH PHÒNG BỆNH");
 
             //Tạo dòng tiêu đều của bảng
             // create CellStyle Họ và tên", "Mã bệnh nhân","Ngày sinh","Giới tính","Địa chỉ","Số điện thoại
@@ -630,26 +575,27 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã hồ sơ nhập viện");
+            cell.setCellValue("STT");
 
             cell = row.createCell(1, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã bệnh nhân");
+            cell.setCellValue("Mã phòng bệnh");
 
             cell = row.createCell(2, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Ngày nhập viện");
+            cell.setCellValue("Tên phòng");
 
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Chuẩn đoán");
+            cell.setCellValue("Loại phòng");
 
             cell = row.createCell(4, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Khoa điều trị");
+            cell.setCellValue("Số giường");
+
             //Kết nối DB
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From HoSoNhapVien";
+            String sql = "Select * From PhongBenh";
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             //Đổ dữ liệu từ rs vào các ô trong excel
@@ -673,24 +619,19 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
 
                 cell = row.createCell(1);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaHoSoNhapVien"));
+                cell.setCellValue(rs.getString("MaPhong"));
 
                 cell = row.createCell(2);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaBenhNhan"));
+                cell.setCellValue(rs.getString("TenPhong"));
 
                 cell = row.createCell(3);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("NgayNhapVien"));
+                cell.setCellValue(rs.getString("LoaiPhong"));
 
                 cell = row.createCell(4);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("ChanDoan"));
-
-                cell = row.createCell(5);
-                cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("KhoaDieuTri"));
-
+                cell.setCellValue(rs.getString("SoGiuong"));
                 i++;
             }
             //Hiệu chỉnh độ rộng của cột
@@ -698,7 +639,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachHoSoNhapVien.xlsx");
+            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\Danhsachphongbenh.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -717,20 +658,21 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
     private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
         try{
             //lấy dữ liệu từ compoment đưa vài biến
-            String mbn = txtTimkiem.getText().trim();
+            String mp = txtTimkiem.getText().trim();
+            //            String ten = txtTimkiem.getText().trim();
+            //            String tk = txtTimkiem.getText().trim();
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From HoSoNhapVien Where MaBenhNhan like'%"+mbn+"%'";
+            String sql = "Select * From PhongBenh Where MaPhong like'%"+mp+"%'";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude={"Mã hồ sơ nhập viện", "Mã bệnh nhân","Ngày nhập viện","Chuẩn đoán","Khoa điều trị"};
+            String[] tieude={"Mã phòng", "Tên phòng","Loại phòng","Số giường"};
             DefaultTableModel tb = new DefaultTableModel(tieude,0);
             while(rs.next()){
                 Vector v = new Vector();
-                v.add(rs.getString("MaHoSoNhapVien"));
-                v.add(rs.getString("MaBenhNhan"));
-                v.add(rs.getString("NgayNhapVien"));
-                v.add(rs.getString("ChanDoan"));
-                v.add(rs.getString("KhoaDieuTri"));
+                v.add(rs.getString("MaPhong"));
+                v.add(rs.getString("TenPhong"));
+                v.add(rs.getString("LoaiPhong"));
+                v.add(rs.getString("SoGiuong"));
                 tb.addRow(v);
             }
             tbqlbn.setModel(tb);
@@ -740,26 +682,18 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bttimkiemActionPerformed
 
-    private void txtmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmbnActionPerformed
+    private void txttpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtmbnActionPerformed
+    }//GEN-LAST:event_txttpActionPerformed
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
         int i=tbqlbn.getSelectedRow();
         DefaultTableModel tb=(DefaultTableModel)tbqlbn.getModel();
-        txtmhs.setText(tb.getValueAt(i, 0).toString());
-        txtmbn.setText(tb.getValueAt(i, 1).toString());
-        String ngay=tb.getValueAt(i, 2).toString();
-        txtchuandoan.setText(tb.getValueAt(i, 3).toString());
-        txtkhoadieutri.setText(tb.getValueAt(i, 4).toString());
-        txtmbn.setEnabled(false);
-        java.util.Date ngs;
-        try {
-            ngs = new SimpleDateFormat("yyyy-MM-dd").parse(ngay);
-            dcngaynhapvien.setDate(ngs);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        txtmp.setText(tb.getValueAt(i, 0).toString());
+        txttp.setText(tb.getValueAt(i, 1).toString());
+        txtsg.setText(tb.getValueAt(i, 3).toString());      
+        txtmp.setEnabled(false);
+       
     }//GEN-LAST:event_tbqlbnMouseClicked
 
     /**
@@ -779,20 +713,20 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHoSoNhapVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanLyPhongBenh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHoSoNhapVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanLyPhongBenh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHoSoNhapVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanLyPhongBenh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuanLyHoSoNhapVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanLyPhongBenh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyHoSoNhapVien().setVisible(true);
+                new QuanLyPhongBenh().setVisible(true);
             }
         });
     }
@@ -802,16 +736,15 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
-    private com.toedter.calendar.JDateChooser dcngaynhapvien;
+    private javax.swing.JComboBox<String> cboloaiphong;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -820,9 +753,8 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbqlbn;
     private javax.swing.JTextField txtTimkiem;
-    private javax.swing.JTextField txtchuandoan;
-    private javax.swing.JTextField txtkhoadieutri;
-    private javax.swing.JTextField txtmbn;
-    private javax.swing.JTextField txtmhs;
+    private javax.swing.JTextField txtmp;
+    private javax.swing.JTextField txtsg;
+    private javax.swing.JTextField txttp;
     // End of variables declaration//GEN-END:variables
 }
