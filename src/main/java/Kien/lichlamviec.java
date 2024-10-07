@@ -410,7 +410,7 @@ public class lichlamviec extends javax.swing.JFrame {
             }
 
         SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
-        Date ndt = new Date(dcngaysinh.getDate().getTime());
+        
         String tk = txtCalv.getText().trim();
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
         if (ma.isEmpty()) {
@@ -419,8 +419,20 @@ public class lichlamviec extends javax.swing.JFrame {
             return;
         }
 
-       
-        
+        if (ten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống.");
+            cboTacgia.requestFocus();
+            return;
+        }
+        Date ndt = null;
+        try {
+            ndt = new Date(dcngaysinh.getDate().getTime());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Phải nhập ngày làm việc hợp lệ!");
+            dcngaysinh.requestFocus();
+            return;
+        }
+
         if (ndt == null) {
             JOptionPane.showMessageDialog(this, "Ngày làm việc không được để trống.");
             dcngaysinh.requestFocus();
@@ -449,10 +461,11 @@ public class lichlamviec extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
+
     }//GEN-LAST:event_btthemActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-        try{
+         try{
             String mk = txtMalich.getText();
             if(mk.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Phải nhập mã lịch làm việc!");
@@ -467,15 +480,21 @@ public class lichlamviec extends javax.swing.JFrame {
                 return;
             }
 
-            
-            Date ndt = new Date (dcngaysinh.getDate().getTime());
-        if (ndt == null) {
-            JOptionPane.showMessageDialog(this, "Không được để trống ngày làm việc");
+            SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
+            Date ndt = null;
+        try {
+            ndt = new Date(dcngaysinh.getDate().getTime());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Phải nhập ngày làm việc hợp lệ!");
+            dcngaysinh.requestFocus();
             return;
         }
 
-        // Định dạng ngày điều trị thành kiểu chuỗi
-        java.sql.Date sqlDate = new java.sql.Date(ndt.getTime());
+        if (ndt == null) {
+            JOptionPane.showMessageDialog(this, "Ngày làm việc không được để trống.");
+            dcngaysinh.requestFocus();
+            return;
+        }
 
             String tk = txtCalv.getText();
             if(tk.isEmpty()){
