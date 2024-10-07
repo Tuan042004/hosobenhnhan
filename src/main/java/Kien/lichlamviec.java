@@ -741,6 +741,7 @@ public class lichlamviec extends javax.swing.JFrame {
         }
         txtCalv.setText(tb.getValueAt(i, 3).toString());
         txtMalich.setEnabled(false);
+        cboTacgia.setEnabled(false);
     }//GEN-LAST:event_tbKhoaMouseClicked
 
     private void cboTacgiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTacgiaItemStateChanged
