@@ -286,12 +286,10 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +301,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -554,12 +552,12 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
      try{
             String mht = txthoten.getText();
             if(mht.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập mã khoa!");
+            JOptionPane.showMessageDialog(this, "Phải nhập họ và tên!");
             return;
         }
             String mbn = txtmbn.getText();
             if(mbn.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập tên khoa!");
+            JOptionPane.showMessageDialog(this, "Phải nhập mã bệnh nhân!");
             return;
         }
         Date ns = new Date (dcngaysinh.getDate().getTime());
@@ -792,7 +790,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachBenhNhan.xlsx");
+            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachBenhNhan1.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
