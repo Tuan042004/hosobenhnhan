@@ -139,6 +139,11 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
                 txttimkiemMouseClicked(evt);
             }
         });
+        txttimkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttimkiemActionPerformed(evt);
+            }
+        });
         txttimkiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txttimkiemKeyReleased(evt);
@@ -394,6 +399,7 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbqtdtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqtdtMouseClicked
@@ -805,6 +811,10 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
         }                                     
 
     }//GEN-LAST:event_btxuatActionPerformed
+
+    private void txttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttimkiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttimkiemActionPerformed
 
     /**
      * @param args the command line arguments
