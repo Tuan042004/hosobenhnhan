@@ -63,7 +63,7 @@ public class Login extends javax.swing.JFrame {
                 btdangnhapActionPerformed(evt);
             }
         });
-        getContentPane().add(btdangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
+        getContentPane().add(btdangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
 
         btthoat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btthoat.setText("Thoát");
@@ -72,7 +72,7 @@ public class Login extends javax.swing.JFrame {
                 btthoatActionPerformed(evt);
             }
         });
-        getContentPane().add(btthoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, -1, -1));
+        getContentPane().add(btthoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Hệ Thống Quản Lý Hồ Sơ Bệnh Nhân Nội Trú");
@@ -82,6 +82,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btdangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdangnhapActionPerformed
