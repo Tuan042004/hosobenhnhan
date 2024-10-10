@@ -19,6 +19,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -127,6 +135,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btn_xuatbc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -347,6 +356,13 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             }
         });
 
+        btn_xuatbc.setText("Xuatbc");
+        btn_xuatbc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xuatbcActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -362,6 +378,8 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addComponent(btxoa)
                 .addGap(68, 68, 68)
                 .addComponent(jButton1)
+                .addGap(38, 38, 38)
+                .addComponent(btn_xuatbc, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addContainerGap())
@@ -376,7 +394,8 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                     .addComponent(btxoa)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(btn_xuatbc))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -641,7 +660,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                    JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xóa");
                }
            } else {
-               JOptionPane.showMessageDialog(this, "Không xóa nữa thì thôi");
+               JOptionPane.showMessageDialog(this, "Không xóa nữa");
            }
        } catch (NumberFormatException e) {
            JOptionPane.showMessageDialog(this, "Mã bệnh nhân phải là một số hợp lệ."); // Thông báo lỗi nếu mã không phải số
@@ -798,6 +817,32 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btn_xuatbcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatbcActionPerformed
+        try {
+//            String mbn = txtmbn.getText().trim();
+            String mht = txthoten.getText().trim();
+//            Date ns = null; ns = new Date(dcngaysinh.getDate().getTime());
+//            String gioitinh = cboxgioitinh.getSelectedItem().toString().trim();
+//            String dc = txtdiachi.getText().trim();
+//            String sdt = txtsdt.getText().trim();
+            
+
+            Connection con = BTL.Connect.KetnoiDB();
+           
+            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report1.jrxml");
+            
+            String sql = "Select * From BenhNhan Where HoTen like N'%"+mht+"%'"; 
+            JRDesignQuery updateQuery=new JRDesignQuery();
+            updateQuery.setText(sql);
+            
+            jdesign.setQuery(updateQuery);
+            JasperReport jreport=JasperCompileManager.compileReport(jdesign);
+            JasperPrint jprint=JasperFillManager.fillReport(jreport, null,con);
+            JasperViewer.viewReport(jprint);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_xuatbcActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -834,6 +879,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_xuatbc;
     private javax.swing.JButton btsua;
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
