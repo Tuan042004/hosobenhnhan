@@ -356,7 +356,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             }
         });
 
-        btn_xuatbc.setText("Xuatbc");
+        btn_xuatbc.setText("Xuất báo cáo");
         btn_xuatbc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_xuatbcActionPerformed(evt);
@@ -376,11 +376,11 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addComponent(btsua)
                 .addGap(18, 18, 18)
                 .addComponent(btxoa)
-                .addGap(68, 68, 68)
+                .addGap(37, 37, 37)
                 .addComponent(jButton1)
-                .addGap(38, 38, 38)
-                .addComponent(btn_xuatbc, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_xuatbc)
+                .addGap(47, 47, 47)
                 .addComponent(jButton5)
                 .addContainerGap())
         );
@@ -621,53 +621,48 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-            try {
-           String mbn = txtmbn.getText().trim(); // Lấy mã bệnh nhân từ trường nhập
+       try {
+            String mbn = txtmbn.getText().trim();
 
-           // Kiểm tra xem mã bệnh nhân có trống không
-           if (mbn.isEmpty()) {
-               JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống.");
-               txtmbn.requestFocus();
-               return;
-           }
+            // Xác nhận từ người dùng trước khi xóa
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                // Kết nối đến cơ sở dữ liệu
+                con = BTL.Connect.KetnoiDB();
 
-           // Hiển thị hộp thoại xác nhận
-           int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa bệnh nhân với mã: " + mbn + "?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                // Kiểm tra xem bệnh nhân có bản ghi nào trong HoSoNhapVien không
+                String checkSql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaBenhNhan = '" + mbn + "'";
+                Statement checkStmt = con.createStatement();
+                ResultSet rs = checkStmt.executeQuery(checkSql);
 
-           // Nếu người dùng chọn "Có"
-           if (choice == JOptionPane.YES_OPTION) {
-               // Kết nối tới cơ sở dữ liệu
-               Connection con = Connect.KetnoiDB();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    // Nếu có bản ghi trong HoSoNhapVien, xóa chúng trước
+                    String deleteHoSoSql = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = '" + mbn + "'";
+                    checkStmt.executeUpdate(deleteHoSoSql);
+                }
 
-               // Câu lệnh SQL để xóa bệnh nhân
-               String sql = "DELETE FROM BenhNhan WHERE MaBenhNhan = ?";
+                // Xóa bản ghi trong bảng BenhNhan
+                String deleteBenhNhanSql = "DELETE FROM BenhNhan WHERE MaBenhNhan = '" + mbn + "'";
+                Statement deleteStmt = con.createStatement();
+                deleteStmt.executeUpdate(deleteBenhNhanSql);
 
-               // Sử dụng PreparedStatement để tránh SQL Injection
-               PreparedStatement ps = con.prepareStatement(sql);
-               ps.setInt(1, Integer.parseInt(mbn)); // Chuyển đổi mã bệnh nhân sang kiểu INT và gán
+                // Đóng kết nối
+                con.close();
 
-               // Thực hiện câu lệnh xóa
-               int rowsAffected = ps.executeUpdate();
+                // Thông báo thành công
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
 
-               // Đóng kết nối
-               con.close();
-
-               // Kiểm tra số dòng bị ảnh hưởng
-               if (rowsAffected > 0) {
-                   JOptionPane.showMessageDialog(this, "Xóa thành công");
-                   load_qtdt(); // Tải lại dữ liệu (nếu cần)
-               } else {
-                   JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xóa");
-               }
-           } else {
-               JOptionPane.showMessageDialog(this, "Không xóa nữa");
-           }
-       } catch (NumberFormatException e) {
-           JOptionPane.showMessageDialog(this, "Mã bệnh nhân phải là một số hợp lệ."); // Thông báo lỗi nếu mã không phải số
-       } catch (Exception ex) {
-           ex.printStackTrace();
-           JOptionPane.showMessageDialog(this, "Lỗi khi xóa dữ liệu: " + ex.getMessage()); // Thông báo lỗi
-       }
+                // Tải lại dữ liệu và xóa trắng các trường nhập liệu
+                load_qtdt();
+                xoatrang();
+            } else {
+                JOptionPane.showMessageDialog(this, "Không xoá nữa");
+            }
+        } catch (Exception ex) {
+            // Hiển thị lỗi nếu có ngoại lệ xảy ra
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi xoá: " + ex.getMessage());
+}
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -819,19 +814,14 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
 
     private void btn_xuatbcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatbcActionPerformed
         try {
-//            String mbn = txtmbn.getText().trim();
-            String mht = txthoten.getText().trim();
-//            Date ns = null; ns = new Date(dcngaysinh.getDate().getTime());
-//            String gioitinh = cboxgioitinh.getSelectedItem().toString().trim();
-//            String dc = txtdiachi.getText().trim();
-//            String sdt = txtsdt.getText().trim();
-            
+            String mbn = txtmbn.getText().trim();
+            //String mht = txthoten.getText().trim();
 
             Connection con = BTL.Connect.KetnoiDB();
            
             JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report1.jrxml");
             
-            String sql = "Select * From BenhNhan Where HoTen like N'%"+mht+"%'"; 
+            String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'"; 
             JRDesignQuery updateQuery=new JRDesignQuery();
             updateQuery.setText(sql);
             

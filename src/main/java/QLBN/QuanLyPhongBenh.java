@@ -490,52 +490,23 @@ public class QuanLyPhongBenh extends javax.swing.JFrame {
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-        try {
-            String mp = txtmp.getText().trim(); // Lấy mã bệnh nhân từ trường nhập
-
-            // Kiểm tra xem mã bệnh nhân có trống không
-            if (mp.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Mã phòng không được để trống.");
-                txttp.requestFocus();
-                return;
-            }
-
-            // Hiển thị hộp thoại xác nhận
-            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa phòng với mã: " + mp + "?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-            // Nếu người dùng chọn "Có"
+        try{
+              String mp = txtmp.getText().trim();
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (choice == JOptionPane.YES_OPTION) {
-                // Kết nối tới cơ sở dữ liệu
-                Connection con = Connect.KetnoiDB();
-
-                // Câu lệnh SQL để xóa bệnh nhân
-                String sql = "DELETE FROM PhongBenh WHERE MaPhong = ?";
-
-                // Sử dụng PreparedStatement để tránh SQL Injection
-                PreparedStatement ps = con.prepareStatement(sql);
-                ps.setInt(1, Integer.parseInt(mp)); // Chuyển đổi mã bệnh nhân sang kiểu INT và gán
-
-                // Thực hiện câu lệnh xóa
-                int rowsAffected = ps.executeUpdate();
-
-                // Đóng kết nối
+                con = BTL.Connect.KetnoiDB();
+                String sql = "Delete From PhongBenh Where MaPhong='"+mp+"'";
+                Statement st = con.createStatement();
+                st.executeUpdate(sql);
                 con.close();
-
-                // Kiểm tra số dòng bị ảnh hưởng
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Xóa thành công");
-                    load_qtdt(); // Tải lại dữ liệu (nếu cần)
-                } else {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xóa");
-                }
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                load_qtdt();
+                xoatrang();
             } else {
-                JOptionPane.showMessageDialog(this, "Không xóa nữa");
+                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Mã bệnh nhân phải là một số hợp lệ."); // Thông báo lỗi nếu mã không phải số
-        } catch (Exception ex) {
+        }catch (Exception ex){
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Lỗi khi xóa dữ liệu: " + ex.getMessage()); // Thông báo lỗi
         }
     }//GEN-LAST:event_btxoaActionPerformed
 
