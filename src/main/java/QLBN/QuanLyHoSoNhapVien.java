@@ -169,7 +169,6 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         cbombn = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbqlbn = new javax.swing.JTable();
-        btn_xuatbc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -403,13 +402,6 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbqlbn);
 
-        btn_xuatbc.setText("Xuất báo cáo");
-        btn_xuatbc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_xuatbcActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -421,11 +413,6 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)))
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(328, 328, 328)
-                    .addComponent(btn_xuatbc)
-                    .addContainerGap(329, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,13 +424,8 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(228, 228, 228)
-                    .addComponent(btn_xuatbc)
-                    .addContainerGap(229, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -792,10 +774,6 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
          String mbn = cbombn.getSelectedItem().toString();
     }//GEN-LAST:event_cbombnItemStateChanged
 
-    private void btn_xuatbcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatbcActionPerformed
-        
-    }//GEN-LAST:event_btn_xuatbcActionPerformed
-
     private void btn_xuatbc1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatbc1ActionPerformed
         // TODO add your handling code here:
         try {
@@ -854,7 +832,6 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_xuatbc;
     private javax.swing.JButton btn_xuatbc1;
     private javax.swing.JButton btsua;
     private javax.swing.JButton btthem;

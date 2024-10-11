@@ -88,6 +88,14 @@ public class QLBN extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        QuanLyPhongBenh qlpb = new QuanLyPhongBenh();
+        qlpb.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        qlpb.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            }
+        });
+        qlpb.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -104,6 +112,14 @@ public class QLBN extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        QuanLyHoSoNhapVien qlhsnv = new QuanLyHoSoNhapVien();
+        qlhsnv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        qlhsnv.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            }
+        });
+        qlhsnv.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

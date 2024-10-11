@@ -60,88 +60,105 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }
 
     Connection con;
-    private void Themloaithe(String mbn, String mht, String dcngaysinh , String gioitinh, String dc, String sdt){
-        try {
-            con= BTL.Connect.KetnoiDB();
-            String sql = "insert into BenhNhan (HoTen, MaBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT) "
-                + "values (N'"+mht+"', '"+Integer.parseInt(mbn)+"', '"+dcngaysinh+"', N'"+gioitinh+"', N'"+dc+"', '"+sdt+"')";
-            Statement st = con.createStatement();
-            st.executeUpdate(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void Thembenhnhan(String mbn, String mht, String dcngaysinh, String gioitinh, String dc, String sdt) {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String sql = "INSERT INTO BenhNhan (HoTen, MaBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT) "
+                   + "VALUES (N'" + mht + "', '" + Integer.parseInt(mbn) + "', '" + dcngaysinh + "', N'" + gioitinh + "', N'" + dc + "', '" + sdt + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
     private void ReadExcel(String tenfilepath) {
         try {
-            FileInputStream fis = new FileInputStream(tenfilepath);
-            //Tạo đối tượng Excel
-            XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sheet = wb.getSheetAt(0); //Lấy sheet đầu tiên của file
-            //Lấy ra các dòng bảng bảng
-            Iterator<Row> itr = sheet.iterator();
-            //Đọc dữ liệu
-            int row_count = 0;
-            while (itr.hasNext()) {
-                if (row_count > 0) {
-                    Row row = itr.next(); 
-                    Cell cell1 = row.getCell(0);
-                    System.out.println(cell1);
-                    String mbn = "";
+        FileInputStream fis = new FileInputStream(tenfilepath);
+        XSSFWorkbook wb = new XSSFWorkbook(fis);
+        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+        Iterator<Row> itr = sheet.iterator();
+        int row_count = 0;
+
+        while (itr.hasNext()) {
+            Row row = itr.next();
+            if (row_count > 0) { // Bỏ qua dòng tiêu đề
+                String mbn = "";
+                Cell cell1 = row.getCell(0);
+                if (cell1 != null) {
                     if (cell1.getCellType() == CellType.STRING) {
-                        mbn = cell1.getStringCellValue();
+                        mbn = cell1.getStringCellValue().trim();
                     } else if (cell1.getCellType() == CellType.NUMERIC) {
-                        mbn = String.valueOf(cell1.getNumericCellValue());
+                        mbn = String.valueOf((int) cell1.getNumericCellValue());
                     }
-
-                    Cell cell2 = row.getCell(1);
-                    String mht = "";
-                    if (cell2.getCellType() == CellType.STRING) {
-                        mht = cell2.getStringCellValue();
-                    } else if (cell2.getCellType() == CellType.NUMERIC) {
-                        mht = String.valueOf(cell2.getNumericCellValue());
-                    }
-
-                    Cell cell3 = row.getCell(2);
-                    String dcngaysinh = "";
-                    if (cell3.getCellType() == CellType.STRING) {
-                        dcngaysinh = cell3.getStringCellValue();
-                    } else if (cell3.getCellType() == CellType.NUMERIC) {
-                        dcngaysinh = String.valueOf(cell3.getNumericCellValue());
-                    }
-
-                    Cell cell4 = row.getCell(3);
-                    String gioitinh = "";
-                    if (cell4.getCellType() == CellType.STRING) {
-                        gioitinh = cell4.getStringCellValue();
-                    } else if (cell4.getCellType() == CellType.NUMERIC) {
-                        gioitinh = String.valueOf(cell4.getNumericCellValue());
-                    }
-                    
-                    Cell cell5 = row.getCell(4);
-                    String dc = "";
-                    if (cell5.getCellType() == CellType.STRING) {
-                        dc = cell5.getStringCellValue();
-                    } else if (cell5.getCellType() == CellType.NUMERIC) {
-                        dc = String.valueOf(cell5.getNumericCellValue());
-                    }
-                    
-                    Cell cell6 = row.getCell(5);
-                    String sdt = "";
-                    if (cell6.getCellType() == CellType.STRING) {
-                        sdt = cell6.getStringCellValue();
-                    } else if (cell6.getCellType() == CellType.NUMERIC) {
-                        sdt = String.valueOf(cell6.getNumericCellValue());
-                    }
-                    
-                    Themloaithe( mbn,  mht,  dcngaysinh ,gioitinh,  dc,  sdt);
                 }
-                row_count++;
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (mbn.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String mht = "";
+                Cell cell2 = row.getCell(1);
+                if (cell2 != null) {
+                    if (cell2.getCellType() == CellType.STRING) {
+                        mht = cell2.getStringCellValue().trim();
+                    } else if (cell2.getCellType() == CellType.NUMERIC) {
+                        mht = String.valueOf(cell2.getNumericCellValue()).trim();
+                    }
+                }
+
+                String dcngaysinh = "";
+                Cell cell3 = row.getCell(2);
+                if (cell3 != null) {
+                    if (cell3.getCellType() == CellType.STRING) {
+                        dcngaysinh = cell3.getStringCellValue().trim();
+                    } else if (cell3.getCellType() == CellType.NUMERIC) {
+                        dcngaysinh = new SimpleDateFormat("yyyy-MM-dd").format(cell3.getDateCellValue());
+                    }
+                }
+
+                String gioitinh = "";
+                Cell cell4 = row.getCell(3);
+                if (cell4 != null) {
+                    if (cell4.getCellType() == CellType.STRING) {
+                        gioitinh = cell4.getStringCellValue().trim();
+                    } else if (cell4.getCellType() == CellType.NUMERIC) {
+                        gioitinh = String.valueOf(cell4.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String dc = "";
+                Cell cell5 = row.getCell(4);
+                if (cell5 != null) {
+                    if (cell5.getCellType() == CellType.STRING) {
+                        dc = cell5.getStringCellValue().trim();
+                    } else if (cell5.getCellType() == CellType.NUMERIC) {
+                        dc = String.valueOf(cell5.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String sdt = "";
+                Cell cell6 = row.getCell(5);
+                if (cell6 != null) {
+                    if (cell6.getCellType() == CellType.STRING) {
+                        sdt = cell6.getStringCellValue().trim();
+                    } else if (cell6.getCellType() == CellType.NUMERIC) {
+                        sdt = String.valueOf(cell6.getNumericCellValue()).trim();
+                    }
+                }
+
+                // Gọi phương thức thêm bệnh nhân
+                Thembenhnhan(mbn, mht, dcngaysinh, gioitinh, dc, sdt);
             }
-            JOptionPane.showMessageDialog(this, "Thêm loại thẻ bằng file thành công");
-            load_qtdt();
-        } catch (Exception e) {
-            e.printStackTrace();
+            row_count++;
         }
+        JOptionPane.showMessageDialog(this, "Thêm bệnh nhân bằng file thành công");
+        load_qtdt();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
         
 
     }
@@ -361,6 +378,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        tbqlbn.setForeground(new java.awt.Color(0, 153, 204));
         tbqlbn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -369,7 +387,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Họ và tên", "Mã bệnh nhân", "Ngày sinh", "Giới tính", "Địa chỉ", "Số điện thoại"
+                "title1", "title2", "title3", "title4", "title5", "title6"
             }
         ));
         tbqlbn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -779,6 +797,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         // TODO add your handling code here:
         xoatrang();
         txtmbn.setEnabled(true);
+        load_qtdt();
          
          
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -905,7 +924,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachBenhNhanNhapVien.xlsx");
+            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachBenhNhan.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -920,7 +939,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
 
             Connection con = BTL.Connect.KetnoiDB();
            
-            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report1.jrxml");
+            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\quanllybenhnhan.jrxml");
             
             String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'"; 
             JRDesignQuery updateQuery=new JRDesignQuery();

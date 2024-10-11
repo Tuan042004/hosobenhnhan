@@ -37,7 +37,6 @@ public class Login extends javax.swing.JFrame {
         passmk = new javax.swing.JPasswordField();
         txttdn = new javax.swing.JTextField();
         btdangnhap = new javax.swing.JButton();
-        btthoat = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -63,16 +62,7 @@ public class Login extends javax.swing.JFrame {
                 btdangnhapActionPerformed(evt);
             }
         });
-        getContentPane().add(btdangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
-
-        btthoat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btthoat.setText("Thoát");
-        btthoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthoatActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btthoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
+        getContentPane().add(btdangnhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Hệ Thống Quản Lý Hồ Sơ Bệnh Nhân Nội Trú");
@@ -100,7 +90,7 @@ try {
         if (rs.next()) {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
             // Mở form Menu
-            Menu menu = new Menu();
+            Menu1 menu = new Menu1();
             menu.setVisible(true);
             this.dispose();
         } else {
@@ -114,17 +104,7 @@ try {
         JOptionPane.showMessageDialog(this, "Lỗi kết nối cơ sở dữ liệu: " + e.getMessage());
     }
 
-    //            // Mở form menu
-    //    Menu menuForm = new Menu();
-    //    menuForm.setVisible(true);  // Hiển thị form Menu
-    //
-    //    // Đóng form đăng nhập hiện tại
-    //    this.dispose();  // Hoặc bạn có thể dùng setVisible(false); để ẩn form
     }//GEN-LAST:event_btdangnhapActionPerformed
-
-    private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btthoatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,7 +143,6 @@ try {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btdangnhap;
-    private javax.swing.JButton btthoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
