@@ -22,16 +22,16 @@
 				<staticText>
 					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="b3dc505e-102c-4b65-8c4a-ff5d135ef678"/>
 					<textElement>
-						<font size="34" isBold="true"/>
+						<font size="24" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Bang]]></text>
+					<text><![CDATA[Bảng Bệnh Nhân]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="2171206e-503f-4490-b0da-9544ffc78b3b"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Add a description here]]></text>
+					<text><![CDATA[]]></text>
 				</staticText>
 			</frame>
 		</band>
