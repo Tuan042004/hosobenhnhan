@@ -4,7 +4,7 @@
  */
 package QLDT;
 
-import BTL.Menu;
+import BTL.Menu1;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -633,7 +633,7 @@ try {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         dispose();
-        new Menu().setVisible(true);
+        new Menu1().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btloadActionPerformed

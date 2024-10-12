@@ -38,7 +38,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="dp" pref="555" max="32767" attributes="0"/>
+                      <Component id="dp" pref="561" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -65,15 +65,14 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
-              <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
               <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-              <Component id="jLabel5" max="32767" attributes="0"/>
+              <Component id="dangxuat" max="32767" attributes="0"/>
               <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
+              <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
+              <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel7" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel7" pref="278" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -90,7 +89,7 @@
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" pref="52" max="-2" attributes="0"/>
                   <EmptySpace pref="160" max="32767" attributes="0"/>
-                  <Component id="jLabel5" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Component id="dangxuat" min="-2" pref="52" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -116,7 +115,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value=" H&#x1ed3; s&#x1a1; b&#x1ec7;nh nh&#xe2;n v&#xe0; nh&#x1ead;p vi&#x1ec7;n"/>
+            <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; b&#x1ec7;nh nh&#xe2;n v&#xe0; nh&#x1ead;p vi&#x1ec7;n"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -135,7 +134,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value=" Qu&#xe1; tr&#xec;nh &#x111;i&#x1ec1;u tr&#x1ecb; v&#xe0; nh&#xe2;n vi&#xea;n y t&#x1ebf;"/>
+            <Property name="text" type="java.lang.String" value="Qu&#xe1; tr&#xec;nh &#x111;i&#x1ec1;u tr&#x1ecb; v&#xe0; nh&#xe2;n vi&#xea;n y t&#x1ebf;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -174,7 +173,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="dangxuat">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="1"/>
@@ -187,7 +186,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel5MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="dangxuatMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -233,7 +232,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jLabel6" alignment="1" pref="855" max="32767" attributes="0"/>
+              <Component id="jLabel6" alignment="1" pref="869" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
