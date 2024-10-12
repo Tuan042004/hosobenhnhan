@@ -5,7 +5,7 @@
 package QLDT;
 
 import BTL.Connect;
-import BTL.Menu;
+import BTL.Menu1;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -659,7 +659,7 @@ public class Quanliquatrinhdieutri extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
        dispose();  
-        new Menu().setVisible(true);
+       new Menu1().setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void txttimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txttimkiemMouseClicked

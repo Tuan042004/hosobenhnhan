@@ -4,6 +4,7 @@
  */
 package QLDT;
 
+import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
 
 /**
@@ -28,30 +29,33 @@ public class Quanlydieutri extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnvyt = new javax.swing.JButton();
+        btdt = new javax.swing.JButton();
+        btqtqldt = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(400, 400));
+        setPreferredSize(new java.awt.Dimension(561, 562));
 
-        jButton1.setText("Quản lý quá trình điều trị");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnvyt.setText("Nhân viên y tế");
+        btnvyt.setPreferredSize(new java.awt.Dimension(187, 187));
+        btnvyt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnvytActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Quản lý nhân viên y tế");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btdt.setText("Đơn thuốc");
+        btdt.setPreferredSize(new java.awt.Dimension(187, 187));
+        btdt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btdtActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Quản lý đơn thuốc");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btqtqldt.setText("Quản lý quá trình điều trị");
+        btqtqldt.setPreferredSize(new java.awt.Dimension(187, 187));
+        btqtqldt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btqtqldtActionPerformed(evt);
             }
         });
 
@@ -60,40 +64,30 @@ public class Quanlydieutri extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(365, Short.MAX_VALUE))
+                    .addComponent(btdt, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(btqtqldt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnvyt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btdt, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btqtqldt, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnvyt, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Quanliquatrinhdieutri qlqtdt = new Quanliquatrinhdieutri();
-        qlqtdt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        qlqtdt.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-            }
-        });
-        qlqtdt.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnvytActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvytActionPerformed
+        // TODO add your handling code here:
         Nhanvienyte nvyt = new Nhanvienyte();
         nvyt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nvyt.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -102,9 +96,10 @@ public class Quanlydieutri extends javax.swing.JInternalFrame {
             }
         });
         nvyt.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnvytActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdtActionPerformed
+        // TODO add your handling code here:
         Donthuoc dt = new Donthuoc();
         dt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dt.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -113,12 +108,28 @@ public class Quanlydieutri extends javax.swing.JInternalFrame {
             }
         });
         dt.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btdtActionPerformed
+
+    private void btqtqldtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btqtqldtActionPerformed
+        // TODO add your handling code here:
+        Quanliquatrinhdieutri qlqtdt = new Quanliquatrinhdieutri();
+        qlqtdt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        qlqtdt.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            }
+        });
+        qlqtdt.setVisible(true);
+    }//GEN-LAST:event_btqtqldtActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btdt;
+    private javax.swing.JButton btnvyt;
+    private javax.swing.JButton btqtqldt;
     // End of variables declaration//GEN-END:variables
+
+    private void addWindowListener(WindowAdapter windowAdapter) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
