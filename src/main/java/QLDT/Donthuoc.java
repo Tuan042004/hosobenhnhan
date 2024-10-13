@@ -4,6 +4,7 @@
  */
 package QLDT;
 
+import BTL.Connect;
 import BTL.Menu1;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,6 +44,24 @@ public class Donthuoc extends javax.swing.JFrame {
     public Donthuoc() {
         initComponents();
         load_donthuoc();
+    }
+    
+    private boolean Checktrungmbn(String mbn) {
+    boolean kq = false;
+        try {
+            con = BTL.Connect.KetnoiDB();
+            String sql = "Select * from DonThuoc where MaBenhNhan = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, mbn);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                // Nếu có bản ghi với MaBenhNhan thì trả về true (nghĩa là đã trùng mã)
+                kq = true;
+            }
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+            return kq;
     }
     
     Connection con;
@@ -480,6 +499,12 @@ public class Donthuoc extends javax.swing.JFrame {
         String thuoc = txtthuoc.getText().trim();
         String ll = txtll.getText().trim();
         String bs = txtbs.getText().trim();
+        
+        //Kiểm tra trùng mã bệnh nhân
+        if (Checktrungmbn(mbn)) {
+        JOptionPane.showMessageDialog(this, "Mã bệnh nhân đã tồn tại, không thể thêm.");
+        return;
+    }
 
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
         if (mdt.isEmpty()) {
