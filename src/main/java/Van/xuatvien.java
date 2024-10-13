@@ -47,6 +47,7 @@ public class xuatvien extends javax.swing.JFrame {
         btthoat = new javax.swing.JButton();
         btxuatexcel = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -106,6 +107,8 @@ public class xuatvien extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Xuất báo cáo");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -119,6 +122,8 @@ public class xuatvien extends javax.swing.JFrame {
                 .addComponent(btdelete)
                 .addGap(18, 18, 18)
                 .addComponent(btxuatexcel)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
@@ -135,7 +140,8 @@ public class xuatvien extends javax.swing.JFrame {
                     .addComponent(btdelete)
                     .addComponent(btthoat)
                     .addComponent(btxuatexcel)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(14, 14, 14))
         );
 
@@ -689,6 +695,7 @@ public class xuatvien extends javax.swing.JFrame {
     private javax.swing.JButton btxuatexcel;
     private com.toedter.calendar.JDateChooser dcnxv;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
