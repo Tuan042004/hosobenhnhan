@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package folder;
+package Van;
 
+import BTL.Connect;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +14,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -24,6 +28,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -42,6 +47,94 @@ public class TLYT extends javax.swing.JFrame {
         initComponents();
         loadyt();
         load_disable();
+    }
+    private void Themtailieu(String mbn, String mtl, String ttl, String nd) {
+    try {
+        con = Connect.KetnoiDB();
+        String sql = "INSERT INTO TaiLieuYTe (MaTaiLieu, MaBenhNhan, TenTaiLieu, NoiDungTaiLieu) "
+                   + "VALUES ('" + Integer.parseInt(mtl) + "', '" + Integer.parseInt(mbn) + "', N'" + ttl + "', N'" + nd + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    private void ReadExcel(String tenfilepath) {
+        try {
+        FileInputStream fis = new FileInputStream(tenfilepath);
+        XSSFWorkbook wb = new XSSFWorkbook(fis);
+        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+        Iterator<Row> itr = sheet.iterator();
+        int row_count = 0;
+
+        while (itr.hasNext()) {
+            Row row = itr.next();
+            if (row_count > 0) { // Bỏ qua dòng tiêu đề
+                String mbn = "";
+                Cell cell1 = row.getCell(0);
+                if (cell1 != null) {
+                    if (cell1.getCellType() == CellType.STRING) {
+                        mbn = cell1.getStringCellValue().trim();
+                    } else if (cell1.getCellType() == CellType.NUMERIC) {
+                        mbn = String.valueOf((int) cell1.getNumericCellValue());
+                    }
+                }
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (mbn.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String mtl = "";
+                Cell cell2 = row.getCell(1);
+                if (cell2 != null) {
+                    if (cell2.getCellType() == CellType.STRING) {
+                        mtl = cell2.getStringCellValue().trim();
+                    } else if (cell2.getCellType() == CellType.NUMERIC) {
+                        mtl = String.valueOf((int) cell2.getNumericCellValue());
+                    }
+                }
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (mtl.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String ttl = "";
+                Cell cell4 = row.getCell(2);
+                if (cell4 != null) {
+                    if (cell4.getCellType() == CellType.STRING) {
+                        ttl = cell4.getStringCellValue().trim();
+                    } else if (cell4.getCellType() == CellType.NUMERIC) {
+                        ttl = String.valueOf(cell4.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String nd = "";
+                Cell cell5 = row.getCell(3);
+                if (cell5 != null) {
+                    if (cell5.getCellType() == CellType.STRING) {
+                        nd = cell5.getStringCellValue().trim();
+                    } else if (cell5.getCellType() == CellType.NUMERIC) {
+                        nd = String.valueOf(cell5.getNumericCellValue()).trim();
+                    }
+                }
+
+                // Gọi phương thức thêm bệnh nhân
+                Themtailieu(mbn, mtl, ttl,nd);
+            }
+            row_count++;
+        }
+        JOptionPane.showMessageDialog(this, "Thêm tài liệu y tế bằng file thành công");
+        loadyt();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+        
+
     }
     private boolean Checktrungmbn(String mbn) {
     boolean kq = false;
@@ -87,7 +180,7 @@ public class TLYT extends javax.swing.JFrame {
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             String[] tieude={"Mã Tài Liệu", "Mã Bệnh Nhân","Tên Tài Liệu","Nội Dung Tài Liệu"};
-            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
+            DefaultTableModel tb=new DefaultTableModel(tieude,0)    { //dùng cho doubleclick          
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         // Tất cả các ô sẽ không thể chỉnh sửa
@@ -147,8 +240,11 @@ public class TLYT extends javax.swing.JFrame {
         btxoa = new javax.swing.JButton();
         btthoat = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Quản Lý Tài Liệu Y Tế");
@@ -159,14 +255,14 @@ public class TLYT extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(376, 376, 376)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(352, 352, 352))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
 
@@ -246,8 +342,8 @@ public class TLYT extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(txtndtl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
@@ -305,7 +401,7 @@ public class TLYT extends javax.swing.JFrame {
             }
         });
 
-        btcapnhat.setText("Cập nhật");
+        btcapnhat.setText("Sửa");
         btcapnhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btcapnhatActionPerformed(evt);
@@ -333,6 +429,13 @@ public class TLYT extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Nhập Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -348,6 +451,8 @@ public class TLYT extends javax.swing.JFrame {
                 .addComponent(btxoa)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btthoat)
                 .addGap(30, 30, 30))
@@ -362,7 +467,8 @@ public class TLYT extends javax.swing.JFrame {
                     .addComponent(btcapnhat)
                     .addComponent(btxoa)
                     .addComponent(btthoat)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -394,6 +500,7 @@ public class TLYT extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtndtlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtndtlActionPerformed
@@ -446,11 +553,6 @@ public class TLYT extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tìm kiếm không thành công");
         }
     }//GEN-LAST:event_tkmabnKeyReleased
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-                load_enable();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
         // B1: lấy dữ liệu các compents đưa vào biến
@@ -631,17 +733,20 @@ public class TLYT extends javax.swing.JFrame {
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã tài liệu y tế");
-
+            cell.setCellValue("STT");
             cell = row.createCell(1, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã bệnh nhân");
+            cell.setCellValue("Mã tài liệu y tế");
 
             cell = row.createCell(2, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Tên tài liệu y tế");
+            cell.setCellValue("Mã bệnh nhân");
 
             cell = row.createCell(3, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Tên tài liệu y tế");
+
+            cell = row.createCell(4, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Nội dung tài liệu y tế");
 
@@ -692,7 +797,7 @@ public class TLYT extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\TLYT.jrxml");
+            File f = new File("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\TLYT.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -714,6 +819,32 @@ public class TLYT extends javax.swing.JFrame {
         txtmbn.setEnabled(false);
         
     }//GEN-LAST:event_tbytMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        load_enable();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         try {
+            JFileChooser fc = new JFileChooser();
+            int lc = fc.showOpenDialog(this);
+            if (lc == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                String tenfile = file.getName();
+                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
+                    ReadExcel(file.getPath());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -744,6 +875,10 @@ public class TLYT extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -758,6 +893,7 @@ public class TLYT extends javax.swing.JFrame {
     private javax.swing.JButton btluu;
     private javax.swing.JButton btthoat;
     private javax.swing.JButton btxoa;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
