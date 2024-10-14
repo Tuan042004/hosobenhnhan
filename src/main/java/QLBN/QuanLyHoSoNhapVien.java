@@ -388,6 +388,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        tbqlbn.setForeground(new java.awt.Color(0, 153, 204));
         tbqlbn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
