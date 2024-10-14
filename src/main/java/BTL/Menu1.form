@@ -175,6 +175,9 @@
             <Property name="text" type="java.lang.String" value="Khoa, l&#x1ecb;ch l&#xe0;m vi&#x1ec7;c, v&#xe0; l&#x1ecb;ch s&#x1eed; &#x111;i&#x1ec1;u tr&#x1ecb;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="dangxuat">
           <Properties>
