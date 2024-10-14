@@ -320,6 +320,11 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         dcngaysinh.setDateFormatString("yyyy-MM-dd");
 
         cboxgioitinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn giới tính", "Nam", "Nữ", "Khác" }));
+        cboxgioitinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxgioitinhActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -973,6 +978,10 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnhapexcelActionPerformed
+
+    private void cboxgioitinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxgioitinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxgioitinhActionPerformed
 
     /**
      * @param args the command line arguments
