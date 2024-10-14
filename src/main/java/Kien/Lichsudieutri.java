@@ -23,6 +23,14 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -473,7 +481,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
             }
             row_count++;
         }
-        JOptionPane.showMessageDialog(this, "Thêm bệnh nhân bằng file thành công");
+        JOptionPane.showMessageDialog(this, "Thêm bằng file thành công");
         load_qtdt();
     } catch (Exception e) {
         e.printStackTrace();
@@ -767,7 +775,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 //Định dạng ngày tháng trong excel
                 java.util.Date ngay = new java.util.Date(rs.getDate("NgayDieuTri").getTime());
                 CellStyle cellStyle = workbook.createCellStyle();
-                cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+                cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
                 cellStyle.setBorderLeft(BorderStyle.THIN);
                 cellStyle.setBorderRight(BorderStyle.THIN);
                 cellStyle.setBorderBottom(BorderStyle.THIN);
@@ -807,6 +815,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
         // TODO add your handling code here:
         txtMalich.setEnabled(true);
+        cboTacgia.setEnabled(true);
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void txtTimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimkiemMouseClicked
@@ -909,6 +918,8 @@ public class Lichsudieutri extends javax.swing.JFrame {
 //        txtMalich.setText(tacgia.get(ten));
     }//GEN-LAST:event_cboTacgiaItemStateChanged
 
+    
+
     private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
         // TODO add your handling code here:
             // TODO add your handling code here:
@@ -930,6 +941,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnhapexcelActionPerformed
+
 
     /**
      * @param args the command line arguments

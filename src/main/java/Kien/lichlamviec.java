@@ -7,6 +7,7 @@ package Kien;
 import BTL.Connect;
 import BTL.Menu;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,8 +17,10 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -29,6 +32,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -65,6 +69,7 @@ public class lichlamviec extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         btnLoad = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -127,6 +132,13 @@ public class lichlamviec extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Nhập Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -140,6 +152,8 @@ public class lichlamviec extends javax.swing.JFrame {
                 .addComponent(btxoa)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
+                .addGap(34, 34, 34)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLoad)
                 .addGap(27, 27, 27)
@@ -156,7 +170,8 @@ public class lichlamviec extends javax.swing.JFrame {
                     .addComponent(btxoa)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
-                    .addComponent(btnLoad))
+                    .addComponent(btnLoad)
+                    .addComponent(jButton1))
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
@@ -631,7 +646,7 @@ public class lichlamviec extends javax.swing.JFrame {
                 //Định dạng ngày tháng trong excel
                 java.util.Date ngay = new java.util.Date(rs.getDate("NgayLamViec").getTime());
                 CellStyle cellStyle = workbook.createCellStyle();
-                cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/MM/yyyy"));
+                cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
                 cellStyle.setBorderLeft(BorderStyle.THIN);
                 cellStyle.setBorderRight(BorderStyle.THIN);
                 cellStyle.setBorderBottom(BorderStyle.THIN);
@@ -667,6 +682,7 @@ public class lichlamviec extends javax.swing.JFrame {
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
         // TODO add your handling code here:
         txtMalich.setEnabled(true);
+        cboTacgia.setEnabled(true);
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void txtTimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimkiemMouseClicked
@@ -767,6 +783,107 @@ public class lichlamviec extends javax.swing.JFrame {
 //        txtMalich.setText(tacgia.get(ten));
     }//GEN-LAST:event_cboTacgiaItemStateChanged
 
+    private void Thembenhnhan(String mls, String mbn, String dc, String kq) {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String sql = "INSERT INTO LichLamViec (MaLichLamViec, MaNhanVien, NgayLamViec, CaLamViec) "
+                   + "VALUES ('" + mls + "', '" + Integer.parseInt(mbn) + "', '" + dc + "', N'" + kq + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+    private void ReadExcel(String tenfilepath) {
+        try {
+        FileInputStream fis = new FileInputStream(tenfilepath);
+        XSSFWorkbook wb = new XSSFWorkbook(fis);
+        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+        Iterator<Row> itr = sheet.iterator();
+        int row_count = 0;
+
+        while (itr.hasNext()) {
+            Row row = itr.next();
+            if (row_count > 0) { // Bỏ qua dòng tiêu đề
+                String mls = "";
+                Cell cell1 = row.getCell(0);
+                if (cell1 != null) {
+                    if (cell1.getCellType() == CellType.STRING) {
+                        mls = cell1.getStringCellValue().trim();
+                    } else if (cell1.getCellType() == CellType.NUMERIC) {
+                        mls = String.valueOf((int) cell1.getNumericCellValue());
+                    }
+                }
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (mls.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String mbn = "";
+                Cell cell2 = row.getCell(1);
+                if (cell2 != null) {
+                    if (cell2.getCellType() == CellType.STRING) {
+                        mbn = cell2.getStringCellValue().trim();
+                    } else if (cell2.getCellType() == CellType.NUMERIC) {
+                        mbn = String.valueOf(cell2.getNumericCellValue()).trim();
+                    }
+                }
+
+                String dc = "";
+                Cell cell3 = row.getCell(2);
+                if (cell3 != null) {
+                    if (cell3.getCellType() == CellType.STRING) {
+                        dc = cell3.getStringCellValue().trim();
+                    } else if (cell3.getCellType() == CellType.NUMERIC) {
+                        dc = new SimpleDateFormat("yyyy-MM-dd").format(cell3.getDateCellValue());
+                    }
+                }
+
+                String kq = "";
+                Cell cell4 = row.getCell(3);
+                if (cell4 != null) {
+                    if (cell4.getCellType() == CellType.STRING) {
+                        kq = cell4.getStringCellValue().trim();
+                    } else if (cell4.getCellType() == CellType.NUMERIC) {
+                        kq = String.valueOf(cell4.getNumericCellValue()).trim();
+                    }
+                }
+
+                // Gọi phương thức thêm bệnh nhân
+                Thembenhnhan(mls, mbn, dc, kq);
+            }
+            row_count++;
+        }
+        JOptionPane.showMessageDialog(this, "Thêm bằng file thành công");
+        load_qtdt();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser fc = new JFileChooser();
+            int lc = fc.showOpenDialog(this);
+            if (lc == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                String tenfile = file.getName();
+                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
+                    ReadExcel(file.getPath());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -810,6 +927,7 @@ public class lichlamviec extends javax.swing.JFrame {
     private javax.swing.JButton btxoa;
     private javax.swing.JComboBox<String> cboTacgia;
     private com.toedter.calendar.JDateChooser dcngaysinh;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
