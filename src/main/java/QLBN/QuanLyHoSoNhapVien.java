@@ -327,6 +327,11 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 cbombnItemStateChanged(evt);
             }
         });
+        cbombn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbombnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -383,6 +388,7 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        tbqlbn.setForeground(new java.awt.Color(0, 153, 204));
         tbqlbn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -795,6 +801,10 @@ public class QuanLyHoSoNhapVien extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_xuatbc1ActionPerformed
+
+    private void cbombnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbombnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbombnActionPerformed
 
     /**
      * @param args the command line arguments

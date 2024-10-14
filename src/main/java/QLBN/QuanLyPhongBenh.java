@@ -326,6 +326,7 @@ public class QuanLyPhongBenh extends javax.swing.JFrame {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
+        tbqlbn.setForeground(new java.awt.Color(0, 153, 204));
         tbqlbn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -337,6 +338,7 @@ public class QuanLyPhongBenh extends javax.swing.JFrame {
                 "Mã phòng", "Tên phòng", "Loại phòng", "Số giường"
             }
         ));
+        tbqlbn.setToolTipText("");
         tbqlbn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbqlbnMouseClicked(evt);

@@ -284,7 +284,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bttimkiem)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,6 +320,11 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         dcngaysinh.setDateFormatString("yyyy-MM-dd");
 
         cboxgioitinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn giới tính", "Nam", "Nữ", "Khác" }));
+        cboxgioitinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxgioitinhActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -492,11 +497,11 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addGap(12, 12, 12)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(btnhapexcel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(33, 33, 33)
                 .addComponent(btn_xuatbc)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
@@ -973,6 +978,10 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnhapexcelActionPerformed
+
+    private void cboxgioitinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxgioitinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxgioitinhActionPerformed
 
     /**
      * @param args the command line arguments
