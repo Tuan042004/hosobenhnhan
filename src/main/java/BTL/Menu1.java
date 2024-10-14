@@ -4,6 +4,7 @@
  */
 package BTL;
 
+import Kien.Quanlykien;
 import Nhung.Quanlygiuongbenhvaxuatvien;
 import QLBN.QLBN;
 import QLBN.QuanLyBenhNhan;
@@ -94,6 +95,11 @@ public class Menu1 extends javax.swing.JFrame {
         jLabel4.setLabelFor(jLabel1);
         jLabel4.setText("Khoa, lịch làm việc, và lịch sử điều trị");
         jLabel4.setToolTipText("");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         dangxuat.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         dangxuat.setForeground(new java.awt.Color(255, 51, 51));
@@ -230,6 +236,12 @@ public class Menu1 extends javax.swing.JFrame {
         Quanlygiuongbenhvaxuatvien nh = new Quanlygiuongbenhvaxuatvien();
         dp.add(nh).setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        dp.removeAll();
+        Quanlykien kien = new Quanlykien();
+        dp.add(kien).setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
