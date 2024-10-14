@@ -4,6 +4,7 @@
  */
 package BTL;
 
+import Nhung.Quanlygiuongbenhvaxuatvien;
 import QLBN.QLBN;
 import QLBN.QuanLyBenhNhan;
 import QLDT.Quanlydieutri;
@@ -81,6 +82,11 @@ public class Menu1 extends javax.swing.JFrame {
         jLabel3.setLabelFor(jLabel1);
         jLabel3.setText("Giường bệnh và xuất viện");
         jLabel3.setToolTipText("");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 153, 255));
@@ -218,6 +224,12 @@ public class Menu1 extends javax.swing.JFrame {
         dispose();  // Đóng cửa sổ hiện tại (trang menu)
         new Login().setVisible(true);  // Mở lại trang đăng nhập và hiển thị
     }//GEN-LAST:event_dangxuatMouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        dp.removeAll();
+        Quanlygiuongbenhvaxuatvien nh = new Quanlygiuongbenhvaxuatvien();
+        dp.add(nh).setVisible(true);
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

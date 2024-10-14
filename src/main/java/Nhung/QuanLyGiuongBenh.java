@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package QuanLyBenhNhan;
+package Nhung;
 
 import java.awt.Font;
 import java.io.File;
@@ -49,10 +49,11 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
         initComponents();
         load_Gb();
     }
+    Connection con;
     private void load_Gb(){
         try {
              tbGiuong.removeAll(); 
-        Connection con = conDB.ketnoidb();
+        con = BTL.Connect.KetnoiDB();
         String sql = "SELECT * FROM GiuongBenh";
         Statement st = con.createStatement(); 
         ResultSet rs = st.executeQuery(sql); 
@@ -111,6 +112,11 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
 
         jLabel2.setText("Mã giường:");
 
+        tk_mg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tk_mgMouseClicked(evt);
+            }
+        });
         tk_mg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tk_mgKeyReleased(evt);
@@ -320,7 +326,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    Connection con;
+    
     private void timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timkiemActionPerformed
         // TODO add your handling code here:
         String searchTerm = tk_mg.getText().trim(); // Lấy mã giường bệnh từ JTextField
@@ -335,7 +341,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
        ResultSet rs = null;
 
        try {
-           con = conDB.ketnoidb(); // Kết nối cơ sở dữ liệu
+           con = BTL.Connect.KetnoiDB(); // Kết nối cơ sở dữ liệu
            String sql = "SELECT * FROM GiuongBenh WHERE MaGiuong = ?"; // Câu lệnh SQL tìm theo MaGiuong
            pst = con.prepareStatement(sql);
            pst.setString(1, searchTerm); // Đưa mã giường bệnh vào câu truy vấn
@@ -407,7 +413,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
         }
 
         try {
-            con = conDB.ketnoidb();
+            con = BTL.Connect.KetnoiDB();
 
             String sql = "UPDATE GiuongBenh SET " +
                          "MaPhong = ?, " +
@@ -430,6 +436,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
             }
 
             load_Gb(); // Gọi phương thức để tải lại dữ liệu
+            xoatrang();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Cập nhật không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -458,7 +465,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
         PreparedStatement deleteStmt = null;
 
         try {
-            con = conDB.ketnoidb();
+            con = BTL.Connect.KetnoiDB();
 
             // Tạo câu lệnh SQL để xóa
             String sql = "DELETE FROM GiuongBenh WHERE MaGiuong = ?";
@@ -527,7 +534,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
 
         PreparedStatement pst = null;
         try {
-            con = conDB.ketnoidb();
+            con = BTL.Connect.KetnoiDB();
 
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -620,7 +627,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
         cell.setCellValue("Trạng thái");
 
         // Kết nối đến cơ sở dữ liệu
-        con = conDB.ketnoidb(); // Đảm bảo kết nối không null
+        con = BTL.Connect.KetnoiDB(); // Đảm bảo kết nối không null
         if (con == null) {
             System.out.println("Kết nối đến cơ sở dữ liệu thất bại.");
             return;
@@ -677,7 +684,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
         }
 
         // Xuất file Excel
-        File f = new File("D:\\BTVN JAVA\\BTL\\src\\main\\java\\QuanLyBenhNhan\\DanhSachGiuongBenh.xlsx");
+        File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Nhung\\DanhSachChanDoan.xlsx");
         FileOutputStream out = new FileOutputStream(f);
         workbook.write(out);
         out.close();
@@ -702,7 +709,7 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
            String mxv = tk_mg.getText().trim();  // Mã xuất viện
 
         // Kết nối đến cơ sở dữ liệu
-        con = conDB.ketnoidb();
+        con = BTL.Connect.KetnoiDB();
         Statement st = con.createStatement();
 
         // Xây dựng câu lệnh SQL cho tìm kiếm
@@ -821,6 +828,10 @@ public class QuanLyGiuongBenh extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_thoatActionPerformed
+
+    private void tk_mgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tk_mgMouseClicked
+        xoatrang();
+    }//GEN-LAST:event_tk_mgMouseClicked
 
     /**
      * @param args the command line arguments

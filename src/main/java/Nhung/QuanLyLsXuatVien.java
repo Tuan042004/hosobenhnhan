@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package QuanLyBenhNhan;
+package Nhung;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,10 +47,11 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
         initComponents();
         load_LS();
     }
+    Connection con;
     private void load_LS(){
         try {
             tbLSXV.removeAll(); 
-            Connection con = conDB.ketnoidb();
+            con = BTL.Connect.KetnoiDB();
             String sql = "SELECT * FROM LichSuXuatVien";
             Statement st = con.createStatement(); 
             ResultSet rs = st.executeQuery(sql); 
@@ -129,6 +130,11 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
 
         jLabel2.setText("Mã xuất viện:");
 
+        tk_ma.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tk_maMouseClicked(evt);
+            }
+        });
         tk_ma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tk_maActionPerformed(evt);
@@ -361,7 +367,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    Connection con;
+
     private void timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timkiemActionPerformed
             // TODO add your handling code here:
              String searchTerm = tk_ma.getText().trim(); // Lấy mã xuất viện từ JTextField
@@ -376,7 +382,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
         ResultSet rs = null;
 
         try {
-            con = conDB.ketnoidb(); // Kết nối cơ sở dữ liệu
+            con = BTL.Connect.KetnoiDB(); // Kết nối cơ sở dữ liệu
             String sql = "SELECT * FROM LichSuXuatVien WHERE MaXuatVien = ?"; // Câu lệnh SQL tìm theo MaXuatVien
             pst = con.prepareStatement(sql);
             pst.setString(1, searchTerm); // Đưa mã xuất viện vào câu truy vấn
@@ -490,14 +496,14 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
         }
         
         try {
-            con = conDB.ketnoidb();
+            con = BTL.Connect.KetnoiDB();
             // Kiểm tra xem kết nối có null không
             if (con == null) {
                 JOptionPane.showMessageDialog(this, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return; // Thoát khỏi phương thức nếu không kết nối được
             }
             String sql = "INSERT INTO LichSuXuatVien " +
-            "VALUES ('"+ maxv +"', '" + mabn + "', '" + ngay +"', '"+kq+"','"+gchu+"')";
+            "VALUES ('"+ maxv +"', '" + mabn + "', '" + ngay +"', N'"+kq+"', N'"+gchu+"')";
 
             // Tạo Statement
             Statement st = con.createStatement();
@@ -548,7 +554,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
     }
 
     try {
-        con = conDB.ketnoidb();
+        con = BTL.Connect.KetnoiDB();
         
         // Cập nhật dữ liệu sử dụng PreparedStatement
         String sql = "UPDATE LichSuXuatVien SET " +
@@ -576,6 +582,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
         }
 
         load_LS(); // Gọi phương thức để tải lại dữ liệu
+        xoatrang();
     } catch (Exception e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Cập nhật không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -605,7 +612,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
         PreparedStatement deleteStmt = null;
 
         try {
-            con = conDB.ketnoidb();
+            con = BTL.Connect.KetnoiDB();
 
             // Tạo câu lệnh SQL để xóa
             String sql = "DELETE FROM LichSuXuatVien WHERE MaXuatVien = ?";
@@ -653,7 +660,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
            String mxv = tk_ma.getText().trim();  // Mã xuất viện
 
         // Kết nối đến cơ sở dữ liệu
-        con = conDB.ketnoidb();
+        con = BTL.Connect.KetnoiDB();
         Statement st = con.createStatement();
 
         // Xây dựng câu lệnh SQL cho tìm kiếm
@@ -735,7 +742,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
     }
 
     // Kết nối đến cơ sở dữ liệu
-    con = conDB.ketnoidb();
+    con = BTL.Connect.KetnoiDB();
     String sql = "SELECT * FROM lichsuxuatvien";
     
     // Thay đổi PreparedStatement
@@ -781,7 +788,7 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
     }
 
     // Xuất file Excel
-    File f = new File("D:\\BTVN JAVA\\BTL\\src\\main\\java\\QuanLyBenhNhan\\DanhSachLichSuXuatVien.xlsx");
+    File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Nhung\\DanhSachChanDoan.xlsx");
     FileOutputStream out = new FileOutputStream(f);
     workbook.write(out);
     out.close();
@@ -902,6 +909,10 @@ public class QuanLyLsXuatVien extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_thoatActionPerformed
+
+    private void tk_maMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tk_maMouseClicked
+        xoatrang();
+    }//GEN-LAST:event_tk_maMouseClicked
 
     /**
      * @param args the command line arguments

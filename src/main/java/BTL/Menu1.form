@@ -156,6 +156,9 @@
             <Property name="text" type="java.lang.String" value="Gi&#x1b0;&#x1edd;ng b&#x1ec7;nh v&#xe0; xu&#x1ea5;t vi&#x1ec7;n"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel3MouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
