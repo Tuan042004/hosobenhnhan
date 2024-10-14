@@ -7,6 +7,7 @@ package Kien;
 import BTL.Connect;
 import BTL.Menu;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,10 +17,20 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -29,6 +40,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -802,6 +814,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
 //        txtMalich.setText(tacgia.get(ten));
     }//GEN-LAST:event_cboTacgiaItemStateChanged
 
+    
     /**
      * @param args the command line arguments
      */
