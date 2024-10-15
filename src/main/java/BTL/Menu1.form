@@ -210,6 +210,9 @@
             <Property name="text" type="java.lang.String" value="B&#xe1;o c&#xe1;o v&#xe0; t&#xe0;i li&#x1ec7;u y t&#x1ebf;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel7MouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

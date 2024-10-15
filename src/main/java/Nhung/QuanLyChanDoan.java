@@ -56,7 +56,13 @@ public class QuanLyChanDoan extends javax.swing.JFrame {
         Statement st = con.createStatement(); 
         ResultSet rs = st.executeQuery(sql); 
         String[] tieude = {"Mã chẩn đoán", "Mã bệnh nhân", "Ngày chẩn đoán", "Chẩn đoán chi tiết","Bác sĩ chẩn đoán"};
-        DefaultTableModel tb = new DefaultTableModel(tieude, 0);
+                    DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        // Tất cả các ô sẽ không thể chỉnh sửa
+                        return false;
+                    }
+                    };
 
         while (rs.next()) {
             Vector<String> v = new Vector<>();
