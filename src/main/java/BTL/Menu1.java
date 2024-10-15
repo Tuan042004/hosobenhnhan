@@ -9,6 +9,7 @@ import Nhung.Quanlygiuongbenhvaxuatvien;
 import QLBN.QLBN;
 import QLBN.QuanLyBenhNhan;
 import QLDT.Quanlydieutri;
+import Van.van;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
@@ -118,6 +119,11 @@ public class Menu1 extends javax.swing.JFrame {
         jLabel7.setLabelFor(jLabel1);
         jLabel7.setText("Báo cáo và tài liệu y tế");
         jLabel7.setToolTipText("");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -242,6 +248,12 @@ public class Menu1 extends javax.swing.JFrame {
         Quanlykien kien = new Quanlykien();
         dp.add(kien).setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        dp.removeAll();
+        van v = new van();
+        dp.add(v).setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
