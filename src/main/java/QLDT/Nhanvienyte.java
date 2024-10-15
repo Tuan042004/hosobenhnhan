@@ -6,13 +6,17 @@ package QLDT;
 
 import BTL.Menu1;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -24,6 +28,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -44,6 +49,97 @@ public class Nhanvienyte extends javax.swing.JFrame {
     }
     
     Connection con;
+    
+        private void Themnhanvien(String mnv, String hoten, String chucvu, String khoa, String sdt) {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String sql = "INSERT INTO NhanVienYTe (MaNhanVien, HoTen, ChucVu, Khoa, SDT) "
+                   + "VALUES (N'" + mnv + "', N'" + hoten+ "',  N'" + chucvu + "', N'" + khoa + "', '" + sdt + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    private void ReadExcel(String tenfilepath) {
+        try {
+        FileInputStream fis = new FileInputStream(tenfilepath);
+        XSSFWorkbook wb = new XSSFWorkbook(fis);
+        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+        Iterator<Row> itr = sheet.iterator();
+        int row_count = 0;
+
+        while (itr.hasNext()) {
+            Row row = itr.next();
+            if (row_count > 0) { // Bỏ qua dòng tiêu đề
+                String mnv = "";
+                Cell cell1 = row.getCell(0);
+                if (cell1 != null) {
+                    if (cell1.getCellType() == CellType.STRING) {
+                        mnv = cell1.getStringCellValue().trim();
+                    } else if (cell1.getCellType() == CellType.NUMERIC) {
+                        mnv = String.valueOf((int) cell1.getNumericCellValue());
+                    }
+                }
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (mnv.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String hoten = "";
+                Cell cell2 = row.getCell(1);
+                if (cell2 != null) {
+                    if (cell2.getCellType() == CellType.STRING) {
+                        hoten = cell2.getStringCellValue().trim();
+                    } else if (cell2.getCellType() == CellType.NUMERIC) {
+                        hoten = String.valueOf(cell2.getNumericCellValue()).trim();
+                    }
+                }
+
+                String chucvu = "";
+                Cell cell4 = row.getCell(2);
+                if (cell4 != null) {
+                    if (cell4.getCellType() == CellType.STRING) {
+                        chucvu = cell4.getStringCellValue().trim();
+                    } else if (cell4.getCellType() == CellType.NUMERIC) {
+                        chucvu = String.valueOf(cell4.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String khoa = "";
+                Cell cell5 = row.getCell(3);
+                if (cell5 != null) {
+                    if (cell5.getCellType() == CellType.STRING) {
+                        khoa = cell5.getStringCellValue().trim();
+                    } else if (cell5.getCellType() == CellType.NUMERIC) {
+                        khoa = String.valueOf(cell5.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String sdt = "";
+                Cell cell6 = row.getCell(4);
+                if (cell6 != null) {
+                    if (cell6.getCellType() == CellType.STRING) {
+                        sdt = cell6.getStringCellValue().trim();
+                    } else if (cell6.getCellType() == CellType.NUMERIC) {
+                        sdt = String.valueOf(cell6.getNumericCellValue()).trim();
+                    }
+                }
+
+                // Gọi phương thức thêm bệnh nhân
+                Themnhanvien(mnv, hoten, chucvu, khoa, sdt);
+            }
+            row_count++;
+        }
+        JOptionPane.showMessageDialog(this, "Thêm nhân viên bằng file thành công");
+        load_nhanvien();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
     private void load_nhanvien(){
         try {
             tbnhanvien.removeAll();
@@ -112,6 +208,7 @@ public class Nhanvienyte extends javax.swing.JFrame {
         btxuat = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         btload = new javax.swing.JButton();
+        btnhapexcel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -317,6 +414,13 @@ public class Nhanvienyte extends javax.swing.JFrame {
             }
         });
 
+        btnhapexcel.setText("Nhập Excel");
+        btnhapexcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnhapexcelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -330,6 +434,8 @@ public class Nhanvienyte extends javax.swing.JFrame {
                 .addComponent(btxoa)
                 .addGap(18, 18, 18)
                 .addComponent(btxuat)
+                .addGap(18, 18, 18)
+                .addComponent(btnhapexcel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btload)
                 .addGap(18, 18, 18)
@@ -346,7 +452,8 @@ public class Nhanvienyte extends javax.swing.JFrame {
                     .addComponent(btxoa)
                     .addComponent(btxuat)
                     .addComponent(jButton5)
-                    .addComponent(btload))
+                    .addComponent(btload)
+                    .addComponent(btnhapexcel))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -767,6 +874,26 @@ try {
         }
     }//GEN-LAST:event_btxuatActionPerformed
 
+    private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
+        try {
+            JFileChooser fc = new JFileChooser();
+            int lc = fc.showOpenDialog(this);
+            if (lc == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                String tenfile = file.getName();
+                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
+                    ReadExcel(file.getPath());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnhapexcelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -804,6 +931,7 @@ try {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btload;
+    private javax.swing.JButton btnhapexcel;
     private javax.swing.JButton btsua;
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
