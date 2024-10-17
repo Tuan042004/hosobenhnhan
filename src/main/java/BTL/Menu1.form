@@ -65,7 +65,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
+              <Component id="jLabel4" alignment="0" pref="284" max="32767" attributes="0"/>
               <Component id="dangxuat" max="32767" attributes="0"/>
               <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
               <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
@@ -88,7 +88,7 @@
                   <Component id="jLabel3" min="-2" pref="52" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" pref="52" max="-2" attributes="0"/>
-                  <EmptySpace pref="160" max="32767" attributes="0"/>
+                  <EmptySpace pref="157" max="32767" attributes="0"/>
                   <Component id="dangxuat" min="-2" pref="52" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
@@ -115,7 +115,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; b&#x1ec7;nh nh&#xe2;n v&#xe0; nh&#x1ead;p vi&#x1ec7;n"/>
+            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p th&#xf4;ng tin"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -134,7 +134,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Qu&#xe1; tr&#xec;nh &#x111;i&#x1ec1;u tr&#x1ecb; v&#xe0; nh&#xe2;n vi&#xea;n y t&#x1ebf;"/>
+            <Property name="text" type="java.lang.String" value="Ph&#xf2;ng b&#x1ec7;nh"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -153,7 +153,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Gi&#x1b0;&#x1edd;ng b&#x1ec7;nh v&#xe0; xu&#x1ea5;t vi&#x1ec7;n"/>
+            <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; nh&#x1ead;p vi&#x1ec7;n"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -172,7 +172,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Khoa, l&#x1ecb;ch l&#xe0;m vi&#x1ec7;c, v&#xe0; l&#x1ecb;ch s&#x1eed; &#x111;i&#x1ec1;u tr&#x1ecb;"/>
+            <Property name="text" type="java.lang.String" value="Qu&#xe1; tr&#xec;nh &#x111;i&#x1ec1;u tr&#x1ecb;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -207,7 +207,7 @@
             <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jLabel1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="B&#xe1;o c&#xe1;o v&#xe0; t&#xe0;i li&#x1ec7;u y t&#x1ebf;"/>
+            <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; xu&#x1ea5;t vi&#x1ec7;n"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
