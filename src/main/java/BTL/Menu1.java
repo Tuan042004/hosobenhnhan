@@ -10,11 +10,13 @@ import QLBN.QLBN;
 import QLBN.QuanLyBenhNhan;
 import QLDT.Quanlydieutri;
 import Van.van;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -28,6 +30,11 @@ public class Menu1 extends javax.swing.JFrame {
      * Creates new form Menu1
      */
     public Menu1() {
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf()); // Hoặc FlatDarkLaf
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initComponents();
     }
 
