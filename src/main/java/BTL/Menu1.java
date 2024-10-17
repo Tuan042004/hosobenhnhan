@@ -9,8 +9,8 @@ import Nhung.Quanlygiuongbenhvaxuatvien;
 import QLBN.QLBN;
 import QLBN.QuanLyBenhNhan;
 import QLDT.Quanlydieutri;
-import Van.van;
-import com.formdev.flatlaf.FlatLightLaf;
+//import Van.van;
+//import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
@@ -31,7 +31,7 @@ public class Menu1 extends javax.swing.JFrame {
      */
     public Menu1() {
         try {
-            UIManager.setLookAndFeel(new FlatLightLaf()); // Hoặc FlatDarkLaf
+//            UIManager.setLookAndFeel(new FlatLightLaf()); // Hoặc FlatDarkLaf
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -256,8 +256,8 @@ public class Menu1 extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         dp.removeAll();
-        van v = new van();
-        dp.add(v).setVisible(true);
+//        van v = new van();
+//        dp.add(v).setVisible(true);
     }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
