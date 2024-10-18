@@ -64,7 +64,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     try {
         con = BTL.Connect.KetnoiDB();
         String sql = "INSERT INTO BenhNhan ( MaBenhNhan,HoTenBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT, CCCD, MBHYT) "
-                   + "VALUES (N'" + mht + "', '" + Integer.parseInt(mbn) + "', '" + dcngaysinh + "', N'" + gioitinh + "', N'" + dc + "', '" + sdt + "', '" + cccd + "', '" + bhyt + "')";
+                   + "VALUES (N'" + mbn + "', N'" + mht + "', '" + dcngaysinh + "', N'" + gioitinh + "', N'" + dc + "', '" + sdt + "', '" + cccd + "', '" + bhyt + "')";
 
         Statement st = con.createStatement();
         st.executeUpdate(sql);
@@ -764,7 +764,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             con = BTL.Connect.KetnoiDB();
 
             // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
-            String sql = "INSERT INTO BenhNhan ( MaBenhNhan,HoTenBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT, CCCD,MBHYT) VALUES (N'"+ mht +"', '"+ mbn +"', '"+ fomat.format(ns) +"', N'"+ gt +"', N'"+ dc +"', '"+ sdt +"', '"+ cccd +"', '"+ bhyt +"')";
+            String sql = "INSERT INTO BenhNhan ( MaBenhNhan,HoTenBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT, CCCD,MBHYT) VALUES (N'"+ mbn +"', '"+ mht +"', '"+ fomat.format(ns) +"', N'"+ gt +"', N'"+ dc +"', '"+ sdt +"', '"+ cccd +"', '"+ bhyt +"')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
@@ -836,48 +836,46 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-       try {
+      try {
             String mbn = txtmbn.getText().trim();
 
-            // Xác nhận từ người dùng trước khi xóa
-            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            // Confirm deletion from the user
+            int choice = JOptionPane.showConfirmDialog(null, 
+                "Bạn có chắc chắn muốn xoá không?", 
+                "Xác nhận", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
+
             if (choice == JOptionPane.YES_OPTION) {
-                // Kết nối đến cơ sở dữ liệu
-                con = BTL.Connect.KetnoiDB();
+                // Connect to the database
+                Connection con = BTL.Connect.KetnoiDB();
 
-                // Kiểm tra xem bệnh nhân có bản ghi nào trong HoSoNhapVien không
-                String checkSql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaBenhNhan = '" + mbn + "'";
-                Statement checkStmt = con.createStatement();
-                ResultSet rs = checkStmt.executeQuery(checkSql);
+                // Check if the patient has records in HoSoNhapVien
+                
+                // Delete the record from BenhNhan
+                String deleteBenhNhanSql = "DELETE FROM BenhNhan WHERE MaBenhNhan = ?";
+                PreparedStatement deleteStmt = con.prepareStatement(deleteBenhNhanSql);
+                deleteStmt.setString(1, mbn);
+                deleteStmt.executeUpdate();
 
-                if (rs.next() && rs.getInt(1) > 0) {
-                    // Nếu có bản ghi trong HoSoNhapVien, xóa chúng trước
-                    String deleteHoSoSql = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = '" + mbn + "'";
-                    checkStmt.executeUpdate(deleteHoSoSql);
-                }
-
-                // Xóa bản ghi trong bảng BenhNhan
-                String deleteBenhNhanSql = "DELETE FROM BenhNhan WHERE MaBenhNhan = '" + mbn + "'";
-                Statement deleteStmt = con.createStatement();
-                deleteStmt.executeUpdate(deleteBenhNhanSql);
-
-                // Đóng kết nối
+                // Close the connection
                 con.close();
 
-                // Thông báo thành công
-                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                // Display success message
+                JOptionPane.showMessageDialog(null, "Xoá thành công");
 
-                // Tải lại dữ liệu và xóa trắng các trường nhập liệu
+                // Reload data and clear input fields
                 load_qtdt();
                 xoatrang();
             } else {
-                JOptionPane.showMessageDialog(this, "Không xoá nữa");
+                JOptionPane.showMessageDialog(null, "Không xoá nữa");
             }
         } catch (Exception ex) {
-            // Hiển thị lỗi nếu có ngoại lệ xảy ra
+            // Handle any exceptions
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Lỗi khi xoá: " + ex.getMessage());
-}
+            JOptionPane.showMessageDialog(null, "Lỗi khi xoá: " + ex.getMessage());
+        }
+    
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
