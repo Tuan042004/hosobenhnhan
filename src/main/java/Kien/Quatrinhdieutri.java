@@ -547,10 +547,11 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
      
      
     Connection con;
-    Map<String,String> benhnhan = new HashMap<>();
+    
     Map<String,String> nhanvien = new HashMap<>();
     Map<String,String> khoa = new HashMap<>();
     Map<String,String> thuoc = new HashMap<>();
+    Map<String,String> benhnhan = new HashMap<>(); //cấu trúc lưu trữ dưới dạng cặp khóa-giá trị
     private void load_cboBenhnhan(){
         try{
             con = Connect.KetnoiDB();
