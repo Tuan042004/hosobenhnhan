@@ -5,6 +5,7 @@
 package QLBN;
 
 import BTL.Connect;
+import Hosoxuatvien.HSXV;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,10 +14,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
@@ -208,7 +212,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             String sql = "Select * From BenhNhan";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude={ "Mã bệnh nhân","Họ và tên","Ngày sinh","Giới tính","Địa chỉ","Số điện thoại", "CCCD", "BHYT"};
+            String[] tieude={ "Họ và tên","Mã bệnh nhân","Ngày sinh","Giới tính","Địa chỉ","Số điện thoại", "CCCD", "BHYT"};
             DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
                     @Override
                     public boolean isCellEditable(int row, int column) {
@@ -219,8 +223,8 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             
             while(rs.next()){
                 Vector v = new Vector();
-                v.add(rs.getString("MaBenhNhan"));
                 v.add(rs.getString("HoTenBenhNhan"));
+                v.add(rs.getString("MaBenhNhan"));
                 v.add(rs.getString("NgaySinh"));
                 v.add(rs.getString("GioiTinh"));
                 v.add(rs.getString("DiaChi"));
@@ -624,39 +628,22 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimkiemKeyReleased
 
     private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
-                try{
-            //lấy dữ liệu từ compoment đưa vài biến
-            String mbn = txtTimkiem.getText().trim();
-//            String ten = txtTimkiem.getText().trim();
-//            String tk = txtTimkiem.getText().trim();
-            con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From BenhNhan Where MaBenhNhan like'%"+mbn+"%'"; 
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-           String[] tieude={"Họ và tên", "Mã bệnh nhân","Ngày sinh","Giới tính","Địa chỉ","Số điện thoại", "CCCD", "BHYT"};
-            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        // Tất cả các ô sẽ không thể chỉnh sửa
-                        return false;
-                    }
-                    };
-            
-            while(rs.next()){
-                Vector v = new Vector();
-                v.add(rs.getString("HoTenBenhNhan"));
-                v.add(rs.getString("MaBenhNhan"));
-                v.add(rs.getString("NgaySinh"));
-                v.add(rs.getString("GioiTinh"));
-                v.add(rs.getString("DiaChi"));
-                v.add(rs.getString("SDT"));
-                v.add(rs.getString("CCCD"));
-                v.add(rs.getString("MBHYT"));
-                tb.addRow(v);
+               try{
+            String ma = txtmbn.getText();
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                con = BTL.Connect.KetnoiDB();
+                String sql = "Delete From BenhNhan Where MaBenhNhan='"+ma+"'";
+                Statement st = con.createStatement();
+                st.executeUpdate(sql);
+                con.close();
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                load_qtdt();
+                xoatrang();
+            } else {
+                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
             }
-            tbqlbn.setModel(tb);
-            con.close();
-        }catch(Exception ex){
+        }catch (Exception ex){
             ex.printStackTrace();
         }
     }//GEN-LAST:event_bttimkiemActionPerformed
@@ -672,6 +659,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         txtcccd.setText(tb.getValueAt(i, 6).toString());
         txtbhyt.setText(tb.getValueAt(i, 7).toString());
         txtmbn.setEnabled(false);
+        cboxgioitinh.setSelectedItem(tb.getValueAt(i, 3).toString());
         java.util.Date ngs;
         try {
             ngs = new SimpleDateFormat("yyyy-MM-dd").parse(ngay);
@@ -764,7 +752,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             con = BTL.Connect.KetnoiDB();
 
             // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
-            String sql = "INSERT INTO BenhNhan ( MaBenhNhan,HoTenBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT, CCCD,MBHYT) VALUES (N'"+ mbn +"', '"+ mht +"', '"+ fomat.format(ns) +"', N'"+ gt +"', N'"+ dc +"', '"+ sdt +"', '"+ cccd +"', '"+ bhyt +"')";
+            String sql = "INSERT INTO BenhNhan ( HoTenBenhNhan,MaBenhNhan, NgaySinh, GioiTinh, DiaChi, SDT, CCCD,MBHYT) VALUES (N'"+ mht +"', '"+ mbn +"', '"+ fomat.format(ns) +"', N'"+ gt +"', N'"+ dc +"', '"+ sdt +"', '"+ cccd +"', '"+ bhyt +"')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
@@ -821,7 +809,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             con = BTL.Connect.KetnoiDB();
             
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng ngày theo chuẩn
-            String sql = "UPDATE BenhNhan SET HoTen=N'" + mht + "', NgaySinh='" + format.format(ns) + 
+            String sql = "UPDATE BenhNhan SET HoTenBenhNhan=N'" + mht + "', NgaySinh='" + format.format(ns) + 
                          "', GioiTinh=N'" + gioitinh + "', DiaChi=N'" + dc + "', SDT='" + sdt + 
                          "' WHERE MaBenhNhan='" + mbn + "'";
             Statement st = con.createStatement();
@@ -836,46 +824,23 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-      try {
-            String mbn = txtmbn.getText().trim();
-
-            // Confirm deletion from the user
-            int choice = JOptionPane.showConfirmDialog(null, 
-                "Bạn có chắc chắn muốn xoá không?", 
-                "Xác nhận", 
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE);
-
-            if (choice == JOptionPane.YES_OPTION) {
-                // Connect to the database
-                Connection con = BTL.Connect.KetnoiDB();
-
-                // Check if the patient has records in HoSoNhapVien
-                
-                // Delete the record from BenhNhan
-                String deleteBenhNhanSql = "DELETE FROM BenhNhan WHERE MaBenhNhan = ?";
-                PreparedStatement deleteStmt = con.prepareStatement(deleteBenhNhanSql);
-                deleteStmt.setString(1, mbn);
-                deleteStmt.executeUpdate();
-
-                // Close the connection
-                con.close();
-
-                // Display success message
-                JOptionPane.showMessageDialog(null, "Xoá thành công");
-
-                // Reload data and clear input fields
-                load_qtdt();
-                xoatrang();
-            } else {
-                JOptionPane.showMessageDialog(null, "Không xoá nữa");
-            }
-        } catch (Exception ex) {
-            // Handle any exceptions
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Lỗi khi xoá: " + ex.getMessage());
+    try{
+        String mbn = txtmbn.getText();
+        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            Connection con = BTL.Connect.KetnoiDB();
+            String sql = "Delete From BenhNhan Where MaBenhNhan='"+mbn+"'";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
+            JOptionPane.showMessageDialog(this, "Xoá thành công");
+            load_qtdt();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
         }
-    
+    }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
