@@ -42,7 +42,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="78" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -443,9 +443,7 @@
                   <Component id="btnhap" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btxuat" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btthanhtoan" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="238" max="32767" attributes="0"/>
+                  <EmptySpace pref="345" max="32767" attributes="0"/>
                   <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -462,7 +460,6 @@
                       <Component id="btxoa" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnhap" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btxuat" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btthanhtoan" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
@@ -513,11 +510,6 @@
         <Component class="javax.swing.JButton" name="jButton6">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tho&#xe1;t"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btthanhtoan">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Thanh to&#xe1;n"/>
           </Properties>
         </Component>
       </SubComponents>
