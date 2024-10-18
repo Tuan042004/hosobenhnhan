@@ -4,19 +4,166 @@
  */
 package Hosoxuatvien;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class Thanhtoan extends javax.swing.JFrame {
+    
+private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã chọn
 
     /**
      * Creates new form Thanhtoan
      */
-    public Thanhtoan() {
+    public Thanhtoan() throws ClassNotFoundException {
         initComponents();
-    }
+        loadcbo();
+        load_hd();
+        
+        selectedMedicines = new ArrayList<>();
 
+        // Thêm ActionListener cho JComboBox
+        cbmt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cbmtActionPerformed(e);
+            }
+        });
+    }
+    
+    
+   Connection con;
+   
+   
+   public void xoatrang() {
+        cbmhs.setSelectedItem("---Chọn mã hồ sơ---");
+        cbmt.setSelectedItem("---Chọn mã thuốc---");  // Xóa lựa chọn trong JComboBox
+        cbbhyt.setSelectedItem("---Loại bảo hiểm y tế---");
+        txtll.setText("");
+        txtthanhtoan.setText("");
+        dcngay.setDate(null);  
+
+        // Mở khóa lại các trường txtmhs và cbmbn
+        cbmhs.setEnabled(true);  
+        cbbhyt.setEnabled(true);
+    }
+   
+    private void loadcbo() throws ClassNotFoundException {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        
+        String queryhs = "SELECT MaHoSoXuatVien FROM HoSoXuatVien"; 
+        Statement statemenths = con.createStatement();
+        ResultSet rshs = statemenths.executeQuery(queryhs);
+        while (rshs.next()) {
+            cbmhs.addItem(rshs.getString("MaHoSoXuatVien"));
+            }
+        
+        String query = "SELECT MaThuoc FROM Thuoc"; // Thay đổi truy vấn để lấy mã bệnh nhân
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()) {
+            cbmt.addItem(rs.getString("MaThuoc")); // Thêm mã bệnh nhân vào ComboBox
+            }
+        } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+}
+   
+    
+    private void load_hd(){
+        try {
+    // Làm sạch bảng trước khi thêm dữ liệu mới
+    tbhd.removeAll();
+
+    // B1: Kết nối đến DB
+    con = BTL.Connect.KetnoiDB();
+
+    // B2: Tạo đối tượng Statement để thực hiện câu lệnh truy cập
+    String sql = "SELECT * FROM DieuTriThanhToan";
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery(sql);
+
+    // Định nghĩa tiêu đề cho bảng
+    String[] tieude = {"Mã hồ sơ", "Mã thuốc"," Liều lượng","Thanh toán"," Ngày thanh toán"};
+    // Tạo DefaultTableModel
+    DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
+        @Override
+        public boolean isCellEditable(int row, int column) {
+        // Tất cả các ô sẽ không thể chỉnh sửa
+        return false;
+        }
+    };
+
+    // Thêm dữ liệu vào bảng
+    while (rs.next()) {
+        Vector<String> v = new Vector<>();
+        v.add(rs.getString("MaHoSoXuatVien"));       
+        v.add(rs.getString("MaThuoc"));
+        v.add(rs.getString("LieuLuong"));
+        v.add(rs.getString("SoTien")); 
+        v.add(rs.getDate("NgayThanhToan").toString());       
+        tb.addRow(v);
+    }  
+
+    // Đóng kết nối
+    tbhd.setModel(tb);
+    con.close();
+
+    } catch (SQLException e) {
+        // Xử lý lỗi SQL
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Lỗi truy cập cơ sở dữ liệu: " + e.getMessage());
+    } catch (Exception e) {
+        // Xử lý lỗi khác
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
+        }
+    }
+    
+    
+   private double getDonGia(String maThuoc) throws ClassNotFoundException, SQLException {
+    double donGia = 0.0;
+    String sql = "SELECT DonGia FROM Thuoc WHERE MaThuoc = ?";
+    con = BTL.Connect.KetnoiDB();
+    try (
+        PreparedStatement pstmt = con.prepareStatement(sql)) {
+        
+        pstmt.setString(1, maThuoc);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            donGia = rs.getDouble("DonGia"); // Lấy giá từ kết quả truy vấn
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // Xử lý lỗi nếu cần
+    }
+    
+    return donGia;
+}
+   
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,25 +180,25 @@ public class Thanhtoan extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbmhs = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField3 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        txtll = new javax.swing.JTextField();
+        txtthanhtoan = new javax.swing.JTextField();
+        dcngay = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbhd = new javax.swing.JTable();
+        cbmt = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cbbhyt = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btthem = new javax.swing.JButton();
+        btthoat = new javax.swing.JButton();
+        btsua = new javax.swing.JButton();
+        btxoa = new javax.swing.JButton();
+        btxuathd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,7 +218,7 @@ public class Thanhtoan extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin chi tiết"));
@@ -84,28 +231,45 @@ public class Thanhtoan extends javax.swing.JFrame {
 
         jLabel5.setText("Ngày thanh toán");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbmhs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Chọn mã hồ sơ---" }));
 
         jLabel7.setText("Mã hồ sơ");
 
-        jLabel6.setText("Thẻ bảo hiểm y tế");
+        dcngay.setDateFormatString("yyyy-MM-dd");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbhd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã hồ sơ", "Mã thuốc", "Liều lượng", "Thanh toán", "Ngày thanh toán"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbhd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbhdMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbhd);
+
+        cbmt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Chọn mã thuốc---" }));
+        cbmt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbmtActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("BHYT");
+
+        cbbhyt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Loại bảo hiểm y tế---", "90%", "85%", "70%" }));
+        cbbhyt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbhytActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -118,34 +282,33 @@ public class Thanhtoan extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(cbmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtthanhtoan)
+                                    .addComponent(cbbhyt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cbmt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtll, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(dcngay, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 111, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -153,23 +316,23 @@ public class Thanhtoan extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbmhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbmt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(cbbhyt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel4)
+                        .addComponent(txtthanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dcngay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .addContainerGap())
@@ -200,44 +363,59 @@ public class Thanhtoan extends javax.swing.JFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        btthem.setText("Thêm ");
+        btthem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btthemActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("jButton2");
+        btthoat.setText("Thoát");
 
-        jButton3.setText("jButton3");
+        btsua.setText("Sửa");
+        btsua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btsuaActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("jButton4");
+        btxoa.setText("Xóa");
+        btxoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btxoaActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("jButton5");
+        btxuathd.setText("Xuất hóa đơn");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jButton1)
-                .addGap(27, 27, 27)
-                .addComponent(jButton3)
+                .addGap(17, 17, 17)
+                .addComponent(btthem)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btsua)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(btxoa)
+                .addGap(18, 18, 18)
+                .addComponent(btxuathd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(17, 17, 17))
+                .addComponent(btthoat)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap(52, Short.MAX_VALUE))
+                    .addComponent(btthem)
+                    .addComponent(btsua)
+                    .addComponent(btxoa)
+                    .addComponent(btthoat)
+                    .addComponent(btxuathd))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -258,18 +436,292 @@ public class Thanhtoan extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
+        // B1: Lấy dữ liệu từ các components và đưa vào biến
+    String mhs = cbmhs.getSelectedItem().toString();   
+    String mt = cbmt.getSelectedItem().toString();  
+    String ll = txtll.getText().trim();  
+    String tt = txtthanhtoan.getText().trim();
+    
+    // Lấy ngày nhập viện và ngày xuất viện từ JDateChooser
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    Date ngay = new Date(dcngay.getDate().getTime()); 
+
+    // B1.1: Kiểm tra các trường bắt buộc phải nhập
+    if (mhs.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Mã hồ sơ không được để trống.");
+        cbmhs.requestFocus();
+        return;
+    }
+
+    if (mt.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Mã thuốc không được để trống.");
+        cbmt.requestFocus();
+        return;
+    }
+
+    if (ll.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Liều lượng không được để trống.");
+        txtll.requestFocus();
+        return;
+    }
+
+    if (tt.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Thanh toán không được để trống.");
+        txtthanhtoan.requestFocus();
+        return;
+    }
+
+    if (ngay == null) {
+        JOptionPane.showMessageDialog(this, "Ngày thanh toán không được để trống.");
+        dcngay.requestFocus();
+        return;
+    }
+
+    // B2: Kết nối Database
+    try {
+        con = BTL.Connect.KetnoiDB();
+
+        // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
+        String sql = "INSERT INTO DieuTriThanhToan (MaHoSoXuatVien, MaThuoc, LieuLuong, SoTien, NgayThanhToan) " +
+                     "VALUES ('" + mhs + "', '" + mt + "', N'" + ll + "', '" + tt + "', '" + format.format(ngay) + "')";
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+
+        // Đóng kết nối
+        con.close();
+        load_hd(); // Cập nhật bảng hiển thị hồ sơ xuất viện
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công");    
+        xoatrang(); // Xóa trắng các trường nhập
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
+    }
+
+    }//GEN-LAST:event_btthemActionPerformed
+
+    private void cbmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmtActionPerformed
+           // Lấy mã thuốc đã chọn từ JComboBox
+    String selectedMaThuoc = (String) cbmt.getSelectedItem();
+
+    if (selectedMaThuoc == null) {
+        System.out.println("Chưa chọn mã thuốc!");
+        return; // Thoát nếu không có thuốc nào được chọn
+    }
+
+    // Gọi phương thức để lấy giá tiền từ mã thuốc
+    double giaTien = 0;
+    try {
+        giaTien = getDonGia(selectedMaThuoc);
+    } catch (ClassNotFoundException | SQLException ex) {
+        Logger.getLogger(Thanhtoan.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    // Cập nhật giá tiền vào JTextField
+    double currentTotal = 0;
+    try {
+        currentTotal = Double.parseDouble(txtthanhtoan.getText());
+    } catch (NumberFormatException e) {
+        currentTotal = 0; // Nếu có lỗi, coi như giá tiền hiện tại là 0
+    }
+
+    // Cộng thêm giá tiền thuốc vào tổng
+    currentTotal += giaTien;
+    
+    // Cập nhật lại JTextField
+    txtthanhtoan.setText(String.valueOf(currentTotal));
+    }//GEN-LAST:event_cbmtActionPerformed
+
+    private void tbhdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhdMouseClicked
+        int i = tbhd.getSelectedRow();
+        DefaultTableModel tb = (DefaultTableModel) tbhd.getModel();
+
+        cbmhs.setSelectedItem(tb.getValueAt(i, 0).toString());
+
+        cbmt.setSelectedItem(tb.getValueAt(i, 1).toString());
+
+        txtll.setText(tb.getValueAt(i, 2).toString());
+
+        txtthanhtoan.setText(tb.getValueAt(i, 3).toString());
+        // Gán giá trị cho JDateChooser ngày điều trị
+        String ngay = tb.getValueAt(i, 4).toString();
+        java.util.Date ngs;
+        try {
+            ngs = new SimpleDateFormat("yyyy-MM-dd").parse(ngay);
+            dcngay.setDate(ngs);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        // Vô hiệu hóa việc chỉnh sửa mã bệnh nhân
+        cbmhs.setEnabled(false);
+        cbbhyt.setEnabled(false);
+    }//GEN-LAST:event_tbhdMouseClicked
+
+    private void cbbhytActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbhytActionPerformed
+
+            BigDecimal tong = BigDecimal.ZERO;//khia báo BigDecima để chính xác hơn khi dùng double hay float vì fungf nó sẽ ko tính đc 70%, 85%
+        try {
+            tong = new BigDecimal(txtthanhtoan.getText());
+        } catch (NumberFormatException e) {
+            tong = BigDecimal.ZERO; // Nếu có lỗi, coi như giá tiền hiện tại là 0
+        }
+
+        String chonbhyt = (String) cbbhyt.getSelectedItem();
+        BigDecimal giamgia = BigDecimal.ZERO; // Khởi tạo giamgia bằng 0
+
+        if (chonbhyt != null) {
+            switch (chonbhyt) {
+                case "90%":
+                    giamgia = tong.multiply(BigDecimal.valueOf(0.9)); // Giảm 90%
+                    break;
+                case "85%":
+                    giamgia = tong.multiply(BigDecimal.valueOf(0.85)); // Giảm 85%
+                    break;
+                case "70%":
+                    giamgia = tong.multiply(BigDecimal.valueOf(0.7)); // Giảm 70%
+                    break;
+            }
+        }
+
+        // Cập nhật lại JTextField với số tiền phải thanh toán sau khi giảm giá
+        BigDecimal soTienPhaiTra = tong.subtract(giamgia); // Tính số tiền cuối cùng
+        txtthanhtoan.setText(soTienPhaiTra.setScale(2, RoundingMode.HALF_UP).toString()); // Cập nhật số tiền cần thanh toán ,RoundingMode.HALF_UP để làm tròn                                 
+    }//GEN-LAST:event_cbbhytActionPerformed
+
+    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
+        String mhs = (String) cbmhs.getSelectedItem(); // Lấy mã điều trị từ JComboBox
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = BTL.Connect.KetnoiDB();  // Kết nối đến cơ sở dữ liệu
+            String sql = "DELETE FROM DieuTriThanhToan WHERE MaHoSoXuatVien= ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, mhs);  // Đặt tham số MaDieuTri vào câu truy vấn
+
+            int response = JOptionPane.showConfirmDialog(null, 
+                "Bạn có muốn xóa?", 
+                "Xác nhận", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
+
+            if (response == JOptionPane.YES_OPTION) {
+                int rowsAffected = ps.executeUpdate();  // Thực hiện truy vấn
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không có dữ liệu để xóa");
+                }
+            }
+
+            // Sau khi xóa thành công, nạp lại dữ liệu
+            load_hd();
+            xoatrang();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();  // In ra lỗi nếu có vấn đề với SQL
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }       catch (ClassNotFoundException ex) {
+                    Logger.getLogger(HSXV.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+            try {
+                if (ps != null) ps.close();  // Đóng PreparedStatement
+                if (con != null) con.close();  // Đóng kết nối cơ sở dữ liệu
+            } catch (SQLException e) {
+                e.printStackTrace();  // In ra lỗi nếu có vấn đề khi đóng kết nối
+            }
+        }
+    }//GEN-LAST:event_btxoaActionPerformed
+
+    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
+        try {
+            // B1: Lấy dữ liệu từ các components và đưa vào biến
+            String mhs = cbmhs.getSelectedItem().toString();  // Mã hồ sơ
+            String mt = cbmt.getSelectedItem().toString();  
+            String ll = txtll.getText().trim();
+            String tt = txtthanhtoan.getText().trim();        
+
+            // Lấy ngày điều trị từ JDateChooser
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date ngay = new Date(dcngay.getDate().getTime());
+
+            // Kiểm tra nếu các trường không được để trống
+            if (mhs.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã hồ sơ");
+                return;
+            }
+            if (mt.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã thuốc");
+                return;
+            }
+            if (tt.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống số tiền thanh toán");
+                return;
+            }
+            if (ll.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống liều lượng");
+                return;
+            }
+            if (ngay == null) {
+                JOptionPane.showMessageDialog(this, "Không được để trống ngày thanh toán");
+                return;
+            }
+
+            // Định dạng ngày điều trị thành kiểu chuỗi
+            java.sql.Date sqlDate = new java.sql.Date(ngay.getTime());
+
+            // Kết nối tới database
+            con = BTL.Connect.KetnoiDB();
+
+            // Câu lệnh SQL để cập nhật bản ghi trong bảng DieuTriThanhToan
+            String sql = "UPDATE DieuTriThanhToan SET "
+                       + "MaThuoc = ?, "
+                       + "LieuLuong = ?, "
+                       + "SoTien = ?, "
+                       + "NgayThanhToan = ? "
+                       + "WHERE MaHoSoXuatVien = ?";
+
+            // Sử dụng PreparedStatement để tránh SQL Injection
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            // Gán các tham số
+            ps.setString(1, mt);     // Gán mã thuốc
+            ps.setString(2, ll);     // Gán liều lượng
+            ps.setString(3, tt);     // Gán số tiền thanh toán
+            ps.setDate(4, sqlDate);   // Gán ngày thanh toán
+            ps.setString(5, mhs);     // Gán mã hồ sơ
+
+            // Thực hiện câu lệnh cập nhật
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Sửa thành công");
+                load_hd();  // Tải lại dữ liệu sau khi cập nhật
+                xoatrang();   // Xóa các trường nhập liệu
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu để sửa");
+            }
+
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Sửa không thành công: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btsuaActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -300,21 +752,25 @@ public class Thanhtoan extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Thanhtoan().setVisible(true);
+                try {
+                    new Thanhtoan().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Thanhtoan.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton btsua;
+    private javax.swing.JButton btthem;
+    private javax.swing.JButton btthoat;
+    private javax.swing.JButton btxoa;
+    private javax.swing.JButton btxuathd;
+    private javax.swing.JComboBox<String> cbbhyt;
+    private javax.swing.JComboBox<String> cbmhs;
+    private javax.swing.JComboBox<String> cbmt;
+    private com.toedter.calendar.JDateChooser dcngay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -328,9 +784,9 @@ public class Thanhtoan extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable tbhd;
+    private javax.swing.JTextField txtll;
+    private javax.swing.JTextField txtthanhtoan;
     // End of variables declaration//GEN-END:variables
 }

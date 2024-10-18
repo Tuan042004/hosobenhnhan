@@ -179,10 +179,10 @@ public class HSXV extends javax.swing.JFrame {
     
     public void xoatrang() {
         txtmhs.setText("");
-        cbmbn.setSelectedIndex(-1);  // Xóa lựa chọn trong JComboBox
-        cbmk.setSelectedIndex(-1);
-        cbkhoa.setSelectedIndex(-1);
-        cbbs.setSelectedIndex(-1);
+        cbmbn.setSelectedItem("---Chọn mã bệnh nhân---"); // Xóa lựa chọn trong JComboBox
+        cbmk.setSelectedItem("---Chọn mã khoa---");
+        cbkhoa.setSelectedItem("---Khoa---");
+        cbbs.setSelectedItem("---Bác sĩ điều trị---");
         dcngaynv.setDate(null);  
         dcngayxv.setDate(null); 
         txtld.setText("");
@@ -325,7 +325,6 @@ public class HSXV extends javax.swing.JFrame {
         btnhap = new javax.swing.JButton();
         btxuat = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        btthanhtoan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(935, 680));
@@ -545,8 +544,6 @@ public class HSXV extends javax.swing.JFrame {
 
         jButton6.setText("Thoát");
 
-        btthanhtoan.setText("Thanh toán");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -562,9 +559,7 @@ public class HSXV extends javax.swing.JFrame {
                 .addComponent(btnhap)
                 .addGap(18, 18, 18)
                 .addComponent(btxuat)
-                .addGap(18, 18, 18)
-                .addComponent(btthanhtoan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 345, Short.MAX_VALUE)
                 .addComponent(jButton6)
                 .addContainerGap())
         );
@@ -578,8 +573,7 @@ public class HSXV extends javax.swing.JFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(btnhap)
-                    .addComponent(btxuat)
-                    .addComponent(btthanhtoan))
+                    .addComponent(btxuat))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -599,7 +593,7 @@ public class HSXV extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -888,7 +882,7 @@ public class HSXV extends javax.swing.JFrame {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Sửa không thành công");
         e.printStackTrace();
-    }
+        }
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void txttimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttimkiemKeyReleased
@@ -1024,7 +1018,6 @@ public class HSXV extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnhap;
     private javax.swing.JButton btsua;
-    private javax.swing.JButton btthanhtoan;
     private javax.swing.JButton btthem;
     private javax.swing.JButton btxoa;
     private javax.swing.JButton btxuat;
