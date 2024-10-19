@@ -1,44 +1,29 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package Van;
+
 import BTL.Connect;
-import Van.NewJFrame;
-import demo.*;
-//import folder.Connect;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
+//import folder.HSNV;
+//import qlbn.AddNew;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -52,64 +37,24 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;/**
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author Dell V
  */
-public class HSNV extends javax.swing.JFrame {
+public class IFhsnv extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form new1
+     * Creates new form NewJInternalFrame
      */
-    public HSNV() throws ClassNotFoundException {
+    public IFhsnv() throws ClassNotFoundException {
         initComponents();
-//        load_disable();
         load_hsnv();
         loadcbo();
-        
     }
     Connection con;
-    public class Form2 {
-    private NewJFrame form1;
-    private DefaultTableModel model;
-
-    public Form2(NewJFrame form1) {
-        this.form1 = form1;  // Lưu tham chiếu đến form1
-        model = (DefaultTableModel) tbhs.getModel();
-    }
-
-    public void addRowToTable(Object[] rowData) {
-        model.addRow(rowData);  // Thêm dữ liệu vào bảng trong form2
-    }
-}
-
-    HSNV(NewJFrame.Form1 aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-//    private void load_disable(){
-//        txtmhs.setEnabled(false);
-//        cbmbn.setEnabled(false);
-//        cbmp.setEnabled(false);
-//        txtcd.setEnabled(false);
-//        cbmg.setEnabled(false);
-//        cbmk.setEnabled(false);
-//        cbtk.setEnabled(false);
-//        btluu.setEnabled(false);
-//        btcapnhat.setEnabled(false);
-//    }
-//    private void load_enable(){
-//        txtmhs.setEnabled(true);
-//        cbmbn.setEnabled(true);
-//        cbmp.setEnabled(true);
-//        txtcd.setEnabled(true);
-//        cbmg.setEnabled(true);
-//        cbmk.setEnabled(true);
-//        cbtk.setEnabled(true);
-//        btluu.setEnabled(true);
-//        btcapnhat.setEnabled(true);
-//    }
-    public void load_hsnv(){
+private void load_hsnv(){
         try {
     // Làm sạch bảng trước khi thêm dữ liệu mới
     tbhs.removeAll();
@@ -177,7 +122,7 @@ public class HSNV extends javax.swing.JFrame {
     cbmbn.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
 
     }
-     public void Themhoso(String mhs, String mbn, String nnv, String cd, String mp,String mg, String mk, String tk) {
+     private void Themhoso(String mhs, String mbn, String nnv, String cd, String mp,String mg, String mk, String tk) {
         try {
             con =Connect.KetnoiDB();
             String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, NgayNhapVien, ChanDoan, MaPhong, MaGiuong, MaKhoa, TenKhoa) "
@@ -191,7 +136,7 @@ public class HSNV extends javax.swing.JFrame {
     }
 
             
-         public void ReadExcel(String tenfilepath) {
+         private void ReadExcel(String tenfilepath) {
     try {
         FileInputStream fis = new FileInputStream(tenfilepath);
         XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -299,7 +244,7 @@ public class HSNV extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Lỗi khi đọc file: " + e.getMessage());
     }
 }
-         public void loadcbo() throws ClassNotFoundException {
+         private void loadcbo() throws ClassNotFoundException {
     try {
         con = Connect.KetnoiDB();
         String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
@@ -346,17 +291,13 @@ public class HSNV extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 }
-    /**
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        tkmbn = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -377,23 +318,63 @@ public class HSNV extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtcd = new javax.swing.JTextField();
         cbmbn = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        tkmbn = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
+        btluu = new javax.swing.JButton();
+        btcapnhat = new javax.swing.JButton();
+        btxoa = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btthoat = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
 
-        jMenuItem2.setText("jMenuItem2");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel2.setText("Mã bệnh nhân:");
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin hồ sơ nhập viện"));
+        tkmbn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tkmbnMouseClicked(evt);
+            }
+        });
+        tkmbn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tkmbnActionPerformed(evt);
+            }
+        });
+        tkmbn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tkmbnKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(jLabel2)
+                .addGap(34, 34, 34)
+                .addComponent(tkmbn, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tkmbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin chi tiết"));
 
         jLabel4.setText("Mã hồ sơ:");
 
@@ -551,47 +532,6 @@ public class HSNV extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
-
-        jLabel2.setText("Mã bệnh nhân:");
-
-        tkmbn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tkmbnMouseClicked(evt);
-            }
-        });
-        tkmbn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tkmbnActionPerformed(evt);
-            }
-        });
-        tkmbn.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tkmbnKeyReleased(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(jLabel2)
-                .addGap(34, 34, 34)
-                .addComponent(tkmbn, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tkmbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Hồ Sơ Nhập Viện");
 
@@ -611,6 +551,27 @@ public class HSNV extends javax.swing.JFrame {
                 .addComponent(jLabel1))
         );
 
+        btluu.setText("Lưu");
+        btluu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btluuActionPerformed(evt);
+            }
+        });
+
+        btcapnhat.setText("Sửa");
+        btcapnhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btcapnhatActionPerformed(evt);
+            }
+        });
+
+        btxoa.setText("Xóa");
+        btxoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btxoaActionPerformed(evt);
+            }
+        });
+
         jButton5.setText("Xuất Excel");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -618,7 +579,7 @@ public class HSNV extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Thao tác");
+        jButton1.setText("Thêm mới");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -632,20 +593,6 @@ public class HSNV extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Xuất báo cáo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Nhập Excel");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -653,27 +600,56 @@ public class HSNV extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jButton1)
-                .addGap(138, 138, 138)
-                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(btluu, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btcapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btthoat)
-                .addGap(45, 45, 45))
+                .addGap(16, 16, 16))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btluu)
+                    .addComponent(btcapnhat)
+                    .addComponent(btxoa)
                     .addComponent(jButton5)
                     .addComponent(jButton1)
-                    .addComponent(btthoat)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btthoat))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jMenu1.setText("File");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setText("Thêm mới");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Excel");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Export");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -696,54 +672,30 @@ public class HSNV extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
+                .addGap(16, 16, 16)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbhsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhsMouseClicked
-        cbmk.setEnabled(false);
-        cbmp.setEnabled(false);
-        cbmg.setEnabled(false);
-        cbmk.setEnabled(false);
-        cbtk.setEnabled(false);
-        cbmbn.setEnabled(false);
-        txtmhs.setEnabled(false);
-        dcnnv.setEnabled(false);
-        txtcd.setEnabled(false);
-        int i = tbhs.getSelectedRow();
-        DefaultTableModel tb = (DefaultTableModel) tbhs.getModel();
-        //gán giá trị cho textfield
-        txtmhs.setText(tb.getValueAt(i, 0).toString());
-        //gán giá trị cho combobox mã bệnh nhân
-        cbmbn.setSelectedItem(tb.getValueAt(i, 1).toString());
-        //gán giá trị cho datechooser ngày nhập viện
-        String nnv = tb.getValueAt(i, 2).toString();
-        java.util.Date ng;
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        NewJFrame an = null;
         try {
-            ng = new SimpleDateFormat("yyyy-MM-DD").parse(nnv);
-            dcnnv.setDate(ng);
-        } catch(Exception ex) {
-            ex.printStackTrace();
+            an = new NewJFrame();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(IFhsnv.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //gán giá trị cho tf chẩn đoán
-        txtcd.setText(tb.getValueAt(i, 3).toString());
-        //gán giá trị cho cbb mã phòng
-        cbmp.setSelectedItem(tb.getValueAt(i, 4).toString());
-        cbmg.setSelectedItem(tb.getValueAt(i, 5).toString());
-        cbmk.setSelectedItem(tb.getValueAt(i, 6).toString());
-        cbtk.setSelectedItem(tb.getValueAt(i, 7).toString());
-    }//GEN-LAST:event_tbhsMouseClicked
+        an.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void tbhsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhsMouseEntered
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
 
-    }//GEN-LAST:event_tbhsMouseEntered
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void tkmbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tkmbnMouseClicked
         // TODO add your handling code here:
@@ -796,6 +748,283 @@ public class HSNV extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tkmbnKeyReleased
 
+    private void tbhsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhsMouseClicked
+        cbmk.setEnabled(false);
+        cbmp.setEnabled(true);
+        cbmg.setEnabled(true);
+        cbmk.setEnabled(true);
+        cbtk.setEnabled(true);
+        cbmbn.setEnabled(false);
+        txtmhs.setEnabled(false);
+        int i = tbhs.getSelectedRow();
+        DefaultTableModel tb = (DefaultTableModel) tbhs.getModel();
+        //gán giá trị cho textfield
+        txtmhs.setText(tb.getValueAt(i, 0).toString());
+        //gán giá trị cho combobox mã bệnh nhân
+        cbmbn.setSelectedItem(tb.getValueAt(i, 1).toString());
+        //gán giá trị cho datechooser ngày nhập viện
+        String nnv = tb.getValueAt(i, 2).toString();
+        java.util.Date ng;
+        try {
+            ng = new SimpleDateFormat("yyyy-MM-DD").parse(nnv);
+            dcnnv.setDate(ng);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        //gán giá trị cho tf chẩn đoán
+        txtcd.setText(tb.getValueAt(i, 3).toString());
+        //gán giá trị cho cbb mã phòng
+        cbmp.setSelectedItem(tb.getValueAt(i, 4).toString());
+        cbmg.setSelectedItem(tb.getValueAt(i, 5).toString());
+        cbmk.setSelectedItem(tb.getValueAt(i, 6).toString());
+        cbtk.setSelectedItem(tb.getValueAt(i, 7).toString());
+    }//GEN-LAST:event_tbhsMouseClicked
+
+    private void tbhsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhsMouseEntered
+
+    }//GEN-LAST:event_tbhsMouseEntered
+
+    private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
+        // B1: Lấy dữ liệu từ các components và đưa vào biến
+        String mhs = txtmhs.getText().trim();  // Mã hồ sơ nhập viện
+        String mbn = cbmbn.getSelectedItem().toString();  // Mã bệnh nhân (ComboBox)
+        String cd = txtcd.getText().trim(); //chẩn đoán bệnh
+        String mk = cbmk.getSelectedItem().toString();  // Mã khoa (ComboBox)
+        String tk = cbtk.getSelectedItem().toString();  // Tên khoa (ComboBox)
+        String mg = cbmg.getSelectedItem().toString();  // mã giường (ComboBox)
+        String mp = cbmp.getSelectedItem().toString(); //mã phòng (combo box)
+
+        // Lấy ngày nhập viện từ JDateChooser
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date nnv = new Date(dcnnv.getDate().getTime()); // JDateChooser cho ngày nhập viện
+
+        // B1.1: Kiểm tra các trường bắt buộc phải nhập
+        if (mhs.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã hồ sơ không được để trống!");
+            txtmhs.requestFocus();
+            return;
+        }
+
+        if (mbn.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống!");
+            cbmbn.requestFocus();
+            return;
+        }
+
+        if (mk.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã khoa không được để trống!");
+            cbmk.requestFocus();
+            return;
+        }
+
+        if (tk.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên khoa không được để trống!");
+            cbtk.requestFocus();
+            return;
+        }
+        if (mp.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã phòng không được để trống!");
+            cbmp.requestFocus();
+            return;
+        }
+        if (mg.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã giường không được để trống!");
+            cbmg.requestFocus();
+            return;
+        }
+        if (cd.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "không được để trống chẩn đoán bệnh!");
+            txtcd.requestFocus();
+            return;
+        }
+
+        if (nnv == null) {
+            JOptionPane.showMessageDialog(this, "Ngày nhập viện không được để trống.");
+            dcnnv.requestFocus();
+            return;
+        }
+
+        // B2: Kết nối Database
+        try {
+            Connection con = Connect.KetnoiDB();
+
+            // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
+            String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, NgayNhapVien, ChanDoan, MaPhong, MaGiuong, MaKhoa, TenKhoa) " +
+            "VALUES ('" + mhs + "', '" + mbn + "', '" + format.format(nnv) + "', N'" + cd + "', '" + mp + "', '" + mg + "', '" + mk + "', N'" + tk + "')";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+
+            // Đóng kết nối
+            con.close();
+            load_hsnv(); // Cập nhật bảng hiển thị hồ sơ nhập viện
+            JOptionPane.showMessageDialog(this, "Thêm mới thành công");
+            xoatrang(); // Xóa trắng các trường nhập
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btluuActionPerformed
+
+    private void btcapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcapnhatActionPerformed
+        try {
+            // B1: Lấy dữ liệu từ các components và đưa vào biến
+            String mhs = txtmhs.getText().trim();  // Mã điều hồ sơ
+            String mbn = cbmbn.getSelectedItem().toString();  // Mã bệnh nhân (ComboBox)
+
+            // Lấy ngày điều trị từ JDateChooser
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date nnv = new Date(dcnnv.getDate().getTime());
+            //        Date nxv = new Date(dcngayxv.getDate().getTime());
+            String mp = cbmp.getSelectedItem().toString(); //mã phòng
+            String mg = cbmg.getSelectedItem().toString(); //mã giường
+            String mk = cbmk.getSelectedItem().toString();  // Mã khoa (ComboBox)
+            String tk = cbtk.getSelectedItem().toString();  // Tên khoa (ComboBox)
+            String cd = txtcd.getText().trim();  // chẩn đoán bệnh
+
+            // Kiểm tra nếu các trường không được để trống
+            if (mhs.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã hồ sơ");
+                return;
+            }
+            if (mbn.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã bệnh nhân");
+                return;
+            }
+            if (mk.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã khoa");
+                return;
+            }
+            if (mp.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã phòng");
+                return;
+            }
+            if (tk.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống khoa");
+                return;
+            }
+            if (mg.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống mã giường");
+                return;
+            }
+            if (cd.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống chẩn đoán bệnh");
+                return;
+            }
+            if (nnv == null) {
+                JOptionPane.showMessageDialog(this, "Không được để trống ngày nhập viện");
+                return;
+            }
+
+            // Định dạng ngày điều trị thành kiểu chuỗi
+            java.sql.Date sqlDateNhapVien = new java.sql.Date(nnv.getTime());
+
+            // Kết nối tới database
+            con = Connect.KetnoiDB();
+
+            // Câu lệnh SQL để cập nhật bản ghi trong bảng QuaTrinhDieuTri
+            String sql = "UPDATE HoSoNhapVien SET "
+            + "NgayNhapVien = ?, "
+            + "ChanDoan = ?, "
+            + "MaPhong = ?, "
+            + "MaGiuong = ?, "
+            + "MaKhoa = ?, "
+            + "TenKhoa = ? "
+            + "WHERE MaHoSoNhapVien = ? AND MaBenhNhan = ?";
+
+            // Sử dụng PreparedStatement để tránh SQL Injection
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1, sqlDateNhapVien);  // Gán ngày nhập viện
+            ps.setString(2, cd); //gán chẩn đoán bệnh
+            ps.setString(3, mp);
+            ps.setString(4, mg);
+            ps.setString(5, mk);
+            ps.setString(6, tk);
+            ps.setString(7, mhs);    //gán mã hồ sơ nhập viện
+            ps.setString(8, mbn);    // Gán mã bệnh nhân
+
+            // Thực hiện câu lệnh cập nhật
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Sửa thành công");
+                load_hsnv();  // Tải lại dữ liệu sau khi cập nhật
+                xoatrang();   // Xóa các trường nhập liệu
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu để sửa");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Sửa không thành công");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btcapnhatActionPerformed
+
+    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
+        //        try{
+            //            String bn = cbmbn.getSelectedItem().toString();
+            ////            String bn =txtmbn.getText().trim();
+            //            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            //            if (choice == JOptionPane.YES_OPTION) {
+                //                Connection con = Connect.KetnoiDB();
+                //                String sql = "Delete From HoSoNhapVien Where MaBenhNhan='"+bn+"'";
+                //                Statement st = con.createStatement();
+                //                st.executeUpdate(sql);
+                //                con.close();
+                //                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                //                loadyt();
+                //                xoatrang();
+                //            } else {
+                //                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+                //            }
+            //        }catch (Exception ex){
+            //            ex.printStackTrace();
+            //        }
+
+        try {
+            String bn = cbmbn.getSelectedItem().toString();
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                Connection con = Connect.KetnoiDB();
+                String sql = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, bn);
+                int rowsDeleted = ps.executeUpdate();
+                con.close();
+
+                if (rowsDeleted > 0) {
+                    JOptionPane.showMessageDialog(this, "Xoá thành công");
+                    load_hsnv();  // Hàm này có thể là để tải lại danh sách?
+                    xoatrang();  // Hàm này để xóa thông tin hiện tại?
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xoá");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btxoaActionPerformed
+private static CellStyle DinhdangHeader(XSSFSheet sheet) {
+        // Create font
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12); // font size
+        font.setColor(IndexedColors.WHITE.getIndex()); // text color
+
+        // Create CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
+        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setWrapText(true);
+        return cellStyle;
+    }
+    
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //         TODO add your handling code here:
         try {
@@ -916,7 +1145,7 @@ public class HSNV extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\HSNV.xlsx");
+            File f = new File("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\demo\\HSNV.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -927,13 +1156,15 @@ public class HSNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//               xoatrang();
-//close();
+        // TODO add your handling code here:
+        //        load_enable();
+        ////        xoatrang();
+        //close();
         NewJFrame an = null;
         try {
             an = new NewJFrame();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HSNV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IFhsnv.class.getName()).log(Level.SEVERE, null, ex);
         }
         an.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -962,54 +1193,47 @@ public class HSNV extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbmpItemStateChanged
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        try {
-            String mhs = txtmhs.getText().trim();
-            //String mht = txthoten.getText().trim();
 
-            Connection con = Connect.KetnoiDB();
-           
-            JasperDesign jdesign=JRXmlLoader.load("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\hsnv.jrxml");
-            
-            String sql = "Select * From HoSoNhapVien Where MaHoSoNhapVien like N'%"+mhs+"%'"; 
-            JRDesignQuery updateQuery=new JRDesignQuery();
-            updateQuery.setText(sql);
-            
-            jdesign.setQuery(updateQuery);
-            JasperReport jreport=JasperCompileManager.compileReport(jdesign);
-            JasperPrint jprint=JasperFillManager.fillReport(jreport, null,con);
-            JasperViewer.viewReport(jprint);
-        } catch (Exception e) { 
-        e.printStackTrace(); // In ra lỗi
-        JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
-}
-    }//GEN-LAST:event_jButton2ActionPerformed
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btcapnhat;
+    private javax.swing.JButton btluu;
+    private javax.swing.JButton btthoat;
+    private javax.swing.JButton btxoa;
+    private javax.swing.JComboBox<String> cbmbn;
+    private javax.swing.JComboBox<String> cbmg;
+    private javax.swing.JComboBox<String> cbmk;
+    private javax.swing.JComboBox<String> cbmp;
+    private javax.swing.JComboBox<String> cbtk;
+    private com.toedter.calendar.JDateChooser dcnnv;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tbhs;
+    private javax.swing.JTextField tkmbn;
+    private javax.swing.JTextField txtcd;
+    private javax.swing.JTextField txtmhs;
+    // End of variables declaration//GEN-END:variables
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        try {
-            JFileChooser fc = new JFileChooser();
-            int lc = fc.showOpenDialog(this);
-            if (lc == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-
-                String tenfile = file.getName();
-                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
-                    ReadExcel(file.getPath());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
-                }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1046,70 +1270,5 @@ public class HSNV extends javax.swing.JFrame {
                }
             }
         });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btthoat;
-    private javax.swing.JComboBox<String> cbmbn;
-    private javax.swing.JComboBox<String> cbmg;
-    private javax.swing.JComboBox<String> cbmk;
-    private javax.swing.JComboBox<String> cbmp;
-    private javax.swing.JComboBox<String> cbtk;
-    private com.toedter.calendar.JDateChooser dcnnv;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tbhs;
-    private javax.swing.JTextField tkmbn;
-    private javax.swing.JTextField txtcd;
-    private javax.swing.JTextField txtmhs;
-    // End of variables declaration//GEN-END:variables
-
-    private static CellStyle DinhdangHeader(XSSFSheet sheet) {
-        // Create font
-        Font font = sheet.getWorkbook().createFont();
-        font.setFontName("Times New Roman");
-        font.setBold(true);
-        font.setFontHeightInPoints((short) 12); // font size
-        font.setColor(IndexedColors.WHITE.getIndex()); // text color
-
-        // Create CellStyle
-        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
-        cellStyle.setFont(font);
-        cellStyle.setAlignment(HorizontalAlignment.CENTER);
-        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
-        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
-        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        cellStyle.setBorderBottom(BorderStyle.THIN);
-        cellStyle.setWrapText(true);
-        return cellStyle;
-    }
-    
-
-    private void close() {
-        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
-    }
-
-    void addRowToTable(Object[] rowData) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
