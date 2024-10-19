@@ -4,7 +4,7 @@
  */
 package BTL;
 
-import Kien.Quanlykien;
+import KienDuPhong.Quanlykien;
 import Nhung.Quanlygiuongbenhvaxuatvien;
 import QLBN.QLBN;
 import QLBN.QuanLyBenhNhan;

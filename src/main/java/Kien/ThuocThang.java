@@ -1,11 +1,10 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package Kien;
 
 import BTL.Connect;
-import BTL.Menu;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,14 +22,6 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -50,17 +41,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Admin
  */
-public class Lichsudieutri extends javax.swing.JFrame {
+public class ThuocThang extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Lichsudieutri
+     * Creates new form ThuocThang
      */
-    public Lichsudieutri() {
+    public ThuocThang() {
         initComponents();
         load_qtdt();
-        load_cboTacgia();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,20 +75,22 @@ public class Lichsudieutri extends javax.swing.JFrame {
         bttimkiem = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtMalich = new javax.swing.JTextField();
+        txtMat = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtKq = new javax.swing.JTextField();
-        dcngaysinh = new com.toedter.calendar.JDateChooser();
-        jLabel7 = new javax.swing.JLabel();
-        txtBacsi = new javax.swing.JTextField();
-        cboTacgia = new javax.swing.JComboBox<>();
+        txtDongia = new javax.swing.JTextField();
+        dcHsd = new com.toedter.calendar.JDateChooser();
+        txtDonvi = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtTent = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtNsx = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbKhoa = new javax.swing.JTable();
+        tbQtdt = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(935, 600));
 
         btthem.setText("Thêm");
         btthem.addActionListener(new java.awt.event.ActionListener() {
@@ -163,9 +154,9 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 .addComponent(btxoa)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
                 .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
                 .addComponent(btnLoad)
                 .addGap(27, 27, 27)
                 .addComponent(jButton5)
@@ -183,12 +174,12 @@ public class Lichsudieutri extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(btnLoad)
                     .addComponent(btnhapexcel))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản lý Lịch Sử Điều Trị");
+        jLabel1.setText("Quản lý Thuốc");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
 
@@ -210,7 +201,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Thông tin Lịch Sử Điều Trị");
+        jLabel8.setText("Thông tin Thuốc");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -220,10 +211,10 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTimkiem)
+                .addGap(18, 18, 18)
                 .addComponent(bttimkiem)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,95 +229,111 @@ public class Lichsudieutri extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin chi tiết"));
 
-        jLabel2.setText("Mã Bệnh Nhân");
+        jLabel3.setText("Mã Thuốc");
 
-        jLabel3.setText("Mã Lịch Sử");
+        jLabel5.setText("Đơn Giá");
 
-        jLabel5.setText("Ngày Điều Trị");
+        jLabel6.setText("Hạn Sử Dụng");
 
-        jLabel6.setText("Kết Quả Điều Trị");
-
-        dcngaysinh.setDateFormatString("yyyy-MM-dd");
-
-        jLabel7.setText("Bác Sĩ Điều Trị");
-
-        cboTacgia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Bệnh Nhân" }));
-        cboTacgia.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboTacgiaItemStateChanged(evt);
+        txtDongia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDongiaActionPerformed(evt);
             }
         });
+
+        dcHsd.setDateFormatString("yyyy-MM-dd");
+
+        txtDonvi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDonviActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Đơn Vị");
+
+        txtTent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTentActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Tên Thuốc");
+
+        jLabel12.setText("Nhà Sản Xuất");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtMalich, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(cboTacgia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(51, 51, 51)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBacsi, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(dcngaysinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtKq, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtMat, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                    .addComponent(txtTent)
+                    .addComponent(txtDonvi))
+                .addGap(69, 69, 69)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(dcHsd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                    .addComponent(txtDongia, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNsx))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtDongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(txtMalich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
-                    .addComponent(dcngaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addComponent(txtTent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addComponent(dcHsd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6)
-                    .addComponent(txtKq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboTacgia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtBacsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jLabel9)
+                    .addComponent(txtDonvi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtNsx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
         );
 
-        tbKhoa.setModel(new javax.swing.table.DefaultTableModel(
+        tbQtdt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        tbKhoa.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbQtdt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbKhoaMouseClicked(evt);
+                tbQtdtMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbKhoa);
+        jScrollPane1.setViewportView(tbQtdt);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -350,8 +357,8 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -372,131 +379,23 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    Map<String,String> tacgia = new HashMap<>();
-    private void load_cboTacgia(){
-        try{
-            con = Connect.KetnoiDB();
-            String sql = "Select * From BenhNhan";
-            Statement st=con.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            //Đổ dữ liệu vào combobox
-            while(rs.next()){
-                cboTacgia.addItem(rs.getString("MaBenhNhan"));
-                tacgia.put(rs.getString("MaBenhNhan"), rs.getString("HoTen"));
-            }
-            con.close();;
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
     Connection con;
-    private void Thembenhnhan(String mls, String mbn, String dc, String kq, String bs) {
-    try {
-        con = BTL.Connect.KetnoiDB();
-        String sql = "INSERT INTO LichSuDieuTri (MaLichSu, MaBenhNhan, NgayDieuTri, KetQuaDieuTri, BacSiDieuTri) "
-                   + "VALUES ('" + mls + "', '" + Integer.parseInt(mbn) + "', '" + dc + "', N'" + kq + "', N'" + bs + "')";
-
-        Statement st = con.createStatement();
-        st.executeUpdate(sql);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    }
-    private void ReadExcel(String tenfilepath) {
-        try {
-        FileInputStream fis = new FileInputStream(tenfilepath);
-        XSSFWorkbook wb = new XSSFWorkbook(fis);
-        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
-        Iterator<Row> itr = sheet.iterator();
-        int row_count = 0;
-
-        while (itr.hasNext()) {
-            Row row = itr.next();
-            if (row_count > 0) { // Bỏ qua dòng tiêu đề
-                String mls = "";
-                Cell cell1 = row.getCell(0);
-                if (cell1 != null) {
-                    if (cell1.getCellType() == CellType.STRING) {
-                        mls = cell1.getStringCellValue().trim();
-                    } else if (cell1.getCellType() == CellType.NUMERIC) {
-                        mls = String.valueOf((int) cell1.getNumericCellValue());
-                    }
-                }
-
-                // Kiểm tra xem mbn có phải là chuỗi rỗng không
-                if (mls.isEmpty()) {
-                    row_count++;
-                    continue; // Bỏ qua dòng này
-                }
-
-                String mbn = "";
-                Cell cell2 = row.getCell(1);
-                if (cell2 != null) {
-                    if (cell2.getCellType() == CellType.STRING) {
-                        mbn = cell2.getStringCellValue().trim();
-                    } else if (cell2.getCellType() == CellType.NUMERIC) {
-                        mbn = String.valueOf(cell2.getNumericCellValue()).trim();
-                    }
-                }
-
-                String dc = "";
-                Cell cell3 = row.getCell(2);
-                if (cell3 != null) {
-                    if (cell3.getCellType() == CellType.STRING) {
-                        dc = cell3.getStringCellValue().trim();
-                    } else if (cell3.getCellType() == CellType.NUMERIC) {
-                        dc = new SimpleDateFormat("yyyy-MM-dd").format(cell3.getDateCellValue());
-                    }
-                }
-
-                String kq = "";
-                Cell cell4 = row.getCell(3);
-                if (cell4 != null) {
-                    if (cell4.getCellType() == CellType.STRING) {
-                        kq = cell4.getStringCellValue().trim();
-                    } else if (cell4.getCellType() == CellType.NUMERIC) {
-                        kq = String.valueOf(cell4.getNumericCellValue()).trim();
-                    }
-                }
-                
-                String bs = "";
-                Cell cell5 = row.getCell(4);
-                if (cell5 != null) {
-                    if (cell5.getCellType() == CellType.STRING) {
-                        bs = cell5.getStringCellValue().trim();
-                    } else if (cell5.getCellType() == CellType.NUMERIC) {
-                        bs = String.valueOf(cell5.getNumericCellValue()).trim();
-                    }
-                }
-
-
-                // Gọi phương thức thêm bệnh nhân
-                Thembenhnhan(mls, mbn, dc, kq, bs);
-            }
-            row_count++;
-        }
-        JOptionPane.showMessageDialog(this, "Thêm bằng file thành công");
-        load_qtdt();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    }
     private void load_qtdt(){
         try {
-            tbKhoa.removeAll();
+            tbQtdt.removeAll();
             //B1: Kết nối đến DB
             con= BTL.Connect.KetnoiDB();
             //B2: Tạo đối tượng Statement để thực hiện câu lệnh truy cập
-            String sql = "Select * From LichSuDieuTri";
+            String sql = "Select * From Thuoc";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude={"Mã Lịch Sử", "Mã Bệnh Nhân","Ngày Điều Trị","Kết Quả Điều Trị","Bác Sĩ Điều Trị"};
+            String[] tieude={"Mã Thuốc", "Tên Thuốc","Đơn Vị","Đơn Giá","Hạn Sử Dụng","Nhà Sản Xuất"};
             DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
                     @Override
                     public boolean isCellEditable(int row, int column) {
@@ -507,73 +406,83 @@ public class Lichsudieutri extends javax.swing.JFrame {
             
             while(rs.next()){
                 Vector v = new Vector();
-                v.add(rs.getString("MaLichSu"));
-                v.add(rs.getString("MaBenhNhan"));
-                v.add(rs.getString("NgayDieuTri"));
-                v.add(rs.getString("KetQuaDieuTri"));
-                v.add(rs.getString("BacSiDieuTri"));
+                v.add(rs.getString("MaThuoc"));
+                v.add(rs.getString("TenThuoc"));
+                v.add(rs.getString("DonVi"));
+                v.add(rs.getString("DonGia"));
+                v.add(rs.getString("HanSuDung"));
+                v.add(rs.getString("NhaSanXuat"));
                 tb.addRow(v);
             }
-            tbKhoa.setModel(tb);
+            tbQtdt.setModel(tb);
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void xoatrang(){
-            txtMalich.setText("");
-//            txtManv.setText("");
-            dcngaysinh.setDate(null);
-            txtKq.setText("");
-            txtBacsi.setText("");
+    
+     public void xoatrang(){
+            txtMat.setText("");
+            txtTent.setText("");
+            txtDonvi.setText("");
+            txtDongia.setText("");
+            dcHsd.setDate(null);
+            txtNsx.setText("");
+
     }
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các compents đưa vào biến
-        String ma = txtMalich.getText().trim();
-        String ten = cboTacgia.getSelectedItem().toString();
+        String ma = txtMat.getText().trim();
+        String ten = txtTent.getText().trim();
+        String dv = txtDonvi.getText().trim();
+        String dg = txtDongia.getText().trim();
         SimpleDateFormat fomat = new SimpleDateFormat("yyyy-MM-dd");
-        String tk = txtKq.getText().trim();
-        String bs = txtBacsi.getText().trim();
+        String nsx = txtNsx.getText().trim();
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
         if (ma.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã lịch sử không được để trống.");
-            txtMalich.requestFocus();
+            JOptionPane.showMessageDialog(this, "Mã thuốc không được để trống.");
+            txtMat.requestFocus();
             return;
         }
-        if(ten.equals("Chọn Mã Bệnh Nhân")){
-                ten="";
-            }
-        
+        //        if(ten.equals("Chọn Mã Bệnh Nhân")){
+            //            ten="";
+            //        }
 
         if (ten.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã bệnh nhân không được để trống.");
-            cboTacgia.requestFocus();
+            JOptionPane.showMessageDialog(this, "Tên thuốc không được để trống.");
+            txtTent.requestFocus();
             return;
         }
-        
+
+        if (dv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Đơn vị không được để trống.");
+            txtDonvi.requestFocus();
+            return;
+        }
+
+        if (dg.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "ĐƠn giá không được để trống.");
+            txtDongia.requestFocus();
+            return;
+        }
+
         Date ndt = null;
         try {
-            ndt = new Date(dcngaysinh.getDate().getTime());
+            ndt = new Date(dcHsd.getDate().getTime());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Phải nhập ngày điều trị hợp lệ!");
-            dcngaysinh.requestFocus();
+            JOptionPane.showMessageDialog(this, "Phải nhập hạn sử dụng hợp lệ!");
+            dcHsd.requestFocus();
             return;
         }
         if (ndt == null) {
-            JOptionPane.showMessageDialog(this, "Ngày điều trị không được để trống.");
-            dcngaysinh.requestFocus();
+            JOptionPane.showMessageDialog(this, "Hạn sử dụng được để trống.");
+            dcHsd.requestFocus();
             return;
         }
 
-        if (tk.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Kết quả không được để trống.");
-            txtKq.requestFocus();
-            return;
-        }
-        
-        if (bs.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Bác sĩ không được để trống.");
-            txtKq.requestFocus();
+        if (nsx.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhà sản xuất không được để trống.");
+            txtNsx.requestFocus();
             return;
         }
 
@@ -582,7 +491,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
             Connection con = BTL.Connect.KetnoiDB();
 
             //B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
-            String sql = "Insert INTO LichSuDieuTri values('"+ ma +"', N'"+ ten +"', '"+ ndt +"', N'"+ tk +"', N'"+ bs +"')";
+            String sql = "Insert INTO Thuoc values('"+ ma +"', N'"+ ten +"', N'"+ dv +"', N'"+ dg +"', '"+ ndt +"', N'"+ nsx +"')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
@@ -597,57 +506,62 @@ public class Lichsudieutri extends javax.swing.JFrame {
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
         try{
-            String mk = txtMalich.getText();
-            if(mk.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập mã lịch sử!");
-                return;
-            }
-            String ten = cboTacgia.getSelectedItem().toString();
-            if(ten.equals("Chọn Mã Bệnh Nhân")){
-                ten="";
-            }
-            if(ten.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập mã bn!");
+            String ma = txtMat.getText();
+            if(ma.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập mã thuốc!");
                 return;
             }
 
-                Date ndt = null;
+            String ten = txtTent.getText();
+            if(ten.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập tên thuốc!");
+                return;
+            }
+
+            String dv = txtDonvi.getText();
+            if(dv.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập đơn vị!");
+                return;
+            }
+
+            String dg = txtDongia.getText();
+            if(dg.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập đơn giá!");
+                return;
+            }
+
+            Date ndt = null;
             try {
-                ndt = new Date(dcngaysinh.getDate().getTime());
+                ndt = new Date(dcHsd.getDate().getTime());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Phải nhập ngày điều trị hợp lệ!");
-                dcngaysinh.requestFocus();
+                JOptionPane.showMessageDialog(this, "Phải nhập hsd hợp lệ!");
+                dcHsd.requestFocus();
                 return;
             }
             if (ndt == null) {
-                JOptionPane.showMessageDialog(this, "Ngày điều trị không được để trống.");
-                dcngaysinh.requestFocus();
+                JOptionPane.showMessageDialog(this, "hsd không được để trống.");
+                dcHsd.requestFocus();
                 return;
             }
 
             // Định dạng ngày điều trị thành kiểu chuỗi
             java.sql.Date sqlDate = new java.sql.Date(ndt.getTime());
 
-            String tk = txtKq.getText();
-            if(tk.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập kết quả điều trị!");
-                return;
-            }
-            
-            String bs = txtBacsi.getText();
-            if(tk.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập bác sĩ điều trị!");
+            String nsx = txtNsx.getText();
+            if(nsx.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập nsx!");
                 return;
             }
 
             con = BTL.Connect.KetnoiDB();
-            String sql = "Update LichSuDieuTri Set MaBenhNhan=N'"+ten+"',NgayDieuTri='"+ndt+"',KetQuaDieuTri=N'"+tk+"',BacSiDieuTri=N'"+bs+"' Where MaLichSu='"+mk+"'";
+            String sql = "Update Thuoc Set TenThuoc=N'"+ten+"',DonVi=N'"+dv+"',DonGia=N'"+dg+"',HanSuDung='"+ndt+"',NhaSanXuat=N'"+nsx+"' Where MaThuoc='"+ma+"'";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
             JOptionPane.showMessageDialog(this, "Sửa thành công");
             load_qtdt();
-            
+            xoatrang();
+
         }catch (Exception ex){
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Sửa ko thành công");
@@ -656,11 +570,11 @@ public class Lichsudieutri extends javax.swing.JFrame {
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
         try{
-            String mk = txtMalich.getText();
+            String ma = txtMat.getText();
             int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (choice == JOptionPane.YES_OPTION) {
                 con = BTL.Connect.KetnoiDB();
-                String sql = "Delete From LichSuDieuTri Where MaLichSu='"+mk+"'";
+                String sql = "Delete From Thuoc Where MaThuoc='"+ma+"'";
                 Statement st = con.createStatement();
                 st.executeUpdate(sql);
                 con.close();
@@ -698,7 +612,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet("Lịch Làm Việc");
+            XSSFSheet spreadsheet = workbook.createSheet("Thuốc");
             // register the columns you wish to track and compute the column width
 
             CreationHelper createHelper = workbook.getCreationHelper();
@@ -709,7 +623,7 @@ public class Lichsudieutri extends javax.swing.JFrame {
             row = spreadsheet.createRow((short) 2);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("DANH SÁCH LỊCH SỬ ĐIỀU TRỊ");
+            cell.setCellValue("DANH SÁCH THUỐC");
 
             //Tạo dòng tiêu đều của bảng
             // create CellStyle
@@ -722,27 +636,31 @@ public class Lichsudieutri extends javax.swing.JFrame {
 
             cell = row.createCell(1, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã Lịch Sử");
+            cell.setCellValue("Mã Thuốc");
 
             cell = row.createCell(2, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã Bệnh Nhân");
+            cell.setCellValue("Tên Thuốc");
 
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Ngày Điều Trị");
+            cell.setCellValue("Đơn Vị");
 
             cell = row.createCell(4, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Kết Quả Điều Trị");
-            
+            cell.setCellValue("ĐƠn Giá");
+
             cell = row.createCell(5, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Bác Sĩ Điều Trị");
+            cell.setCellValue("Hạn Sử Dụng");
+
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Nhà Sản Xuất");
 
             //Kết nối DB
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From LichSuDieuTri";
+            String sql = "Select * From Thuoc";
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             //Đổ dữ liệu từ rs vào các ô trong excel
@@ -766,30 +684,35 @@ public class Lichsudieutri extends javax.swing.JFrame {
 
                 cell = row.createCell(1);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaLichSu"));
+                cell.setCellValue(rs.getString("MaThuoc"));
 
                 cell = row.createCell(2);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaBenhNhan"));
+                cell.setCellValue(rs.getString("TenThuoc"));
+
+                cell = row.createCell(3);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("DonVi"));
+
+                cell = row.createCell(4);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("DonGia"));
 
                 //Định dạng ngày tháng trong excel
-                java.util.Date ngay = new java.util.Date(rs.getDate("NgayDieuTri").getTime());
+                java.util.Date ngay = new java.util.Date(rs.getDate("HanSuDung").getTime());
                 CellStyle cellStyle = workbook.createCellStyle();
+
                 cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
                 cellStyle.setBorderLeft(BorderStyle.THIN);
                 cellStyle.setBorderRight(BorderStyle.THIN);
                 cellStyle.setBorderBottom(BorderStyle.THIN);
-                cell = row.createCell(3);
+                cell = row.createCell(5);
                 cell.setCellValue(ngay);
                 cell.setCellStyle(cellStyle);
 
-                cell = row.createCell(4);
+                cell = row.createCell(6);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("KetQuaDieuTri"));
-                
-                cell = row.createCell(5);
-                cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("BacSiDieuTri"));
+                cell.setCellValue(rs.getString("NhaSanXuat"));
 
                 i++;
             }
@@ -798,12 +721,13 @@ public class Lichsudieutri extends javax.swing.JFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Kien\\Lichsudieutri.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Kien\\Thuoc.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
             JOptionPane.showMessageDialog(this, "Xuất Excel thành công!!");
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Xuất Excel ko thành công!!");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -814,9 +738,131 @@ public class Lichsudieutri extends javax.swing.JFrame {
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
         // TODO add your handling code here:
-        txtMalich.setEnabled(true);
-        cboTacgia.setEnabled(true);
+        txtMat.setEnabled(true);
     }//GEN-LAST:event_btnLoadActionPerformed
+
+    private void Them(String ma, String ten, String dv, String dg, String hsd, String nsx) {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String sql = "INSERT INTO Thuoc (MaThuoc, TenThuoc, DonVi, DonGia, HanSuDung, NhaSanXuat) "
+                   + "VALUES ('" + ma + "', N'" + ten + "',N'" + dv + "', N'" + dg + "', '" + hsd + "', N'" + nsx + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+    
+    private void ReadExcel(String tenfilepath) {
+        try {
+        FileInputStream fis = new FileInputStream(tenfilepath);
+        XSSFWorkbook wb = new XSSFWorkbook(fis);
+        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+        Iterator<Row> itr = sheet.iterator();
+        int row_count = 0;
+
+        while (itr.hasNext()) {
+            Row row = itr.next();
+            if (row_count > 0) { // Bỏ qua dòng tiêu đề
+                String ma = "";
+                Cell cell1 = row.getCell(0);
+                if (cell1 != null) {
+                    if (cell1.getCellType() == CellType.STRING) {
+                        ma = cell1.getStringCellValue().trim();
+                    } else if (cell1.getCellType() == CellType.NUMERIC) {
+                        ma = String.valueOf((int) cell1.getNumericCellValue());
+                    }
+                }
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (ma.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String ten = "";
+                Cell cell2 = row.getCell(1);
+                if (cell2 != null) {
+                    if (cell2.getCellType() == CellType.STRING) {
+                        ten = cell2.getStringCellValue().trim();
+                    } else if (cell2.getCellType() == CellType.NUMERIC) {
+                        ten = String.valueOf(cell2.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String dv = "";
+                Cell cell3 = row.getCell(2);
+                if (cell3 != null) {
+                    if (cell3.getCellType() == CellType.STRING) {
+                        dv = cell3.getStringCellValue().trim();
+                    } else if (cell3.getCellType() == CellType.NUMERIC) {
+                        dv = String.valueOf(cell3.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String dg = "";
+                Cell cell4 = row.getCell(3);
+                if (cell4 != null) {
+                    if (cell4.getCellType() == CellType.STRING) {
+                        dg = cell4.getStringCellValue().trim();
+                    } else if (cell4.getCellType() == CellType.NUMERIC) {
+                        dg = String.valueOf(cell4.getNumericCellValue()).trim();
+                    }
+                }
+
+                String hsd = "";
+                Cell cell5= row.getCell(4);
+                if (cell5 != null) {
+                    if (cell5.getCellType() == CellType.STRING) {
+                        hsd = cell5.getStringCellValue().trim();
+                    } else if (cell5.getCellType() == CellType.NUMERIC) {
+                        hsd = new SimpleDateFormat("yyyy-MM-dd").format(cell5.getDateCellValue());
+                    }
+                }
+
+                String nsx = "";
+                Cell cell6 = row.getCell(5);
+                if (cell6 != null) {
+                    if (cell6.getCellType() == CellType.STRING) {
+                        nsx = cell6.getStringCellValue().trim();
+                    } else if (cell6.getCellType() == CellType.NUMERIC) {
+                        nsx = String.valueOf(cell6.getNumericCellValue()).trim();
+                    }
+                }
+
+                // Gọi phương thức thêm bệnh nhân
+                Them(ma, ten, dv, dg, hsd, nsx);
+            }
+            row_count++;
+        }
+        JOptionPane.showMessageDialog(this, "Thêm bằng file thành công");
+        load_qtdt();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+
+    private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
+
+        try {
+            JFileChooser fc = new JFileChooser();
+            int lc = fc.showOpenDialog(this);
+            if (lc == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                String tenfile = file.getName();
+                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
+                    ReadExcel(file.getPath());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnhapexcelActionPerformed
 
     private void txtTimkiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimkiemMouseClicked
         xoatrang();
@@ -867,116 +913,69 @@ public class Lichsudieutri extends javax.swing.JFrame {
     private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
         try{
             //lấy dữ liệu từ compoment đưa vài biến
-            String mk = txtTimkiem.getText().trim();
-            //            String ten = txtTimkiem.getText().trim();
-            //            String tk = txtTimkiem.getText().trim();
+            String tk = txtTimkiem.getText().trim();
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From LichSuDieuTri Where MaLichSu like'%"+mk+"%'"; // and TenKhoa like N'%"+ten+"%' and TruongKhoa like N'%"+tk+"%'
-            Statement st = con.createStatement();
+            String sql = "Select * From Thuoc Where MaThuoc like'%"+tk+"%'"; //and HoTenBenhNhan like N'%"+tk+"%' and BacSiDieuTri like N'%"+tk+"%' and ChanDoanDieuTri like N'%"+tk+"%' and PhuongPhapDieuTri like N'%"+tk+"%'"; 
+            Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude = {"Mã Lịch Sử", "Mã Bệnh Nhân","Ngày Điều Trị","Kết Quả Điều Trị","Bác Sĩ Điều Trị"};
-            DefaultTableModel tb = new DefaultTableModel(tieude,0);
+            String[] tieude={"Mã Thuốc", "Tên Thuốc","Đơn Vị","Đơn Giá","Hạn Sử Dụng","Nhà Sản Xuất"};
+            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    // Tất cả các ô sẽ không thể chỉnh sửa
+                    return false;
+                }
+            };
+
             while(rs.next()){
                 Vector v = new Vector();
-                v.add(rs.getString("MaLichSu"));
-                v.add(rs.getString("MaBenhNhan"));
-                v.add(rs.getString("NgayDieuTri"));
-                v.add(rs.getString("KetQuaDieuTri"));
-                v.add(rs.getString("BacSiDieuTri"));
+                v.add(rs.getString("MaThuoc"));
+                v.add(rs.getString("TenThuoc"));
+                v.add(rs.getString("DonVi"));
+                v.add(rs.getString("DonGia"));
+                v.add(rs.getString("HanSuDung"));
+                v.add(rs.getString("NhaSanXuat"));
                 tb.addRow(v);
             }
-            tbKhoa.setModel(tb);
+            tbQtdt.setModel(tb);
             con.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_bttimkiemActionPerformed
 
-    private void tbKhoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKhoaMouseClicked
-        int i = tbKhoa.getSelectedRow();
-        DefaultTableModel tb = (DefaultTableModel)tbKhoa.getModel();
-        txtMalich.setText(tb.getValueAt(i, 0).toString());
-        cboTacgia.setSelectedItem(tb.getValueAt(i, 1).toString());
-        String ngay = tb.getValueAt(i, 2).toString();
+    private void txtDongiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDongiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDongiaActionPerformed
+
+    private void txtDonviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDonviActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDonviActionPerformed
+
+    private void txtTentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTentActionPerformed
+
+    private void tbQtdtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbQtdtMouseClicked
+        int i = tbQtdt.getSelectedRow();
+        DefaultTableModel tb = (DefaultTableModel)tbQtdt.getModel();
+        txtMat.setText(tb.getValueAt(i, 0).toString());
+        txtTent.setText(tb.getValueAt(i, 1).toString());
+        txtDonvi.setText(tb.getValueAt(i, 2).toString());
+        txtDongia.setText(tb.getValueAt(i, 3).toString());
+        String ngay = tb.getValueAt(i, 4).toString();
         java.util.Date ngs;
         try{
             ngs = new SimpleDateFormat("yyyy-MM-dd").parse(ngay);
-            dcngaysinh.setDate(ngs);
+            dcHsd.setDate(ngs);
 
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        txtKq.setText(tb.getValueAt(i, 3).toString());
-        txtBacsi.setText(tb.getValueAt(i, 4).toString());
-        txtMalich.setEnabled(false);
-        cboTacgia.setEnabled(false);
-    }//GEN-LAST:event_tbKhoaMouseClicked
+        txtNsx.setText(tb.getValueAt(i, 5).toString());
+        txtMat.setEnabled(false);
+    }//GEN-LAST:event_tbQtdtMouseClicked
 
-    private void cboTacgiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTacgiaItemStateChanged
-        // TODO add your handling code here:
-        String ten = cboTacgia.getSelectedItem().toString();
-//        txtMalich.setText(tacgia.get(ten));
-    }//GEN-LAST:event_cboTacgiaItemStateChanged
-
-    
-
-    private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
-        // TODO add your handling code here:
-            // TODO add your handling code here:
-        try {
-            JFileChooser fc = new JFileChooser();
-            int lc = fc.showOpenDialog(this);
-            if (lc == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-
-                String tenfile = file.getName();
-                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
-                    ReadExcel(file.getPath());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
-                }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnhapexcelActionPerformed
-
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Lichsudieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Lichsudieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Lichsudieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Lichsudieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Lichsudieutri().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoad;
@@ -985,26 +984,28 @@ public class Lichsudieutri extends javax.swing.JFrame {
     private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
-    private javax.swing.JComboBox<String> cboTacgia;
-    private com.toedter.calendar.JDateChooser dcngaysinh;
+    private com.toedter.calendar.JDateChooser dcHsd;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbKhoa;
-    private javax.swing.JTextField txtBacsi;
-    private javax.swing.JTextField txtKq;
-    private javax.swing.JTextField txtMalich;
+    private javax.swing.JTable tbQtdt;
+    private javax.swing.JTextField txtDongia;
+    private javax.swing.JTextField txtDonvi;
+    private javax.swing.JTextField txtMat;
+    private javax.swing.JTextField txtNsx;
+    private javax.swing.JTextField txtTent;
     private javax.swing.JTextField txtTimkiem;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package Kien;
 
@@ -41,12 +41,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Admin
  */
-public class Quatrinhdieutri extends javax.swing.JFrame {
+public class DieuTri extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Quatrinhdieutri
+     * Creates new form DieuTri
      */
-    public Quatrinhdieutri() {
+    public DieuTri() {
         initComponents();
         load_cboBenhnhan();
         load_cboNhanvien();
@@ -110,7 +110,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         btnLoad = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(935, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -276,7 +276,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -292,8 +292,8 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtKqk)
-                    .addComponent(cboMathuoc, 0, 143, Short.MAX_VALUE)
+                    .addComponent(txtKqk, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                    .addComponent(cboMathuoc, 0, 1, Short.MAX_VALUE)
                     .addComponent(txtKqt)
                     .addComponent(txtKqbn))
                 .addGap(15, 15, 15))
@@ -492,7 +492,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     private void load_qtdt(){
         try {
             tbQtdt.removeAll();
@@ -671,14 +670,14 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             String[] tieude={"Mã Điều Trị", "Họ Tên Bệnh Nhân","Bác Sĩ Điều Trị","Ngày Điều Trị","Chuẩn Đoán Điều Trị","Phương Pháp Điều Trị","Tên Khoa","Tên Thuốc"};
-            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        // Tất cả các ô sẽ không thể chỉnh sửa
-                        return false;
-                    }
-                    };
-            
+            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    // Tất cả các ô sẽ không thể chỉnh sửa
+                    return false;
+                }
+            };
+
             while(rs.next()){
                 Vector v = new Vector();
                 v.add(rs.getString("MaDieutri"));
@@ -698,11 +697,53 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bttimkiemActionPerformed
 
+    private void txtppdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtppdtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtppdtActionPerformed
+
     private void cboMabnItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMabnItemStateChanged
         // TODO add your handling code here:
         String ten = cboMabn.getSelectedItem().toString();
         txtKqbn.setText(benhnhan.get(ten));
     }//GEN-LAST:event_cboMabnItemStateChanged
+
+    private void cboMabnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMabnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboMabnActionPerformed
+
+    private void txtKqnvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKqnvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKqnvActionPerformed
+
+    private void cboManvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboManvItemStateChanged
+        // TODO add your handling code here:
+        String ten = cboManv.getSelectedItem().toString();
+        txtKqnv.setText(nhanvien.get(ten));
+    }//GEN-LAST:event_cboManvItemStateChanged
+
+    private void cboManvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboManvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboManvActionPerformed
+
+    private void cboMakhoaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMakhoaItemStateChanged
+        // TODO add your handling code here:
+        String ten = cboMakhoa.getSelectedItem().toString();
+        txtKqk.setText(khoa.get(ten));
+    }//GEN-LAST:event_cboMakhoaItemStateChanged
+
+    private void cboMakhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMakhoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboMakhoaActionPerformed
+
+    private void cboMathuocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMathuocItemStateChanged
+        // TODO add your handling code here:
+        String ten = cboMathuoc.getSelectedItem().toString();
+        txtKqt.setText(thuoc.get(ten));
+    }//GEN-LAST:event_cboMathuocItemStateChanged
+
+    private void cboMathuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMathuocActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboMathuocActionPerformed
 
     private void tbQtdtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbQtdtMouseClicked
         int i = tbQtdt.getSelectedRow();
@@ -742,16 +783,16 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             txtMadt.requestFocus();
             return;
         }
-//        if(ten.equals("Chọn Mã Bệnh Nhân")){
-//            ten="";
-//        }
+        //        if(ten.equals("Chọn Mã Bệnh Nhân")){
+            //            ten="";
+            //        }
 
         if (ten.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên bệnh nhân không được để trống.");
             txtKqbn.requestFocus();
             return;
         }
-        
+
         if (bs.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên bác sĩ không được để trống.");
             txtKqnv.requestFocus();
@@ -777,7 +818,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             txtcddt.requestFocus();
             return;
         }
-        
+
         if (pp.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Phương pháp điều trị không được để trống.");
             txtppdt.requestFocus();
@@ -789,7 +830,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             txtKqk.requestFocus();
             return;
         }
-        
+
         if (thuoc.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Thuốc không được để trống.");
             txtKqt.requestFocus();
@@ -822,9 +863,9 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 return;
             }
             String ten = txtKqbn.getText();
-//            if(ten.equals("Chọn Mã Bệnh Nhân")){
-//                ten="";
-//            }
+            //            if(ten.equals("Chọn Mã Bệnh Nhân")){
+                //                ten="";
+                //            }
             if(ten.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Phải nhập tên bn!");
                 return;
@@ -863,7 +904,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Phải nhập pp điều trị!");
                 return;
             }
-            
+
             String khoa = txtKqk.getText();
             if(khoa.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Phải nhập khoa!");
@@ -874,7 +915,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Phải nhập thuốc!");
                 return;
             }
-            
 
             con = BTL.Connect.KetnoiDB();
             String sql = "Update QuaTrinhDieuTri Set HoTenBenhNhan=N'"+ten+"',BacSiDieuTri=N'"+bs+"',NgayDieuTri='"+ndt+"',ChanDoanDieuTri=N'"+cd+"',PhuongPhapDieuTri=N'"+pp+"',TenKhoa=N'"+khoa+"',TenThuoc=N'"+thuoc+"' Where MaDieuTri='"+ma+"'";
@@ -912,7 +952,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btxoaActionPerformed
 
-    
     private static CellStyle DinhdangHeader(XSSFSheet sheet) {
         // Create font
         Font font = sheet.getWorkbook().createFont();
@@ -932,6 +971,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         cellStyle.setWrapText(true);
         return cellStyle;
     }
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         try {
@@ -965,7 +1005,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             cell = row.createCell(2, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Tên Bệnh Nhân");
-            
+
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Tên Bác Sĩ");
@@ -981,11 +1021,11 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             cell = row.createCell(6, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Phương Pháp Điều Trị");
-            
+
             cell = row.createCell(7, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Tên Khoa");
-            
+
             cell = row.createCell(8, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Tên Thuốc");
@@ -1021,7 +1061,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 cell = row.createCell(2);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("HoTenBenhNhan"));
-                
+
                 cell = row.createCell(3);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("BacSiDieuTri"));
@@ -1044,11 +1084,11 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 cell = row.createCell(6);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("PhuongPhapDieuTri"));
-                
+
                 cell = row.createCell(7);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("TenKhoa"));
-                
+
                 cell = row.createCell(8);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("TenThuoc"));
@@ -1201,6 +1241,7 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         e.printStackTrace();
     }
     }
+
     private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
 
         try {
@@ -1222,82 +1263,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnhapexcelActionPerformed
 
-    private void cboMabnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMabnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboMabnActionPerformed
-
-    private void cboManvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboManvItemStateChanged
-        // TODO add your handling code here:
-        String ten = cboManv.getSelectedItem().toString();
-        txtKqnv.setText(nhanvien.get(ten));
-    }//GEN-LAST:event_cboManvItemStateChanged
-
-    private void cboManvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboManvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboManvActionPerformed
-
-    private void txtKqnvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKqnvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtKqnvActionPerformed
-
-    private void txtppdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtppdtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtppdtActionPerformed
-
-    private void cboMakhoaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMakhoaItemStateChanged
-        // TODO add your handling code here:
-        String ten = cboMakhoa.getSelectedItem().toString();
-        txtKqk.setText(khoa.get(ten));
-    }//GEN-LAST:event_cboMakhoaItemStateChanged
-
-    private void cboMakhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMakhoaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboMakhoaActionPerformed
-
-    private void cboMathuocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMathuocItemStateChanged
-        // TODO add your handling code here:
-        String ten = cboMathuoc.getSelectedItem().toString();
-        txtKqt.setText(thuoc.get(ten));
-    }//GEN-LAST:event_cboMathuocItemStateChanged
-
-    private void cboMathuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMathuocActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboMathuocActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Quatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Quatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Quatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Quatrinhdieutri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Quatrinhdieutri().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoad;
