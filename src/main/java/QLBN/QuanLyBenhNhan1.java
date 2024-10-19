@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -59,6 +60,10 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
      * Creates new form QuanLyBenhNhan1
      */
     public QuanLyBenhNhan1() {
+                this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
+        ui.setNorthPane(null);
+        
         initComponents();
          load_qtdt();
     }
@@ -330,10 +335,10 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimkiem)
                 .addGap(18, 18, 18)
                 .addComponent(bttimkiem)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,7 +573,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(btnhapexcel)
                 .addGap(26, 26, 26)
                 .addComponent(jButton1)
@@ -996,7 +1001,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
 
             Connection con = BTL.Connect.KetnoiDB();
 
-            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report2.jrxml");
+            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\QLBN\\report2.jrxml");
 
             String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'";
             JRDesignQuery updateQuery=new JRDesignQuery();

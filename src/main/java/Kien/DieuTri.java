@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -47,6 +48,10 @@ public class DieuTri extends javax.swing.JInternalFrame {
      * Creates new form DieuTri
      */
     public DieuTri() {
+                this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
+        ui.setNorthPane(null);
+        
         initComponents();
         load_cboBenhnhan();
         load_cboNhanvien();
@@ -106,7 +111,6 @@ public class DieuTri extends javax.swing.JInternalFrame {
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         btnLoad = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
@@ -276,7 +280,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -292,7 +296,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtKqk, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                    .addComponent(txtKqk, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                     .addComponent(cboMathuoc, 0, 1, Short.MAX_VALUE)
                     .addComponent(txtKqt)
                     .addComponent(txtKqbn))
@@ -379,7 +383,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -408,13 +412,6 @@ public class DieuTri extends javax.swing.JInternalFrame {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Thoát");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
             }
         });
 
@@ -449,8 +446,6 @@ public class DieuTri extends javax.swing.JInternalFrame {
                 .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLoad)
-                .addGap(27, 27, 27)
-                .addComponent(jButton5)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -462,7 +457,6 @@ public class DieuTri extends javax.swing.JInternalFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
                     .addComponent(btnLoad)
                     .addComponent(btnhapexcel))
                 .addGap(0, 8, Short.MAX_VALUE))
@@ -483,10 +477,10 @@ public class DieuTri extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         pack();
@@ -1110,11 +1104,6 @@ public class DieuTri extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-        new Menu().setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
         // TODO add your handling code here:
         txtMadt.setEnabled(true);
@@ -1277,7 +1266,6 @@ public class DieuTri extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cboMathuoc;
     private com.toedter.calendar.JDateChooser dcngaydt;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

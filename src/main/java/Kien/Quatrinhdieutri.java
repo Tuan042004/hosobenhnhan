@@ -106,7 +106,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         btnLoad = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
@@ -411,13 +410,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Thoát");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
         btnLoad.setText("Load");
         btnLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,8 +441,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                 .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLoad)
-                .addGap(27, 27, 27)
-                .addComponent(jButton5)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -462,7 +452,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
                     .addComponent(btnLoad)
                     .addComponent(btnhapexcel))
                 .addGap(0, 8, Short.MAX_VALUE))
@@ -1071,11 +1060,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-        new Menu().setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
         // TODO add your handling code here:
         txtMadt.setEnabled(true);
@@ -1313,7 +1297,6 @@ public class Quatrinhdieutri extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboMathuoc;
     private com.toedter.calendar.JDateChooser dcngaydt;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
