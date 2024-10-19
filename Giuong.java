@@ -40,10 +40,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Giuong extends javax.swing.JDialog {
 
 
-    public Giuong(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Giuong(menuPhongGiuong aThis, boolean par) {
         initComponents();
         load_Gb();
+    }
+
+    private Giuong() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
      private void load_Gb() {
     String sql = "SELECT * FROM Giuong";
@@ -369,7 +372,8 @@ public class Giuong extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    Connection con;      private static CellStyle DinhDangHeader(XSSFSheet sheet){
+    Connection con; 
+    private static CellStyle DinhDangHeader(XSSFSheet sheet){
         // Tạo font
        XSSFFont font = sheet.getWorkbook().createFont();
        font.setFontName("Times New Roman");
@@ -800,7 +804,7 @@ public class Giuong extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+        public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -814,20 +818,20 @@ public class Giuong extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Giuong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Phong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Giuong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Phong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Giuong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Phong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Giuong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Phong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Giuong dialog = new Giuong(new javax.swing.JFrame(), true);
+                Giuong dialog = new Giuong();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
