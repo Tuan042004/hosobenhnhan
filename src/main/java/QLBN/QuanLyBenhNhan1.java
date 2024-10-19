@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package QLBN;
 
@@ -53,16 +53,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author dqduc
  */
-public class QuanLyBenhNhan extends javax.swing.JFrame {
+public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form QuanLyBenhNhan
+     * Creates new form QuanLyBenhNhan1
      */
-    public QuanLyBenhNhan() {
+    public QuanLyBenhNhan1() {
         initComponents();
-        load_qtdt();
+         load_qtdt();
     }
-    
     Connection con;
     private void Thembenhnhan(String mbn, String mht, String dcngaysinh, String gioitinh, String dc, String sdt, String cccd, String bhyt) {
     try {
@@ -294,7 +293,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         btn_xuatbc = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(935, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
@@ -496,7 +495,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -569,7 +568,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(btnhapexcel)
                 .addGap(26, 26, 26)
                 .addComponent(jButton1)
@@ -628,7 +627,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimkiemKeyReleased
 
     private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
-               try{
+        try{
             String ma = txtmbn.getText();
             int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (choice == JOptionPane.YES_OPTION) {
@@ -647,6 +646,14 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_bttimkiemActionPerformed
+
+    private void txtmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmbnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmbnActionPerformed
+
+    private void cboxgioitinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxgioitinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxgioitinhActionPerformed
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
         int i=tbqlbn.getSelectedRow();
@@ -670,7 +677,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_tbqlbnMouseClicked
 
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
-      // B1: lấy dữ liệu các components đưa vào biến
+        // B1: lấy dữ liệu các components đưa vào biến
         String mht = txthoten.getText().trim();
         String mbn = txtmbn.getText().trim();
         String gioitinh = cboxgioitinh.getSelectedItem().toString().trim();
@@ -757,7 +764,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             st.executeUpdate(sql);
             con.close();
 
-            load_qtdt(); 
+            load_qtdt();
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
 
             // Xóa trang
@@ -767,51 +774,50 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btthemActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-     try{
+        try{
             String mht = txthoten.getText();
             if(mht.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập họ và tên!");
-            return;
-        }
+                JOptionPane.showMessageDialog(this, "Phải nhập họ và tên!");
+                return;
+            }
             String mbn = txtmbn.getText();
             if(mbn.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập mã bệnh nhân!");
-            return;
-        }
-        Date ns = new Date (dcngaysinh.getDate().getTime());
+                JOptionPane.showMessageDialog(this, "Phải nhập mã bệnh nhân!");
+                return;
+            }
+            Date ns = new Date (dcngaysinh.getDate().getTime());
             if(ns == null){
-            JOptionPane.showMessageDialog(this, "Phải nhập ngày sinh!");
-            return;
-        }
-        String gioitinh = cboxgioitinh.getSelectedItem().toString();
+                JOptionPane.showMessageDialog(this, "Phải nhập ngày sinh!");
+                return;
+            }
+            String gioitinh = cboxgioitinh.getSelectedItem().toString();
             if(gioitinh.equals("Chọn giới tính")){
                 gioitinh="";
             }
             if(gioitinh.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập giới tính!");
-            return;
-        }
-        String dc = txtdiachi.getText();
+                JOptionPane.showMessageDialog(this, "Phải nhập giới tính!");
+                return;
+            }
+            String dc = txtdiachi.getText();
             if(dc.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập địa chỉ!");
-            return;
-        }
-        String sdt = txtsdt.getText();
+                JOptionPane.showMessageDialog(this, "Phải nhập địa chỉ!");
+                return;
+            }
+            String sdt = txtsdt.getText();
             if(sdt.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Phải nhập số điện thoại!");
-            return;
-        }
-            
+                JOptionPane.showMessageDialog(this, "Phải nhập số điện thoại!");
+                return;
+            }
+
             con = BTL.Connect.KetnoiDB();
-            
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng ngày theo chuẩn
-            String sql = "UPDATE BenhNhan SET HoTenBenhNhan=N'" + mht + "', NgaySinh='" + format.format(ns) + 
-                         "', GioiTinh=N'" + gioitinh + "', DiaChi=N'" + dc + "', SDT='" + sdt + 
-                         "' WHERE MaBenhNhan='" + mbn + "'";
+            String sql = "UPDATE BenhNhan SET HoTenBenhNhan=N'" + mht + "', NgaySinh='" + format.format(ns) +
+            "', GioiTinh=N'" + gioitinh + "', DiaChi=N'" + dc + "', SDT='" + sdt +
+            "' WHERE MaBenhNhan='" + mbn + "'";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
@@ -824,46 +830,40 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-    try{
-        String mbn = txtmbn.getText();
-        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (choice == JOptionPane.YES_OPTION) {
-            Connection con = BTL.Connect.KetnoiDB();
-            String sql = "Delete From BenhNhan Where MaBenhNhan='"+mbn+"'";
-            Statement st = con.createStatement();
-            st.executeUpdate(sql);
-            con.close();
-            JOptionPane.showMessageDialog(this, "Xoá thành công");
-            load_qtdt();
-        } else {
-            JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
-        }
-    }catch (Exception ex){
+        try{
+            String mbn = txtmbn.getText();
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                Connection con = BTL.Connect.KetnoiDB();
+                String sql = "Delete From BenhNhan Where MaBenhNhan='"+mbn+"'";
+                Statement st = con.createStatement();
+                st.executeUpdate(sql);
+                con.close();
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                load_qtdt();
+            } else {
+                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+            }
+        }catch (Exception ex){
             ex.printStackTrace();
         }
     }//GEN-LAST:event_btxoaActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void txtmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmbnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtmbnActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
         txtmbn.setEnabled(true);
         load_qtdt();
-         
-         
+
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-           // TODO add your handling code here:
+        // TODO add your handling code here:
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.createSheet("Khoa");
@@ -887,7 +887,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             cell = row.createCell(0, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("STT");
-                
+
             cell = row.createCell(1, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Mã bệnh nhân");
@@ -899,27 +899,27 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Ngày sinh");
-            
+
             cell = row.createCell(4, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Giới tính");
-            
+
             cell = row.createCell(5, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Địa chỉ");
-            
+
             cell = row.createCell(6, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Số điện thoại");
-            
+
             cell = row.createCell(7, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("CCCD");
-            
+
             cell = row.createCell(8, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("BHYT");
-             //Kết nối DB
+            //Kết nối DB
             con = BTL.Connect.KetnoiDB();
             String sql = "Select * From BenhNhan";
             PreparedStatement st = con.prepareStatement(sql);
@@ -958,19 +958,19 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 cell = row.createCell(4);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("GioiTinh"));
-                
+
                 cell = row.createCell(5);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("DiaChi"));
-                
+
                 cell = row.createCell(6);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("SDT"));
-                
+
                 cell = row.createCell(7);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("CCCD"));
-                
+
                 cell = row.createCell(8);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("MBHYT"));
@@ -986,7 +986,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             workbook.write(out);
             out.close();
         } catch (Exception e) {
-        }       
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_xuatbcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatbcActionPerformed
@@ -995,13 +995,13 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             //String mht = txthoten.getText().trim();
 
             Connection con = BTL.Connect.KetnoiDB();
-           
+
             JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report2.jrxml");
-            
-            String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'"; 
+
+            String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'";
             JRDesignQuery updateQuery=new JRDesignQuery();
             updateQuery.setText(sql);
-            
+
             jdesign.setQuery(updateQuery);
             JasperReport jreport=JasperCompileManager.compileReport(jdesign);
             JasperPrint jprint=JasperFillManager.fillReport(jreport, null,con);
@@ -1031,44 +1031,6 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnhapexcelActionPerformed
 
-    private void cboxgioitinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxgioitinhActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboxgioitinhActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuanLyBenhNhan().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_xuatbc;
