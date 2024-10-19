@@ -4,7 +4,7 @@
  */
 package BTL;
 
-import QLDT.QuaTrinhDieuTri;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -93,8 +93,8 @@ try {
             // Mở form Menu
 //            Menu1 menu = new Menu1();
 //            menu.setVisible(true);
-            QuaTrinhDieuTri qt = new  QuaTrinhDieuTri();
-            qt.setVisible(true);
+          
+           
                 this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu!");

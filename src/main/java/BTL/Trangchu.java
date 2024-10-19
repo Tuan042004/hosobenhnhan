@@ -6,8 +6,12 @@ package BTL;
 
 import Hosoxuatvien.HoSoXuatVien;
 import Hosoxuatvien.HoaDonThanhToan;
-import Hosoxuatvien.Thuoc;
-import QLDT.Quanlydieutri;
+import Kien.Thuoc;
+import Kien.DieuTri;
+import Kien.ThuocThang;
+import QLBN.QuanLyBenhNhan1;
+import QLBN.QuanLyKhoa;
+import QLBN.QuanLyNhanVien;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,6 +103,11 @@ public class Trangchu extends javax.swing.JFrame {
         btkhoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btkhoa.setMargin(new java.awt.Insets(2, 15, 3, 15));
         btkhoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btkhoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btkhoaMouseClicked(evt);
+            }
+        });
         jToolBar1.add(btkhoa);
 
         btnv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\bacsi.png")); // NOI18N
@@ -106,6 +115,11 @@ public class Trangchu extends javax.swing.JFrame {
         btnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnv.setLabel("Nhân viên y tế");
         btnv.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnvMouseClicked(evt);
+            }
+        });
         jToolBar1.add(btnv);
 
         btt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\thuoc.png")); // NOI18N
@@ -149,6 +163,11 @@ public class Trangchu extends javax.swing.JFrame {
         btdt.setFocusable(false);
         btdt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btdt.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btdt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btdtMouseClicked(evt);
+            }
+        });
         jToolBar1.add(btdt);
 
         bthsxv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\xuatvien.png")); // NOI18N
@@ -236,7 +255,10 @@ public class Trangchu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbnMouseClicked
-
+        dp.removeAll();
+        QuanLyBenhNhan1 bn = null;
+         bn= new QuanLyBenhNhan1();
+        dp.add(bn ).setVisible(true);
     }//GEN-LAST:event_btbnMouseClicked
 
     private void btttMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btttMouseClicked
@@ -263,10 +285,31 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void bttMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttMouseClicked
         dp.removeAll();
-        Thuoc thuoc = null;
-        thuoc = new Thuoc();
+        ThuocThang thuoc = null;
+        thuoc = new ThuocThang();
         dp.add(thuoc).setVisible(true);
     }//GEN-LAST:event_bttMouseClicked
+
+    private void btkhoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btkhoaMouseClicked
+        dp.removeAll();
+        QuanLyKhoa bn = null;
+         bn= new QuanLyKhoa();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btkhoaMouseClicked
+
+    private void btnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnvMouseClicked
+        dp.removeAll();
+        QuanLyNhanVien bn = null;
+        bn= new QuanLyNhanVien();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btnvMouseClicked
+
+    private void btdtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btdtMouseClicked
+        dp.removeAll();
+        DieuTri bn = null;
+        bn= new DieuTri();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btdtMouseClicked
 
     /**
      * @param args the command line arguments
