@@ -58,7 +58,11 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
-        
+        xoatrang();
+        btluu.setEnabled(false);
+        btsua.setEnabled(false);
+        btxoa.setEnabled(false);
+        load_qtdt();
         initComponents();
         load_qtdt();
     }
@@ -204,7 +208,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbqlbn = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        btthem = new javax.swing.JButton();
+        btluu = new javax.swing.JButton();
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -331,11 +335,10 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,10 +354,10 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        btthem.setText("Lưu");
-        btthem.addActionListener(new java.awt.event.ActionListener() {
+        btluu.setText("Lưu");
+        btluu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthemActionPerformed(evt);
+                btluuActionPerformed(evt);
             }
         });
 
@@ -408,7 +411,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(15, 15, 15)
-                .addComponent(btthem)
+                .addComponent(btluu)
                 .addGap(18, 18, 18)
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
@@ -426,7 +429,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btthem)
+                    .addComponent(btluu)
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
@@ -505,6 +508,11 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtmbnActionPerformed
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
+        xoatrang();
+        btluu.setEnabled(false);
+        btsua.setEnabled(true);
+        btxoa.setEnabled(true);
+
         int i=tbqlbn.getSelectedRow();
         DefaultTableModel tb=(DefaultTableModel)tbqlbn.getModel();
         txthoten.setText(tb.getValueAt(i, 1).toString());
@@ -512,7 +520,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         txtmbn.setEnabled(false);
     }//GEN-LAST:event_tbqlbnMouseClicked
 
-    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
+    private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
         // B1: lấy dữ liệu các components đưa vào biến
         String tk = txthoten.getText().trim();
         String mk = txtmbn.getText().trim();
@@ -548,7 +556,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-    }//GEN-LAST:event_btthemActionPerformed
+    }//GEN-LAST:event_btluuActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
         try{
@@ -608,7 +616,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
 
                 // Thông báo thành công
                 JOptionPane.showMessageDialog(this, "Xoá thành công");
-
+                xoatrang();
                 // Tải lại dữ liệu và xóa trắng các trường nhập liệu
                 load_qtdt();
                 xoatrang();
@@ -626,6 +634,9 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         xoatrang();
         txtmbn.setEnabled(true);
+        btluu.setEnabled(true);
+        btsua.setEnabled(false);
+        btxoa.setEnabled(false);
         load_qtdt();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -735,9 +746,9 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btluu;
     private javax.swing.JButton btnhapexcel;
     private javax.swing.JButton btsua;
-    private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
     private javax.swing.JButton jButton1;
