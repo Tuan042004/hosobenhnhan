@@ -12,6 +12,7 @@ import Kien.ThuocThang;
 import QLBN.QuanLyBenhNhan1;
 import QLBN.QuanLyKhoa;
 import QLBN.QuanLyNhanVien;
+import Van.IFhsnv;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -156,6 +157,11 @@ public class Trangchu extends javax.swing.JFrame {
         bthsnv.setFocusable(false);
         bthsnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bthsnv.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bthsnv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bthsnvMouseClicked(evt);
+            }
+        });
         jToolBar1.add(bthsnv);
 
         btdt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\quatrinhdieutri.png")); // NOI18N
@@ -310,6 +316,17 @@ public class Trangchu extends javax.swing.JFrame {
         bn= new DieuTri();
         dp.add(bn ).setVisible(true);
     }//GEN-LAST:event_btdtMouseClicked
+
+    private void bthsnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bthsnvMouseClicked
+        dp.removeAll();
+        IFhsnv bn = null;
+        try {
+            bn= new IFhsnv();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Trangchu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dp.add(bn ).setVisible(true);        
+    }//GEN-LAST:event_bthsnvMouseClicked
 
     /**
      * @param args the command line arguments
