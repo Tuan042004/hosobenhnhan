@@ -59,13 +59,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel1" alignment="1" min="-2" pref="874" max="-2" attributes="0"/>
-                          <Component id="jPanel5" min="-2" pref="919" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel1" alignment="1" min="-2" pref="874" max="-2" attributes="0"/>
+                      <Component id="jPanel5" alignment="1" min="-2" pref="919" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="48" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -256,7 +254,7 @@
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jButton4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="btthem" min="-2" max="-2" attributes="0"/>
+                  <Component id="btluu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btsua" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -276,7 +274,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btthem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btluu" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btsua" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btxoa" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -290,12 +288,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btthem">
+        <Component class="javax.swing.JButton" name="btluu">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btthemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btluuActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btsua">

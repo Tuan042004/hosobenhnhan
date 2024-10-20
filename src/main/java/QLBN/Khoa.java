@@ -56,6 +56,9 @@ public class Khoa extends javax.swing.JFrame {
      */
     public Khoa() {
         initComponents();
+        btluu.setEnabled(false);
+        btsua.setEnabled(false);
+        btxoa.setEnabled(false);
         load_qtdt();
     }
     private static CellStyle DinhdangHeader(XSSFSheet sheet) {
@@ -200,7 +203,7 @@ public class Khoa extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbqlbn = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        btthem = new javax.swing.JButton();
+        btluu = new javax.swing.JButton();
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -213,7 +216,7 @@ public class Khoa extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản Lý Bệnh Nhân");
+        jLabel1.setText("Quản Lý Khoa");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
 
@@ -245,10 +248,10 @@ public class Khoa extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 667, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
                 .addComponent(bttimkiem)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,11 +328,12 @@ public class Khoa extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,14 +345,14 @@ public class Khoa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        btthem.setText("Lưu");
-        btthem.addActionListener(new java.awt.event.ActionListener() {
+        btluu.setText("Lưu");
+        btluu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthemActionPerformed(evt);
+                btluuActionPerformed(evt);
             }
         });
 
@@ -402,17 +406,17 @@ public class Khoa extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(15, 15, 15)
-                .addComponent(btthem)
+                .addComponent(btluu)
                 .addGap(18, 18, 18)
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                 .addComponent(btnhapexcel)
                 .addGap(26, 26, 26)
                 .addComponent(jButton1)
                 .addGap(167, 167, 167)
-                .addComponent(jButton5)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -420,7 +424,7 @@ public class Khoa extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btthem)
+                    .addComponent(btluu)
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
@@ -438,7 +442,9 @@ public class Khoa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -482,7 +488,7 @@ public class Khoa extends javax.swing.JFrame {
             while(rs.next()){
                 Vector v = new Vector();
                 v.add(rs.getString("MaKhoa"));
-                v.add(rs.getString("TenKhoa"));      
+                v.add(rs.getString("TenKhoa"));
                 tb.addRow(v);
             }
             tbqlbn.setModel(tb);
@@ -497,126 +503,82 @@ public class Khoa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtmbnActionPerformed
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
+        xoatrang();
+
+        btsua.setEnabled(true);
+        btxoa.setEnabled(true);
+
         int i=tbqlbn.getSelectedRow();
         DefaultTableModel tb=(DefaultTableModel)tbqlbn.getModel();
         txthoten.setText(tb.getValueAt(i, 1).toString());
         txtmbn.setText(tb.getValueAt(i, 0).toString());
         txtmbn.setEnabled(false);
-
     }//GEN-LAST:event_tbqlbnMouseClicked
 
-    private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
-        // TODO add your handling code here:
+    private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
+        // B1: lấy dữ liệu các components đưa vào biến
+        String tk = txthoten.getText().trim();
+        String mk = txtmbn.getText().trim();
+        // B1.1: Kiểm tra các trường bắt buộc phải nhập
+        if (tk.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên khoa không được để trống.");
+            txthoten.requestFocus();
+            return;
+        }
+
+        if (mk.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã khoa không được để trống.");
+            txtmbn.requestFocus();
+            return;
+        }
+        // B2: Kết nối Database
         try {
-            JFileChooser fc = new JFileChooser();
-            int lc = fc.showOpenDialog(this);
-            if (lc == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
+            con = BTL.Connect.KetnoiDB();
 
-                String tenfile = file.getName();
-                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
-                    ReadExcel(file.getPath());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
-                }
+            // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
+            String sql = "INSERT INTO Khoa (MaKhoa, TenKhoa) VALUES (N'" + mk + "', N'" + tk + "')";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
 
-            }
+            load_qtdt();
+            JOptionPane.showMessageDialog(this, "Thêm mới thành công");
+
+            // Xóa trang
+            xoatrang();
+
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnhapexcelActionPerformed
+    }//GEN-LAST:event_btluuActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        try {
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet("Khoa");
-            // register the columns you wish to track and compute the column width
+    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
+        try{
+            String mk = txtmbn.getText();
+            if(mk.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập mã khoa!");
+                return;
+            }
+            String tk = txthoten.getText();
+            if(tk.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải nhập tên khoa!");
+                return;
+            }
 
-            CreationHelper createHelper = workbook.getCreationHelper();
-
-            XSSFRow row = null;
-            Cell cell = null;
-
-            row = spreadsheet.createRow((short) 2);
-            row.setHeight((short) 500);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("DANH SÁCH Khoa");
-
-
-            CellStyle cellStyle_Head = DinhdangHeader(spreadsheet);
-            row = spreadsheet.createRow((short) 3);
-            row.setHeight((short) 500);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("STT");
-
-            cell = row.createCell(1, CellType.STRING);
-            cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã Khoa");
-
-            cell = row.createCell(2, CellType.STRING);
-            cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Tên Khoa");
-
-           
-            //Kết nối DB
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From Khoa";
-            PreparedStatement st = con.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            //Đổ dữ liệu từ rs vào các ô trong excel
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int tongsocot = rsmd.getColumnCount();
 
-            //Đinh dạng Tạo đường kẻ cho ô chứa dữ liệu
-            CellStyle cellStyle_data = spreadsheet.getWorkbook().createCellStyle();
-            cellStyle_data.setBorderLeft(BorderStyle.THIN);
-            cellStyle_data.setBorderRight(BorderStyle.THIN);
-            cellStyle_data.setBorderBottom(BorderStyle.THIN);
-
-            int i = 0;
-            while (rs.next()) {
-                row = spreadsheet.createRow((short) 4 + i);
-                row.setHeight((short) 400);
-
-                cell = row.createCell(0);
-                cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(i + 1);
-
-                cell = row.createCell(1);
-                cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaKhoa"));
-
-                cell = row.createCell(2);
-                cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("TenKhoa"));
-                i++;
-            }
-            //Hiệu chỉnh độ rộng của cột
-            for (int col = 0; col < tongsocot; col++) {
-                spreadsheet.autoSizeColumn(col);
-            }
-
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\Khoa.xlsx");
-            FileOutputStream out = new FileOutputStream(f);
-            workbook.write(out);
-            out.close();
-        } catch (Exception e) {
+            String sql = "UPDATE Khoa SET TenKhoa=N'" + tk + "' WHERE MaKhoa='" + mk + "'";
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+            con.close();
+            JOptionPane.showMessageDialog(this, "Sửa thành công");
+            load_qtdt();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Sửa ko thành công");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        xoatrang();
-        txtmbn.setEnabled(true);
-        load_qtdt();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btsuaActionPerformed
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
         try {
@@ -663,70 +625,119 @@ public class Khoa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btxoaActionPerformed
 
-    private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-        try{
-            String mk = txtmbn.getText();
-            if(mk.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập mã khoa!");
-                return;
-            }
-            String tk = txthoten.getText();
-            if(tk.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Phải nhập tên khoa!");
-                return;
-            }
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        xoatrang();
+        txtmbn.setEnabled(true);
+        btluu.setEnabled(true);
+        btsua.setEnabled(false);
+        btxoa.setEnabled(false);
+        load_qtdt();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-            con = BTL.Connect.KetnoiDB();
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-            String sql = "UPDATE Khoa SET TenKhoa=N'" + tk + "' WHERE MaKhoa='" + mk + "'";
-            Statement st = con.createStatement();
-            st.executeUpdate(sql);
-            con.close();
-            JOptionPane.showMessageDialog(this, "Sửa thành công");
-            load_qtdt();
-        }catch (Exception ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Sửa ko thành công");
-        }
-    }//GEN-LAST:event_btsuaActionPerformed
-
-    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
-        // B1: lấy dữ liệu các components đưa vào biến
-        String tk = txthoten.getText().trim();
-        String mk = txtmbn.getText().trim();
-        // B1.1: Kiểm tra các trường bắt buộc phải nhập
-        if (tk.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tên khoa không được để trống.");
-            txthoten.requestFocus();
-            return;
-        }
-
-        if (mk.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã khoa không được để trống.");
-            txtmbn.requestFocus();
-            return;
-        }
-        // B2: Kết nối Database
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
         try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("Khoa");
+            // register the columns you wish to track and compute the column width
+
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            XSSFRow row = null;
+            Cell cell = null;
+
+            row = spreadsheet.createRow((short) 2);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SÁCH Khoa");
+
+            CellStyle cellStyle_Head = DinhdangHeader(spreadsheet);
+            row = spreadsheet.createRow((short) 3);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("STT");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Mã Khoa");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Tên Khoa");
+
+            //Kết nối DB
             con = BTL.Connect.KetnoiDB();
+            String sql = "Select * From Khoa";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            //Đổ dữ liệu từ rs vào các ô trong excel
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int tongsocot = rsmd.getColumnCount();
 
-            // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
-            String sql = "INSERT INTO Khoa (MaKhoa, TenKhoa) VALUES (N'" + mk + "', N'" + tk + "')";
-            Statement st = con.createStatement();
-            st.executeUpdate(sql);
-            con.close();
+            //Đinh dạng Tạo đường kẻ cho ô chứa dữ liệu
+            CellStyle cellStyle_data = spreadsheet.getWorkbook().createCellStyle();
+            cellStyle_data.setBorderLeft(BorderStyle.THIN);
+            cellStyle_data.setBorderRight(BorderStyle.THIN);
+            cellStyle_data.setBorderBottom(BorderStyle.THIN);
 
-            load_qtdt();
-            JOptionPane.showMessageDialog(this, "Thêm mới thành công");
+            int i = 0;
+            while (rs.next()) {
+                row = spreadsheet.createRow((short) 4 + i);
+                row.setHeight((short) 400);
 
-            // Xóa trang
-            xoatrang();
+                cell = row.createCell(0);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(i + 1);
 
+                cell = row.createCell(1);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("MaKhoa"));
+
+                cell = row.createCell(2);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("TenKhoa"));
+                i++;
+            }
+            //Hiệu chỉnh độ rộng của cột
+            for (int col = 0; col < tongsocot; col++) {
+                spreadsheet.autoSizeColumn(col);
+            }
+
+            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\Khoa.xlsx");
+            FileOutputStream out = new FileOutputStream(f);
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser fc = new JFileChooser();
+            int lc = fc.showOpenDialog(this);
+            if (lc == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                String tenfile = file.getName();
+                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
+                    ReadExcel(file.getPath());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
+                }
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-    }//GEN-LAST:event_btthemActionPerformed
+    }//GEN-LAST:event_btnhapexcelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -764,9 +775,9 @@ public class Khoa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btluu;
     private javax.swing.JButton btnhapexcel;
     private javax.swing.JButton btsua;
-    private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
     private javax.swing.JButton jButton1;
