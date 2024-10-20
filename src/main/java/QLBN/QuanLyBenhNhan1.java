@@ -335,10 +335,10 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtTimkiem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bttimkiem)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,9 +634,9 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
     private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
         try{
             //lấy dữ liệu từ compoment đưa vài biến
-            String mk = txtTimkiem.getText().trim();
+            String mbn = txtTimkiem.getText().trim();
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From BenhNhan Where MaBenhNhan like'%"+mk+"%'";
+            String sql = "Select * From BenhNhan Where MaBenhNhan like'%"+mbn+"%'";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             String[] tieude={ "Họ và tên","Mã bệnh nhân","Ngày sinh","Giới tính","Địa chỉ","Số điện thoại", "CCCD", "BHYT"};
@@ -921,7 +921,6 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 st.executeUpdate(sql);
                 con.close();
                 JOptionPane.showMessageDialog(this, "Xoá thành công");
-                xoatrang();
                 load_qtdt();
             } else {
                 JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
