@@ -91,8 +91,8 @@ try {
         if (rs.next()) {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
             // Mở form Menu
-//            Menu1 menu = new Menu1();
-//            menu.setVisible(true);
+            Trangchu menu = new Trangchu();
+            menu.setVisible(true);
           
            
                 this.dispose();

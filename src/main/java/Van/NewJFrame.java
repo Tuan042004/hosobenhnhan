@@ -204,6 +204,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel30.setText("Mã Phòng:");
 
+        dcnnv3.setDateFormatString("yyyy-MM-dd");
+
         tbhs3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
