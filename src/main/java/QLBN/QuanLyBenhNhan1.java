@@ -63,8 +63,10 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
-        
         initComponents();
+        btluu.setEnabled(false);
+        btsua.setEnabled(false);
+        btxoa.setEnabled(false);
          load_qtdt();
     }
     Connection con;
@@ -293,7 +295,6 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btn_xuatbc = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
@@ -418,7 +419,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtcccd, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtbhyt, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -532,13 +533,6 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setText("Thoát");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Xuất excel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -573,15 +567,13 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                .addComponent(btnhapexcel)
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
                 .addComponent(btn_xuatbc)
-                .addGap(29, 29, 29)
-                .addComponent(jButton5)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -592,7 +584,6 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
                     .addComponent(jButton1)
                     .addComponent(btn_xuatbc)
                     .addComponent(btnhapexcel))
@@ -941,10 +932,6 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
@@ -1127,7 +1114,6 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dcngaysinh;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

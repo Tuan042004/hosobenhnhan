@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package QLBN;
+
 import BTL.Connect;
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,14 +60,15 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
-        btluu.setEnabled(false);
+      initComponents();
+        btthem.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
-        initComponents();
         load_qtdt();
         load_cboTacgia();
     }
-     Connection con;
+       
+    Connection con;
     private void Thembenhnhan(String mnv, String tk, String ht, String ns, String gt, String dc, String sdt, String cccd) {
     try {
         con = BTL.Connect.KetnoiDB();
@@ -303,11 +305,10 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbqlbn = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        btluu = new javax.swing.JButton();
+        btthem = new javax.swing.JButton();
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
@@ -348,10 +349,10 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bttimkiem)
-                .addGap(38, 38, 38))
+                .addGap(26, 26, 26))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,15 +511,12 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,14 +528,14 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        btluu.setText("Lưu");
-        btluu.addActionListener(new java.awt.event.ActionListener() {
+        btthem.setText("Lưu");
+        btthem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btluuActionPerformed(evt);
+                btthemActionPerformed(evt);
             }
         });
 
@@ -559,13 +557,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Thoát");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
             }
         });
 
@@ -591,29 +582,26 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(15, 15, 15)
-                .addComponent(btluu)
+                .addComponent(btthem)
                 .addGap(18, 18, 18)
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                .addComponent(btnhapexcel)
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addGap(167, 167, 167)
-                .addComponent(jButton5)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btluu)
+                    .addComponent(btthem)
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
                     .addComponent(jButton1)
                     .addComponent(btnhapexcel))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -625,12 +613,9 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -708,9 +693,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbokhoaActionPerformed
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
-        
-        btsua.setEnabled(true);
-        btxoa.setEnabled(true);
         int i=tbqlbn.getSelectedRow();
         DefaultTableModel tb=(DefaultTableModel)tbqlbn.getModel();
         txthoten.setText(tb.getValueAt(i, 1).toString());
@@ -731,9 +713,8 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tbqlbnMouseClicked
 
-    private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
+    private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các components đưa vào biến
-        
         String mht = txthoten.getText().trim();
         String mnv = txtmnv.getText().trim();
         String gioitinh = cbogioitinh.getSelectedItem().toString().trim();
@@ -830,7 +811,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-    }//GEN-LAST:event_btluuActionPerformed
+    }//GEN-LAST:event_btthemActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
         try {
@@ -951,15 +932,8 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         xoatrang();
         txtmnv.setEnabled(true);
-        btluu.setEnabled(true);
-        btsua.setEnabled(false);
-        btxoa.setEnabled(false);
         load_qtdt();
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
@@ -1110,9 +1084,9 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btluu;
     private javax.swing.JButton btnhapexcel;
     private javax.swing.JButton btsua;
+    private javax.swing.JButton btthem;
     private javax.swing.JButton bttimkiem;
     private javax.swing.JButton btxoa;
     private javax.swing.JComboBox<String> cbogioitinh;
@@ -1120,7 +1094,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dcngaysinh;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
