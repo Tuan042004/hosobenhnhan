@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -74,6 +75,9 @@ public class HoSoXuatVien extends javax.swing.JInternalFrame {
         // Mở khóa lại các trường txtmhs và cbmbn
     txtmhs.setEnabled(true);  // Mở lại trường mã hồ sơ để người dùng nhập
     cbmbn.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
+    txttenbn.setEnabled(true);
+    cbkhoa.setEnabled(true);
+
 
     }
     
@@ -208,36 +212,6 @@ public class HoSoXuatVien extends javax.swing.JInternalFrame {
 //
 //        return tenKhoa; // Trả về tên khoa
 //    }
-    
-private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException, SQLException {
-    String[] dieuTriInfo = new String[3]; // Mảng chứa mã khoa, tên khoa và bác sĩ điều trị
-
-    // Lấy thông tin từ HoSoNhapVien
-    String queryHoSoNhapVien = "SELECT MaKhoa, TenKhoa FROM HoSoNhapVien WHERE MaBenhNhan = ?";
-    con = BTL.Connect.KetnoiDB(); 
-    try (PreparedStatement pstmt = con.prepareStatement(queryHoSoNhapVien)) {
-        pstmt.setString(1, maBenhNhan); // Gán mã bệnh nhân vào truy vấn
-        ResultSet rs = pstmt.executeQuery();
-
-        if (rs.next()) {
-            dieuTriInfo[0] = rs.getString("MaKhoa"); // Lấy mã khoa
-            dieuTriInfo[1] = rs.getString("TenKhoa"); // Lấy tên khoa
-        }
-    }
-
-    // Lấy thông tin bác sĩ từ QuaTrinhDieuTri
-    String queryQuaTrinhDieuTri = "SELECT BacSiDieuTri FROM QuaTrinhDieuTri WHERE HoTenBenhNhan = ?";
-    try (PreparedStatement pstmt = con.prepareStatement(queryQuaTrinhDieuTri)) {
-        pstmt.setString(1, maBenhNhan); // Sử dụng maBenhNhan để xác định tên bệnh nhân
-        ResultSet rs = pstmt.executeQuery();
-
-        if (rs.next()) {
-            dieuTriInfo[2] = rs.getString("BacSiDieuTri"); // Lấy bác sĩ điều trị
-        }
-    }
-
-    return dieuTriInfo; // Trả về mảng thông tin
-}
 
     
     @SuppressWarnings("unchecked")
@@ -280,6 +254,7 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
         setPreferredSize(new java.awt.Dimension(980, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Hồ sơ xuất viện ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -287,9 +262,9 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(378, 378, 378)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,6 +338,11 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
         jLabel9.setText("Bác sĩ điều trị");
 
         cbmk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Chọn mã khoa---" }));
+        cbmk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbmkActionPerformed(evt);
+            }
+        });
 
         cbkhoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Khoa---" }));
 
@@ -483,8 +463,8 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
                             .addComponent(dcngayxv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         btthem.setText("Thêm");
@@ -568,10 +548,10 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89))
+                .addGap(77, 77, 77))
         );
 
         pack();
@@ -664,6 +644,9 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
         // Vô hiệu hóa việc chỉnh sửa mã bệnh nhân
         cbmbn.setEnabled(false);
         txtmhs.setEnabled(false);
+        txttenbn.setEnabled(false);
+        cbkhoa.setEnabled(false);
+
     }//GEN-LAST:event_tbxvMouseClicked
 
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
@@ -1067,30 +1050,58 @@ private String[] getDieuTriInfo(String maBenhNhan) throws ClassNotFoundException
             if (benhNhanInfo[1] != null) {
                 java.sql.Date ngayNhapVien = java.sql.Date.valueOf(benhNhanInfo[1]); 
                 dcngaynv.setDate(new java.util.Date(ngayNhapVien.getTime())); // Chuyển thành java.util.Date và đặt vào dcngaynv
-            }
-
-            // Gọi phương thức getDieuTriInfo để lấy tên khoa và bác sĩ điều trị
-            String[] dieuTriInfo = getDieuTriInfo(selectedMaBenhNhan); // Sử dụng mã bệnh nhân
-            
-            // Cập nhật mã khoa vào cboMaKhoa
-            cbmk.removeAllItems();
-            cbmk.addItem(dieuTriInfo[0]); // Thêm mã khoa
-
-            // Cập nhật tên khoa vào cbKhoa
-            cbkhoa.removeAllItems(); // Xóa tất cả các mục hiện có
-            cbkhoa.addItem(dieuTriInfo[1]); // Thêm tên khoa vào cbKhoa
-
-            // Cập nhật bác sĩ điều trị vào cbbs
-            cbbs.removeAllItems(); // Xóa tất cả item trước đó
-            cbbs.addItem(dieuTriInfo[2]); // Thêm bác sĩ điều trị
-            
-            
+            }            
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(); // Xử lý ngoại lệ nếu có lỗi kết nối hoặc truy vấn
+            }
+        }   
+    }//GEN-LAST:event_cbmbnActionPerformed
+
+    private void cbmkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmkActionPerformed
+    // Lấy mã khoa đã chọn
+    String maKhoa = (String) cbmk.getSelectedItem();
+    
+    // Kiểm tra nếu mã khoa không null
+    if (maKhoa != null) {
+        try {
+            // Tạo kết nối với cơ sở dữ liệu
+            con = BTL.Connect.KetnoiDB();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HoSoXuatVien.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HoSoXuatVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try  {
+            // Lấy tên khoa tương ứng với mã khoa
+            String sqlKhoa = "SELECT TenKhoa FROM Khoa WHERE MaKhoa = ?";
+            try (PreparedStatement pstmtKhoa = con.prepareStatement(sqlKhoa)) {
+                pstmtKhoa.setString(1, maKhoa);
+                ResultSet rsKhoa = pstmtKhoa.executeQuery();
+                if (rsKhoa.next()) {
+                    String tenKhoa = rsKhoa.getString("TenKhoa");
+                    cbkhoa.setSelectedItem(tenKhoa);
+                }
+            }
+
+            // Lấy bác sĩ điều trị tương ứng với tên khoa
+            String sqlNVYT = "SELECT BacSiDieuTri FROM NhanVienYTe WHERE TenKhoa = ?";
+            try (PreparedStatement pstmtNVYT = con.prepareStatement(sqlNVYT)) {
+                pstmtNVYT.setString(1, cbkhoa.getSelectedItem().toString());
+                ResultSet rsNVYT = pstmtNVYT.executeQuery();
+                
+                // Xóa các mục cũ trong cbbs
+                cbbs.removeAllItems();
+                
+                while (rsNVYT.next()) {
+                    String bacSiDieuTri = rsNVYT.getString("BacSiDieuTri");
+                    cbbs.addItem(bacSiDieuTri);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-    
-    }//GEN-LAST:event_cbmbnActionPerformed
+    }//GEN-LAST:event_cbmkActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
