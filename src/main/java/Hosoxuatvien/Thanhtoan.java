@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -149,6 +150,64 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
         }
     }
     
+    private String getTenBenhNhan(String maBenhNhan) throws ClassNotFoundException, SQLException {
+        String tenBenhNhan = "";
+
+        // Kết nối đến cơ sở dữ liệu
+        String query = "SELECT HoTenBenhNhan FROM BenhNhan WHERE MaBenhNhan = ?";
+        con = BTL.Connect.KetnoiDB(); 
+        try (
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, maBenhNhan); // Gán mã bệnh nhân vào truy vấn
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                tenBenhNhan = rs.getString("HoTenBenhNhan"); // Lấy tên bệnh nhân từ kết quả truy vấn
+            }
+        }
+
+        return tenBenhNhan; // Trả về tên bệnh nhân
+    }
+
+    private String getMaBenhNhanFromHoSo(String maHoSoXuatVien) throws ClassNotFoundException, SQLException {
+        String maBenhNhan = "";
+
+        String query = "SELECT MaBenhNhan FROM HoSoXuatVien WHERE MaHoSoXuatVien = ?";
+        con = BTL.Connect.KetnoiDB();
+
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, maHoSoXuatVien);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                maBenhNhan = rs.getString("MaBenhNhan");
+            }
+        }
+
+        return maBenhNhan;
+    }
+
+
+    private String getTenThuoc(String maThuoc) throws ClassNotFoundException, SQLException {
+    String tenThuoc = "";
+    
+    // Kết nối đến cơ sở dữ liệu
+    String query = "SELECT TenThuoc FROM Thuoc WHERE MaThuoc = ?";
+    con = BTL.Connect.KetnoiDB(); 
+    try (
+        PreparedStatement pstmt = con.prepareStatement(query)) {
+        
+        pstmt.setString(1, maThuoc); // Gán mã thuốc vào truy vấn
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            tenThuoc = rs.getString("TenThuoc"); // Lấy tên thuốc từ kết quả truy vấn
+        }
+    }
+    
+    return tenThuoc; // Trả về tên thuốc
+        }
+    
     
    private double getDonGia(String maThuoc) throws ClassNotFoundException, SQLException {
     double donGia = 0.0;
@@ -198,6 +257,12 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
         cbmt = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         cbbhyt = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        txttenthuoc = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txttenbn = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txtmbn = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txttimkiem = new javax.swing.JTextField();
@@ -240,6 +305,11 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
         jLabel5.setText("Ngày thanh toán");
 
         cbmhs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Chọn mã hồ sơ---" }));
+        cbmhs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbmhsActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Mã hồ sơ");
 
@@ -279,6 +349,12 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
             }
         });
 
+        jLabel9.setText("Tên thuốc");
+
+        jLabel10.setText("Bệnh nhân");
+
+        jLabel11.setText("Mã bệnh nhân");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -302,21 +378,30 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
                                     .addComponent(txtthanhtoan)
                                     .addComponent(cbbhyt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(56, 56, 56)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cbmt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtll, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(dcngay, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 111, Short.MAX_VALUE)))
+                                .addComponent(dcngay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbmt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtll)))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txttenthuoc)
+                            .addComponent(txttenbn)
+                            .addComponent(txtmbn, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -327,20 +412,27 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
                     .addComponent(cbmhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel2)
-                    .addComponent(cbmt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbmt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txttenthuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(cbbhyt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbhyt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(txttenbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
                         .addComponent(jLabel4)
                         .addComponent(txtthanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(dcngay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dcngay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(txtmbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                 .addContainerGap())
@@ -370,7 +462,7 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -537,35 +629,45 @@ private ArrayList<String> selectedMedicines; // Danh sách các thuốc đã ch�
     }//GEN-LAST:event_btthemActionPerformed
 
     private void cbmtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmtActionPerformed
-           // Lấy mã thuốc đã chọn từ JComboBox
-    String selectedMaThuoc = (String) cbmt.getSelectedItem();
+        // Lấy mã thuốc đã chọn từ JComboBox
+        String selectedMaThuoc = (String) cbmt.getSelectedItem();
 
-    if (selectedMaThuoc == null) {
-        System.out.println("Chưa chọn mã thuốc!");
-        return; // Thoát nếu không có thuốc nào được chọn
-    }
+        if (selectedMaThuoc == null) {
+            System.out.println("Chưa chọn mã thuốc!");
+            return; // Thoát nếu không có thuốc nào được chọn
+        }
 
-    // Gọi phương thức để lấy giá tiền từ mã thuốc
-    double giaTien = 0;
-    try {
-        giaTien = getDonGia(selectedMaThuoc);
-    } catch (ClassNotFoundException | SQLException ex) {
-        Logger.getLogger(Thanhtoan.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        // Khai báo biến tên thuốc và giá thuốc
+        String tenThuoc = "";
+        double giaTien = 0;
 
-    // Cập nhật giá tiền vào JTextField
-    double currentTotal = 0;
-    try {
-        currentTotal = Double.parseDouble(txtthanhtoan.getText());
-    } catch (NumberFormatException e) {
-        currentTotal = 0; // Nếu có lỗi, coi như giá tiền hiện tại là 0
-    }
+        try {
+            // Gọi phương thức để lấy tên thuốc từ mã thuốc
+            tenThuoc = getTenThuoc(selectedMaThuoc); // Gọi phương thức để lấy tên thuốc
 
-    // Cộng thêm giá tiền thuốc vào tổng
-    currentTotal += giaTien;
-    
-    // Cập nhật lại JTextField
-    txtthanhtoan.setText(String.valueOf(currentTotal));
+            // Gọi phương thức để lấy giá tiền từ mã thuốc
+            giaTien = getDonGia(selectedMaThuoc); // Gọi phương thức để lấy giá tiền
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Thanhtoan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Cập nhật tên thuốc vào JTextField
+        txttenthuoc.setText(tenThuoc);
+
+        // Cập nhật giá tiền vào JTextField
+        double currentTotal = 0;
+        try {
+            currentTotal = Double.parseDouble(txtthanhtoan.getText());
+        } catch (NumberFormatException e) {
+            currentTotal = 0; // Nếu có lỗi, coi như giá tiền hiện tại là 0
+        }
+
+        // Cộng thêm giá tiền thuốc vào tổng
+        currentTotal += giaTien;
+
+        // Cập nhật lại JTextField với giá tiền mới
+        txtthanhtoan.setText(String.valueOf(currentTotal));
+
     }//GEN-LAST:event_cbmtActionPerformed
 
     private void tbhdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhdMouseClicked
@@ -811,6 +913,33 @@ try {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btxuathdActionPerformed
+
+    private void cbmhsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmhsActionPerformed
+    // Lấy mã hồ sơ xuất viện đã chọn từ JComboBox
+    String selectedMaHoSoXuatVien = (String) cbmhs.getSelectedItem();
+
+    if (selectedMaHoSoXuatVien == null) {
+        System.out.println("Chưa chọn mã hồ sơ xuất viện!");
+        return; // Thoát nếu không có hồ sơ nào được chọn
+    }
+
+    String maBenhNhan = "";
+    String tenBenhNhan = "";
+
+    try {
+        // Lấy mã bệnh nhân từ mã hồ sơ xuất viện
+        maBenhNhan = getMaBenhNhanFromHoSo(selectedMaHoSoXuatVien);
+        // Lấy tên bệnh nhân từ mã bệnh nhân
+        tenBenhNhan = getTenBenhNhan(maBenhNhan);
+    } catch (ClassNotFoundException | SQLException ex) {
+        Logger.getLogger(Thanhtoan.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    // Cập nhật tên bệnh nhân vào JTextField
+    txttenbn.setText(tenBenhNhan);
+    // Cập nhật mã bệnh nhân vào JTextField
+    txtmbn.setText(maBenhNhan);
+    }//GEN-LAST:event_cbmhsActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -861,6 +990,8 @@ try {
     private javax.swing.JComboBox<String> cbmt;
     private com.toedter.calendar.JDateChooser dcngay;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -868,6 +999,7 @@ try {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -875,6 +1007,9 @@ try {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbhd;
     private javax.swing.JTextField txtll;
+    private javax.swing.JTextField txtmbn;
+    private javax.swing.JTextField txttenbn;
+    private javax.swing.JTextField txttenthuoc;
     private javax.swing.JTextField txtthanhtoan;
     private javax.swing.JTextField txttimkiem;
     // End of variables declaration//GEN-END:variables

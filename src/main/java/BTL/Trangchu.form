@@ -4,12 +4,12 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[950, 800]"/>
+      <Dimension value="[1000, 800]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -33,7 +33,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="dp" alignment="0" pref="973" max="32767" attributes="0"/>
+                          <Component id="dp" alignment="0" pref="996" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -61,19 +61,19 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="311" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -81,6 +81,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="24" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="H&#x1ec6; TH&#x1ed0;NG QU&#x1ea2;N L&#xdd; DANH S&#xc1;CH B&#x1ec6;NH NH&#xc2;N N&#x1ed8;I TR&#xda;"/>
           </Properties>
         </Component>
@@ -93,8 +96,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jToolBar1" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jToolBar1" min="-2" pref="990" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -118,6 +121,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btbn">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\Benhnhan.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin b&#x1ec7;nh nh&#xe2;n"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -129,6 +135,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btkhoa">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\khoa.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Khoa"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -143,6 +152,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnv">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\nhapvien.png"/>
+                </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="label" type="java.lang.String" value="Nh&#xe2;n vi&#xea;n y t&#x1ebf;"/>
@@ -154,6 +166,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btt">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\thuoc.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Thu&#x1ed1;c"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -168,6 +183,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btpb">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\phong.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ph&#xf2;ng b&#x1ec7;nh"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -179,6 +197,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btg">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\giuong.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Gi&#x1b0;&#x1edd;ng b&#x1ec7;nh"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -190,6 +211,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="bthsnv">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\nhapvien.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; nh&#x1ead;p vi&#x1ec7;n"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -201,6 +225,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btdt">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\quatrinhdieutri.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Qu&#xe1; tr&#xec;nh &#x111;i&#x1ec1;u tr&#x1ecb;"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -212,6 +239,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="bthsxv">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\xuatvien.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="H&#x1ed3; s&#x1a1; xu&#x1ea5;t vi&#x1ec7;n"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -223,6 +253,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="bttt">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\thanhtoan.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Thanh to&#xe1;n"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -233,6 +266,20 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btttMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\nutthoat.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tho&#xe1;t"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

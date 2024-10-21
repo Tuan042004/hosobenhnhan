@@ -60,32 +60,35 @@ public class Trangchu extends javax.swing.JFrame {
         btdt = new javax.swing.JButton();
         bthsxv = new javax.swing.JButton();
         bttt = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         dp = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(950, 800));
+        setPreferredSize(new java.awt.Dimension(1000, 800));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("HỆ THỐNG QUẢN LÝ DANH SÁCH BỆNH NHÂN NỘI TRÚ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(170, 170, 170))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jToolBar1.setRollover(true);
 
+        btbn.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\Benhnhan.png")); // NOI18N
         btbn.setText("Thông tin bệnh nhân");
         btbn.setFocusable(false);
         btbn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -97,6 +100,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btbn);
 
+        btkhoa.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\khoa.png")); // NOI18N
         btkhoa.setText("Khoa");
         btkhoa.setFocusable(false);
         btkhoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -109,6 +113,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btkhoa);
 
+        btnv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\nhapvien.png")); // NOI18N
         btnv.setFocusable(false);
         btnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnv.setLabel("Nhân viên y tế");
@@ -120,6 +125,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btnv);
 
+        btt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\thuoc.png")); // NOI18N
         btt.setText("Thuốc");
         btt.setFocusable(false);
         btt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -132,6 +138,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btt);
 
+        btpb.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\phong.png")); // NOI18N
         btpb.setText("Phòng bệnh");
         btpb.setFocusable(false);
         btpb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -139,6 +146,7 @@ public class Trangchu extends javax.swing.JFrame {
         btpb.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btpb);
 
+        btg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\giuong.png")); // NOI18N
         btg.setText("Giường bệnh");
         btg.setFocusable(false);
         btg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -146,6 +154,7 @@ public class Trangchu extends javax.swing.JFrame {
         btg.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btg);
 
+        bthsnv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\nhapvien.png")); // NOI18N
         bthsnv.setText("Hồ sơ nhập viện");
         bthsnv.setFocusable(false);
         bthsnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -157,6 +166,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bthsnv);
 
+        btdt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\quatrinhdieutri.png")); // NOI18N
         btdt.setText("Quá trình điều trị");
         btdt.setFocusable(false);
         btdt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -168,6 +178,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btdt);
 
+        bthsxv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\xuatvien.png")); // NOI18N
         bthsxv.setText("Hồ sơ xuất viện");
         bthsxv.setFocusable(false);
         bthsxv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -179,6 +190,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bthsxv);
 
+        bttt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\thanhtoan.png")); // NOI18N
         bttt.setText("Thanh toán");
         bttt.setFocusable(false);
         bttt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -191,14 +203,26 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bttt);
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\nutthoat.png")); // NOI18N
+        jButton1.setText("Thoát");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 990, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +256,7 @@ public class Trangchu extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dp, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE))))
+                            .addComponent(dp, javax.swing.GroupLayout.DEFAULT_SIZE, 996, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -248,6 +272,7 @@ public class Trangchu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbnMouseClicked
@@ -289,7 +314,7 @@ public class Trangchu extends javax.swing.JFrame {
     private void btkhoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btkhoaMouseClicked
         dp.removeAll();
         QuanLyKhoa bn = null;
-         bn= new QuanLyKhoa();
+        bn= new QuanLyKhoa();
         dp.add(bn ).setVisible(true);
     }//GEN-LAST:event_btkhoaMouseClicked
 
@@ -317,6 +342,13 @@ public class Trangchu extends javax.swing.JFrame {
         }
         dp.add(bn ).setVisible(true);        
     }//GEN-LAST:event_bthsnvMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+
+    this.dispose();
+    Login login = new Login();
+    login.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -365,6 +397,7 @@ public class Trangchu extends javax.swing.JFrame {
     private javax.swing.JButton btt;
     private javax.swing.JButton bttt;
     private javax.swing.JDesktopPane dp;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
