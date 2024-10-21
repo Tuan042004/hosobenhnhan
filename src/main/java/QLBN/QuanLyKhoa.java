@@ -212,7 +212,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(935, 600));
+        setPreferredSize(new java.awt.Dimension(980, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
