@@ -44,7 +44,6 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 /**
  *
  * @author dqduc
@@ -58,15 +57,13 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
-        xoatrang();
+        initComponents();
         btluu.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
         load_qtdt();
-        initComponents();
-        load_qtdt();
     }
-     private static CellStyle DinhdangHeader(XSSFSheet sheet) {
+    private static CellStyle DinhdangHeader(XSSFSheet sheet) {
         // Create font
         Font font = sheet.getWorkbook().createFont();
         font.setFontName("Times New Roman");
@@ -212,7 +209,6 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
@@ -350,8 +346,8 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btluu.setText("Lưu");
@@ -382,13 +378,6 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setText("Thoát");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Xuất excel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,13 +405,11 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
-                .addComponent(btnhapexcel)
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addGap(167, 167, 167)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
+                .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,7 +420,6 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
                     .addComponent(jButton1)
                     .addComponent(btnhapexcel))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -509,7 +495,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
         xoatrang();
-        btluu.setEnabled(false);
+
         btsua.setEnabled(true);
         btxoa.setEnabled(true);
 
@@ -616,7 +602,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
 
                 // Thông báo thành công
                 JOptionPane.showMessageDialog(this, "Xoá thành công");
-                xoatrang();
+
                 // Tải lại dữ liệu và xóa trắng các trường nhập liệu
                 load_qtdt();
                 xoatrang();
@@ -639,10 +625,6 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         btxoa.setEnabled(false);
         load_qtdt();
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -753,7 +735,6 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
     private javax.swing.JButton btxoa;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
