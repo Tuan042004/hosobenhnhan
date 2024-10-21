@@ -333,7 +333,7 @@ private void load_hsnv(){
         jButton1 = new javax.swing.JButton();
         btthoat = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(935, 600));
+        setPreferredSize(new java.awt.Dimension(980, 600));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tìm kiếm"));
 

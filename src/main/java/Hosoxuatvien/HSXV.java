@@ -281,6 +281,11 @@ public class HSXV extends javax.swing.JFrame {
         jLabel6.setText("Ngày xuất viện");
 
         cbmbn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Chọn mã bệnh nhân---" }));
+        cbmbn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbmbnActionPerformed(evt);
+            }
+        });
 
         dcngaynv.setDateFormatString("yyyy-MM-dd");
 
@@ -966,6 +971,11 @@ public class HSXV extends javax.swing.JFrame {
         }        
         
     }//GEN-LAST:event_btxuatexcelActionPerformed
+
+    private void cbmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmbnActionPerformed
+        
+
+    }//GEN-LAST:event_cbmbnActionPerformed
 
     /**
      * @param args the command line arguments
