@@ -77,9 +77,24 @@ public class HoSoXuatVien extends javax.swing.JInternalFrame {
     cbmbn.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
     txttenbn.setEnabled(true);
     cbkhoa.setEnabled(true);
-
-
     }
+    
+private boolean Checktrungmbn(String mbn) {
+    boolean kq = false;
+    try {
+        con = BTL.Connect.KetnoiDB();
+        // Thay HoSoXuatVien bằng HoSoNhapVien nếu bạn muốn kiểm tra mã bệnh nhân khi nhập viện
+        String sql = "SELECT * FROM HoSoXuatVien WHERE MaBenhNhan = '" + mbn + "'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        if (rs.next()) { // Nếu tìm thấy mã bệnh nhân trong cơ sở dữ liệu
+            kq = true; // Mã bệnh nhân đã tồn tại
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return kq;
+}
     
         private void loadcbo() throws ClassNotFoundException {
     try {
@@ -663,6 +678,12 @@ public class HoSoXuatVien extends javax.swing.JInternalFrame {
         Date ngayXuat = new Date(dcngayxv.getDate().getTime()); // JDateChooser cho ngày xuất viện
 
         String lyDoXuat = txtld.getText().trim();  // Lý do xuất viện
+        
+                //Kiểm tra trùng mã bệnh nhân
+        if(Checktrungmbn(mbn)){
+            JOptionPane.showMessageDialog(this, "Trùng mã bệnh ");
+            return;
+        }
 
         // B1.1: Kiểm tra các trường bắt buộc phải nhập
         if (maHoSo.isEmpty()) {
