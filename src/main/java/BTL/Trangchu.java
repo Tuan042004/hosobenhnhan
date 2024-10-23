@@ -9,6 +9,8 @@ import Hosoxuatvien.HoaDonThanhToan;
 import Kien.Thuoc;
 import Kien.DieuTri;
 import Kien.ThuocThang;
+import Nhung.giuongbenh;
+import Nhung.phongbenh;
 import QLBN.QuanLyBenhNhan1;
 import QLBN.QuanLyKhoa;
 import QLBN.QuanLyNhanVien;
@@ -144,6 +146,11 @@ public class Trangchu extends javax.swing.JFrame {
         btpb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btpb.setMargin(new java.awt.Insets(2, 15, 3, 15));
         btpb.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btpb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btpbActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btpb);
 
         btg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\giuong.png")); // NOI18N
@@ -152,6 +159,11 @@ public class Trangchu extends javax.swing.JFrame {
         btg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btg.setMargin(new java.awt.Insets(2, 15, 3, 15));
         btg.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btgActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btg);
 
         bthsnv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\nhapvien.png")); // NOI18N
@@ -348,6 +360,20 @@ public class Trangchu extends javax.swing.JFrame {
     Login login = new Login();
     login.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void btpbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btpbActionPerformed
+        dp.removeAll();
+        phongbenh bn = null;
+        bn= new phongbenh();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btpbActionPerformed
+
+    private void btgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btgActionPerformed
+        dp.removeAll();
+        giuongbenh bn = null;
+        bn= new giuongbenh();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btgActionPerformed
 
     /**
      * @param args the command line arguments

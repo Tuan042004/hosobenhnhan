@@ -855,7 +855,14 @@ private void load_tt(String maGiuong) {
 
     private void suaxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suaxoaActionPerformed
         // TODO add your handling code here:
-       xoagiuong themg = new xoagiuong();
+       xoagiuong themg = null;
+        try {
+            themg = new xoagiuong();
+        } catch (SQLException ex) {
+            Logger.getLogger(giuongbenh.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(giuongbenh.class.getName()).log(Level.SEVERE, null, ex);
+        }
         themg.setVisible(true);
     }//GEN-LAST:event_suaxoaActionPerformed
     

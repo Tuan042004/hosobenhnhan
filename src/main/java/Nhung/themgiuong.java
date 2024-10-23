@@ -381,7 +381,12 @@ public class themgiuong extends javax.swing.JFrame {
         String mg = ma_g.getText(); // Lấy giá trị được chọn từ comboBox mã giường
 
         // Khởi tạo frame xoagiuong và truyền dữ liệu từ form chính
-        xoagiuong xoag = new xoagiuong(ma_p, ma_p);
+        xoagiuong xoag = null;
+        try {
+            xoag = new xoagiuong(ma_p, ma_p);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(themgiuong.class.getName()).log(Level.SEVERE, null, ex);
+        }
         xoag.setFields(ma_p, ma_p);
         xoag.setVisible(true);
 //        String mg = ma_g.getText().toString().trim();
