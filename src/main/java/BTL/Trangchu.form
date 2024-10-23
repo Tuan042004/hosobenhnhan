@@ -177,6 +177,9 @@
                 </Property>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btpbActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btg">
               <Properties>
@@ -188,6 +191,9 @@
                 </Property>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btgActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bthsnv">
               <Properties>
@@ -198,7 +204,6 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bthsnvMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bthsnvActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btdt">

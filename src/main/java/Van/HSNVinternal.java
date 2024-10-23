@@ -383,6 +383,8 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         btthoat = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(980, 600));
+
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin hồ sơ nhập viện"));
 
         jLabel4.setText("Mã hồ sơ:");

@@ -9,10 +9,12 @@ import Hosoxuatvien.HoaDonThanhToan;
 import Kien.Thuoc;
 import Kien.DieuTri;
 import Kien.ThuocThang;
+import Nhung.giuongbenh;
+import Nhung.phongbenh;
 import QLBN.QuanLyBenhNhan1;
 import QLBN.QuanLyKhoa;
 import QLBN.QuanLyNhanVien;
-import Van.HSNVinternal;
+import Van.IFhsnv;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -139,6 +141,11 @@ public class Trangchu extends javax.swing.JFrame {
         btpb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btpb.setMargin(new java.awt.Insets(2, 15, 3, 15));
         btpb.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btpb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btpbActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btpb);
 
         btg.setText("Giường bệnh");
@@ -146,6 +153,11 @@ public class Trangchu extends javax.swing.JFrame {
         btg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btg.setMargin(new java.awt.Insets(2, 15, 3, 15));
         btg.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btgActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btg);
 
         bthsnv.setText("Hồ sơ nhập viện");
@@ -155,11 +167,6 @@ public class Trangchu extends javax.swing.JFrame {
         bthsnv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bthsnvMouseClicked(evt);
-            }
-        });
-        bthsnv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bthsnvActionPerformed(evt);
             }
         });
         jToolBar1.add(bthsnv);
@@ -326,7 +333,14 @@ public class Trangchu extends javax.swing.JFrame {
     }//GEN-LAST:event_btdtMouseClicked
 
     private void bthsnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bthsnvMouseClicked
-        
+        dp.removeAll();
+        IFhsnv bn = null;
+        try {
+            bn= new IFhsnv();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Trangchu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dp.add(bn ).setVisible(true);        
     }//GEN-LAST:event_bthsnvMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -336,10 +350,19 @@ public class Trangchu extends javax.swing.JFrame {
     login.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void bthsnvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthsnvActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_bthsnvActionPerformed
+    private void btpbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btpbActionPerformed
+        dp.removeAll();
+        phongbenh bn = null;
+        bn= new phongbenh();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btpbActionPerformed
+
+    private void btgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btgActionPerformed
+        dp.removeAll();
+        giuongbenh bn = null;
+        bn= new giuongbenh();
+        dp.add(bn ).setVisible(true);
+    }//GEN-LAST:event_btgActionPerformed
 
     /**
      * @param args the command line arguments

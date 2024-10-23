@@ -391,6 +391,7 @@ public class HSNV extends javax.swing.JFrame {
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(980, 600));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin hồ sơ nhập viện"));
 
@@ -484,9 +485,9 @@ public class HSNV extends javax.swing.JFrame {
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel4))
                                 .addGap(37, 37, 37)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbmp, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbmp, 0, 177, Short.MAX_VALUE)
+                                    .addComponent(txtmhs)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
