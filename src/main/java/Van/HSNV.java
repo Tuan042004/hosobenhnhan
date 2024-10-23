@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Van;
-import BTL.Connect;
+//import BTL.Connect;
 import Van.NewJFrame;
-//import folder.Connect;
+import demo.*;
+import BTL.Connect;
+import Van.Sua;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -58,14 +60,30 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;/**
  */
 public class HSNV extends javax.swing.JFrame {
 
+    private NewJFrame f1;
+
     /**
      * Creates new form new1
      */
     public HSNV() throws ClassNotFoundException {
         initComponents();
-//        load_disable();
+        load_disable();
         load_hsnv();
         loadcbo();
+    }
+    public HSNV(NewJFrame f1){
+        this.f1 = f1;
+        initComponents();
+    }
+    private void load_disable(){
+        txtmhs.setEnabled(false);
+        cbmbn.setEnabled(false);
+        dcnnv.setEnabled(false);
+        txtcd.setEnabled(false);
+        cbmp.setEnabled(false);
+        cbmg.setEnabled(false);
+        cbmk.setEnabled(false);
+        cbtk.setEnabled(false);
         
     }
     Connection con;
@@ -86,28 +104,6 @@ public class HSNV extends javax.swing.JFrame {
     HSNV(NewJFrame.Form1 aThis) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-//    private void load_disable(){
-//        txtmhs.setEnabled(false);
-//        cbmbn.setEnabled(false);
-//        cbmp.setEnabled(false);
-//        txtcd.setEnabled(false);
-//        cbmg.setEnabled(false);
-//        cbmk.setEnabled(false);
-//        cbtk.setEnabled(false);
-//        btluu.setEnabled(false);
-//        btcapnhat.setEnabled(false);
-//    }
-//    private void load_enable(){
-//        txtmhs.setEnabled(true);
-//        cbmbn.setEnabled(true);
-//        cbmp.setEnabled(true);
-//        txtcd.setEnabled(true);
-//        cbmg.setEnabled(true);
-//        cbmk.setEnabled(true);
-//        cbtk.setEnabled(true);
-//        btluu.setEnabled(true);
-//        btcapnhat.setEnabled(true);
-//    }
     public void load_hsnv(){
         try {
     // Làm sạch bảng trước khi thêm dữ liệu mới
@@ -117,12 +113,13 @@ public class HSNV extends javax.swing.JFrame {
     con = Connect.KetnoiDB();
 
     // B2: Tạo đối tượng Statement để thực hiện câu lệnh truy cập
-    String sql = "SELECT * FROM HoSoNhapVien";
+    String sql = "SELECT * from HoSoNhapVien";
     Statement st = con.createStatement();
     ResultSet rs = st.executeQuery(sql);
 
     // Định nghĩa tiêu đề cho bảng
-    String[] tieude = {"Mã hồ sơ", "Mã bệnh nhân"," Ngày nhập viện","Chẩn đoán","Mã phòng","Mã giường", "Mã khoa", "Tên khoa"};
+    String[] tieude = { "Mã hồ sơ", "Mã bệnh nhân", "Ngày nhập viện", "Chẩn đoán", "Mã phòng", "Mã giường", "Mã khoa", "Tên khoa" };
+
     // Tạo DefaultTableModel
     DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
         @Override
@@ -137,8 +134,8 @@ public class HSNV extends javax.swing.JFrame {
         Vector<String> v = new Vector<>();
         v.add(rs.getString("MaHoSoNhapVien"));        // Mã hồ sơ
         v.add(rs.getString("MaBenhNhan"));             // Mã bệnh nhân
-        v.add(rs.getDate("NgayNhapVien").toString());   // Ngày nhập viện điều trị
-//        v.add(rs.getDate("NgayXuat").toString()); // Ngày xuất viện        
+//        v.add(rs.getString("HoTenBenhNhan"));   // Họ Tên Bệnh Nhân
+        v.add(rs.getDate("NgayNhapVien").toString()); // Ngày nhập viện        
         v.add(rs.getString("ChanDoan")); //chẩn đoán bệnh
         v.add(rs.getString("MaPhong"));                  // Mã phòng
         v.add(rs.getString("MaGiuong"));                 // mã giường
@@ -163,11 +160,11 @@ public class HSNV extends javax.swing.JFrame {
 }
      public void xoatrang() {
         txtmhs.setText("");
-        cbmbn.setSelectedItem("Chọn Mã Bệnh Nhân");  // Xóa lựa chọn trong JComboBox
-        cbmk.setSelectedItem("Chọn Mã Khoa");
-        cbtk.setSelectedItem("Chọn Tên Khoa");
-        cbmg.setSelectedItem("Chọn Giường");
-        cbmp.setSelectedItem("Chọn Phòng");
+        cbmbn.setSelectedItem(null);  // Xóa lựa chọn trong JComboBox
+        cbmk.setSelectedItem(null);
+        cbtk.setSelectedItem(null);
+        cbmg.setSelectedItem(null);
+        cbmp.setSelectedItem(null);
         dcnnv.setDate(null);   
         txtcd.setText("");
         
@@ -298,6 +295,7 @@ public class HSNV extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Lỗi khi đọc file: " + e.getMessage());
     }
 }
+         
          public void loadcbo() throws ClassNotFoundException {
     try {
         con = Connect.KetnoiDB();
@@ -384,9 +382,11 @@ public class HSNV extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        btthoat = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        btthoat = new javax.swing.JButton();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -397,6 +397,12 @@ public class HSNV extends javax.swing.JFrame {
         jLabel4.setText("Mã hồ sơ:");
 
         jLabel3.setText("Mã bệnh nhân: ");
+
+        txtmhs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtmhsActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Ngày nhập viện: ");
 
@@ -425,7 +431,6 @@ public class HSNV extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
-        cbmp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Phòng" }));
         cbmp.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbmpItemStateChanged(evt);
@@ -434,7 +439,6 @@ public class HSNV extends javax.swing.JFrame {
 
         jLabel7.setText("Mã Giường:");
 
-        cbmg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Giường" }));
         cbmg.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbmgItemStateChanged(evt);
@@ -443,7 +447,6 @@ public class HSNV extends javax.swing.JFrame {
 
         jLabel8.setText("Mã Khoa:");
 
-        cbmk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Khoa" }));
         cbmk.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbmkItemStateChanged(evt);
@@ -452,7 +455,6 @@ public class HSNV extends javax.swing.JFrame {
 
         jLabel9.setText("Tên Khoa:");
 
-        cbtk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Tên Khoa" }));
         cbtk.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbtkItemStateChanged(evt);
@@ -466,8 +468,6 @@ public class HSNV extends javax.swing.JFrame {
                 txtcdActionPerformed(evt);
             }
         });
-
-        cbmbn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Bệnh Nhân" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -497,7 +497,7 @@ public class HSNV extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbmbn, 0, 180, Short.MAX_VALUE)
@@ -510,7 +510,7 @@ public class HSNV extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbmk, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbtk, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtcd))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -579,7 +579,7 @@ public class HSNV extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(34, 34, 34)
                 .addComponent(tkmbn, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -624,13 +624,6 @@ public class HSNV extends javax.swing.JFrame {
             }
         });
 
-        btthoat.setText("Thoát");
-        btthoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthoatActionPerformed(evt);
-            }
-        });
-
         jButton2.setText("Xuất báo cáo");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -645,22 +638,47 @@ public class HSNV extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Load");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Cập nhật");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        btthoat.setText("Thoát");
+        btthoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btthoatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addContainerGap()
                 .addComponent(jButton1)
-                .addGap(138, 138, 138)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton6)
+                .addGap(91, 91, 91)
                 .addComponent(jButton3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btthoat)
-                .addGap(45, 45, 45))
+                .addComponent(btthoat, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,9 +686,11 @@ public class HSNV extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton1)
-                    .addComponent(btthoat)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton6)
+                    .addComponent(btthoat))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -683,9 +703,10 @@ public class HSNV extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -707,23 +728,12 @@ public class HSNV extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbhsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhsMouseClicked
-        cbmk.setEnabled(false);
-        cbmp.setEnabled(false);
-        cbmg.setEnabled(false);
-        cbmk.setEnabled(false);
-        cbtk.setEnabled(false);
-        cbmbn.setEnabled(false);
-        txtmhs.setEnabled(false);
-        dcnnv.setEnabled(false);
-        txtcd.setEnabled(false);
+        load_disable();
         int i = tbhs.getSelectedRow();
         DefaultTableModel tb = (DefaultTableModel) tbhs.getModel();
-        //gán giá trị cho textfield
-        txtmhs.setText(tb.getValueAt(i, 0).toString());
-        //gán giá trị cho combobox mã bệnh nhân
-        cbmbn.setSelectedItem(tb.getValueAt(i, 1).toString());
-        //gán giá trị cho datechooser ngày nhập viện
-        String nnv = tb.getValueAt(i, 2).toString();
+        txtmhs.setText(tb.getValueAt(i, 0).toString()); //gán giá trị cho textfield mã hồ sơ
+        cbmbn.setSelectedItem(tb.getValueAt(i, 1).toString());//gán giá trị cho combobox mã bệnh nhân
+        String nnv = tb.getValueAt(i, 2).toString();//gán giá trị cho datechooser ngày nhập viện
         java.util.Date ng;
         try {
             ng = new SimpleDateFormat("yyyy-MM-DD").parse(nnv);
@@ -731,13 +741,18 @@ public class HSNV extends javax.swing.JFrame {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-        //gán giá trị cho tf chẩn đoán
-        txtcd.setText(tb.getValueAt(i, 3).toString());
-        //gán giá trị cho cbb mã phòng
-        cbmp.setSelectedItem(tb.getValueAt(i, 4).toString());
-        cbmg.setSelectedItem(tb.getValueAt(i, 5).toString());
-        cbmk.setSelectedItem(tb.getValueAt(i, 6).toString());
-        cbtk.setSelectedItem(tb.getValueAt(i, 7).toString());
+        txtcd.setText(tb.getValueAt(i, 3).toString());//gán giá trị cho tf chẩn đoán
+        cbmp.setSelectedItem(tb.getValueAt(i, 4).toString());//gán giá trị cho cbb mã phòng
+        cbmg.setSelectedItem(tb.getValueAt(i, 5).toString());//gán giá trị cho cbb mã giường
+        cbmk.setSelectedItem(tb.getValueAt(i, 6).toString());//gán giá trị cho cbb mã khoa
+        cbtk.setSelectedItem(tb.getValueAt(i, 7).toString());//gán giá trị cho cbb tên khoa
+// Sua s = null;
+//        try {
+//            s = new Sua();
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(HSNV.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+// s.setVisible(true);
     }//GEN-LAST:event_tbhsMouseClicked
 
     private void tbhsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhsMouseEntered
@@ -1006,6 +1021,26 @@ public class HSNV extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void txtmhsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmhsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmhsActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        load_hsnv();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        Sua s = null;
+        try {
+            s = new Sua();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HSNV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        s. setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1035,6 +1070,10 @@ public class HSNV extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1058,7 +1097,9 @@ public class HSNV extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
