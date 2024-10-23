@@ -932,6 +932,8 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         xoatrang();
         txtmnv.setEnabled(true);
+        btthem.setEnabled(true);
+
         load_qtdt();
     }//GEN-LAST:event_jButton4ActionPerformed
 
