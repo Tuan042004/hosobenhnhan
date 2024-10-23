@@ -14,7 +14,7 @@ import Nhung.phongbenh;
 import QLBN.QuanLyBenhNhan1;
 import QLBN.QuanLyKhoa;
 import QLBN.QuanLyNhanVien;
-import Van.IFhsnv;
+import Van.HSNVinternal;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -334,9 +334,9 @@ public class Trangchu extends javax.swing.JFrame {
 
     private void bthsnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bthsnvMouseClicked
         dp.removeAll();
-        IFhsnv bn = null;
+        HSNVinternal bn = null;
         try {
-            bn= new IFhsnv();
+            bn= new HSNVinternal();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Trangchu.class.getName()).log(Level.SEVERE, null, ex);
         }
