@@ -326,14 +326,7 @@ public class Trangchu extends javax.swing.JFrame {
     }//GEN-LAST:event_btdtMouseClicked
 
     private void bthsnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bthsnvMouseClicked
-        dp.removeAll();
-        HSNVinternal bn = null;
-        try {
-            bn= new HSNVinternal();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Trangchu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dp.add(bn ).setVisible(true);
+        
     }//GEN-LAST:event_bthsnvMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
