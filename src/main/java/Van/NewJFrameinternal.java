@@ -1,10 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package Van;
 
-
+import Van.NewJFrame;
+import Van.HSNVinternal;
 import Van.HSNV;
 import BTL.Connect;
 import java.awt.event.ActionEvent;
@@ -24,40 +25,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author Dell V
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class NewJFrameinternal extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form NewJFrame
+     * Creates new form NewJFrameinternal
      */
-    public NewJFrame() throws ClassNotFoundException {
-        initComponents(); //khoi tao cac thanh phan giao dien
+    public NewJFrameinternal() throws ClassNotFoundException {
+        initComponents();
         load_hsnv();
         loadcbo(); //load du lieu vao combobox
-        addComboBoxListeners(); //them su kien lang nghe cho combobox
+        addComboBoxListeners();
     }
     public class Form1 {
-    private HSNV form2;
+    private HSNVinternal form2;
 
     public Form1() {
-        form2 = new HSNV(this);  // Truyền form1 qua form2
+        form2 = new HSNVinternal(this);  // Truyền form1 qua form2
     }
 
     public void updateForm2Data(Object[] rowData) {
         form2.addRowToTable(rowData);  // Gọi phương thức của form2 để thêm dữ liệu
     }
 }
-    private void checkAndReconnect() throws SQLException {
+    private void checkAndReconnect() throws SQLException, ClassNotFoundException {
     if (con == null || con.isClosed()) {
-        try {
-            con = BTL.Connect.KetnoiDB(); // Gọi hàm kết nối lại nếu kết nối bị đóng
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        con = BTL.Connect.KetnoiDB(); // Gọi hàm kết nối lại nếu kết nối bị đóng
     }
 }
     Connection con;
@@ -142,9 +138,12 @@ public class NewJFrame extends javax.swing.JFrame {
             String maKhoa = khoaMap.get(selectedTenKhoa);  // Lấy Mã Khoa tương ứng từ HashMap nếu cần (giả sử bạn vẫn muốn hiển thị Mã Khoa)
             cbmk3.removeAllItems();  // Xóa mục cũ trong ComboBox Mã Khoa
             cbmk3.addItem(maKhoa);   // Thêm Mã Khoa vào ComboBox
-            
-            // Tải các phòng có giường trống dựa theo Tên Khoa
-            loadPhongWithEmptyBeds(selectedTenKhoa);  // Sử dụng trực tiếp Tên Khoa thay vì MaKhoa
+            try {
+                // Tải các phòng có giường trống dựa theo Tên Khoa
+                loadPhongWithEmptyBeds(selectedTenKhoa);  // Sử dụng trực tiếp Tên Khoa thay vì MaKhoa
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(NewJFrameinternal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     });
     
@@ -152,13 +151,17 @@ public class NewJFrame extends javax.swing.JFrame {
     cbmp3.addActionListener(e -> {
         String selectedPhong = (String) cbmp3.getSelectedItem();  // Lấy mã phòng đã chọn
         if (selectedPhong != null) {
-            loadGiuongForPhong(selectedPhong);  // Tải giường trống cho phòng đó
+            try {
+                loadGiuongForPhong(selectedPhong);  // Tải giường trống cho phòng đó
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(NewJFrameinternal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     });
 }
 
      // Phương thức tải danh sách các phòng có giường trống theo mã khoa
-private void loadPhongWithEmptyBeds(String tenKhoa) {
+private void loadPhongWithEmptyBeds(String tenKhoa) throws ClassNotFoundException {
     try {
         checkAndReconnect();  // Kiểm tra và kết nối lại nếu cần
         
@@ -181,7 +184,7 @@ private void loadPhongWithEmptyBeds(String tenKhoa) {
     }
 }
 
-private void loadGiuongForPhong(String maPhong) {
+private void loadGiuongForPhong(String maPhong) throws ClassNotFoundException {
     try {
         checkAndReconnect();  // Kiểm tra và kết nối lại nếu cần
 
@@ -205,7 +208,7 @@ private void loadGiuongForPhong(String maPhong) {
      private void loadcbo() throws ClassNotFoundException {
          HashSet<String> existingCodes = new HashSet<>();
     try {
-        con = Connect.KetnoiDB();
+        con = BTL.Connect.KetnoiDB();
         String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -244,7 +247,11 @@ private void loadGiuongForPhong(String maPhong) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedPhong = (String) cbmp3.getSelectedItem();  // Lấy mã phòng đã chọn
-                loadGiuongForPhong(selectedPhong);  // Gọi hàm để tải giường trống cho phòng
+                try {
+                    loadGiuongForPhong(selectedPhong);  // Gọi hàm để tải giường trống cho phòng
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(NewJFrameinternal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     
@@ -253,8 +260,67 @@ private void loadGiuongForPhong(String maPhong) {
         JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 }
-     
-         
+     // Phương thức kiểm tra trùng mã hồ sơ
+private boolean trungmhs(String mhs) {
+    try {
+        Connection con = Connect.KetnoiDB();
+        String sql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaHoSoNhapVien = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, mhs);
+
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;  // Trả về true nếu mã hồ sơ đã tồn tại
+        }
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;  // Trả về false nếu không trùng
+}
+
+// Phương thức kiểm tra trùng mã bệnh nhân
+private boolean trungmbn(String mbn) {
+    try {
+        Connection con = Connect.KetnoiDB();
+        String sql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, mbn);
+
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;  // Trả về true nếu mã bệnh nhân đã tồn tại
+        }
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;  // Trả về false nếu không trùng
+}
+private void loadComboBoxMaGiuong() throws ClassNotFoundException {
+    try {
+        Connection con = Connect.KetnoiDB();
+        String sql = "SELECT MaGiuong FROM Giuong WHERE TrangThaiGiuong = N'Trống'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+
+        cbmg3.removeAllItems();  // Xóa dữ liệu cũ trong ComboBox
+
+        while (rs.next()) {
+            cbmg3.addItem(rs.getString("MaGiuong"));  // Thêm mã giường vào ComboBox
+        }
+
+        con.close();  // Đóng kết nối sau khi hoàn tất
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi tải mã giường: " + e.getMessage());
+    }
+}
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -286,8 +352,7 @@ private void loadGiuongForPhong(String maPhong) {
         btthoat = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(906, 442));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản lý thông tin chi tiết"));
 
@@ -513,30 +578,29 @@ private void loadGiuongForPhong(String maPhong) {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addGap(53, 53, 53)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(407, Short.MAX_VALUE)
+                .addContainerGap(440, Short.MAX_VALUE)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(45, 45, 45)))
+                    .addGap(0, 42, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 42, Short.MAX_VALUE)))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbhs3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhs3MouseClicked
@@ -588,44 +652,11 @@ private void loadGiuongForPhong(String maPhong) {
     private void txtcd3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcd3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcd3ActionPerformed
-    // Phương thức kiểm tra trùng mã hồ sơ và mã bệnh nhân
-// Phương thức kiểm tra trùng mã hồ sơ
-private boolean trungmhs(String mhs) {
-    try {
-        Connection con = Connect.KetnoiDB();
-        String sql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaHoSoNhapVien = ?";
-        PreparedStatement pst = con.prepareStatement(sql);
-        pst.setString(1, mhs);
 
-        ResultSet rs = pst.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) > 0;  // Trả về true nếu mã hồ sơ đã tồn tại
-        }
-        con.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return false;  // Trả về false nếu không trùng
-}
+    private void cbmbn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmbn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbmbn3ActionPerformed
 
-// Phương thức kiểm tra trùng mã bệnh nhân
-private boolean trungmbn(String mbn) {
-    try {
-        Connection con = Connect.KetnoiDB();
-        String sql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaBenhNhan = ?";
-        PreparedStatement pst = con.prepareStatement(sql);
-        pst.setString(1, mbn);
-
-        ResultSet rs = pst.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) > 0;  // Trả về true nếu mã bệnh nhân đã tồn tại
-        }
-        con.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return false;  // Trả về false nếu không trùng
-}
     private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
         // B1: Lấy dữ liệu từ các components và đưa vào biến
         String mhs = txtmhs3.getText().trim();  // Mã hồ sơ nhập viện
@@ -705,11 +736,11 @@ private boolean trungmbn(String mbn) {
             "VALUES ('" + mhs + "', '" + mbn + "', '" + format.format(nnv) + "', N'" + cd + "', '" + mp + "', '" + mg + "', '" + mk + "', N'" + tk + "')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
-            
-              // Sau khi thêm thành công, cập nhật lại danh sách phòng và giường trống
-        loadPhongWithEmptyBeds(mk);  // Load lại danh sách phòng trong khoa
-        loadGiuongForPhong(mp);      // Load lại danh sách giường trống của phòng đã chọn
-            
+
+            // Sau khi thêm thành công, cập nhật lại danh sách phòng và giường trống
+            loadPhongWithEmptyBeds(mk);  // Load lại danh sách phòng trong khoa
+            loadGiuongForPhong(mp);      // Load lại danh sách giường trống của phòng đã chọn
+
             load_hsnv(); // Cập nhật bảng hiển thị hồ sơ nhập viện
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
             xoatrang(); // Xóa trắng các trường nhập
@@ -719,93 +750,68 @@ private boolean trungmbn(String mbn) {
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
     }//GEN-LAST:event_btluuActionPerformed
-    private void loadComboBoxMaGiuong() {
-    try {
-        Connection con = null;
-        try {
-            con = Connect.KetnoiDB();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String sql = "SELECT MaGiuong FROM Giuong WHERE TrangThaiGiuong = N'Trống'";
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-
-        cbmg3.removeAllItems();  // Xóa dữ liệu cũ trong ComboBox
-
-        while (rs.next()) {
-            cbmg3.addItem(rs.getString("MaGiuong"));  // Thêm mã giường vào ComboBox
-        }
-
-        con.close();  // Đóng kết nối sau khi hoàn tất
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi tải mã giường: " + e.getMessage());
-    }
-}
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-                                                 
-    try {
-        String bn = cbmbn3.getSelectedItem().toString(); // Lấy mã bệnh nhân từ ComboBox
 
-        // Xác nhận từ người dùng trước khi xoá
-        int choice = JOptionPane.showConfirmDialog(this, 
-                "Bạn có chắc chắn muốn xoá không?", 
-                "Xác nhận", 
-                JOptionPane.YES_NO_OPTION, 
+        try {
+            String bn = cbmbn3.getSelectedItem().toString(); // Lấy mã bệnh nhân từ ComboBox
+
+            // Xác nhận từ người dùng trước khi xoá
+            int choice = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc chắn muốn xoá không?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
-        if (choice == JOptionPane.YES_OPTION) {
-            // Kết nối đến cơ sở dữ liệu
-             con = Connect.KetnoiDB();
+            if (choice == JOptionPane.YES_OPTION) {
+                // Kết nối đến cơ sở dữ liệu
+                con = Connect.KetnoiDB();
 
-            // B1: Lấy mã giường của bệnh nhân cần xoá
-            String sqlSelect = "SELECT MaGiuong FROM HoSoNhapVien WHERE MaBenhNhan = ?";
-            PreparedStatement psSelect = con.prepareStatement(sqlSelect);
-            psSelect.setString(1, bn);
-            ResultSet rs = psSelect.executeQuery();
+                // B1: Lấy mã giường của bệnh nhân cần xoá
+                String sqlSelect = "SELECT MaGiuong FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+                PreparedStatement psSelect = con.prepareStatement(sqlSelect);
+                psSelect.setString(1, bn);
+                ResultSet rs = psSelect.executeQuery();
 
-            String maGiuong = null;
-            if (rs.next()) {
-                maGiuong = rs.getString("MaGiuong");
-            }
-
-            // B2: Thực hiện xoá hồ sơ nhập viện
-            String sqlDelete = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = ?";
-            PreparedStatement psDelete = con.prepareStatement(sqlDelete);
-            psDelete.setString(1, bn);
-            int rowsDeleted = psDelete.executeUpdate();
-
-            if (rowsDeleted > 0) {
-                // B3: Cập nhật trạng thái giường thành "Trống" nếu mã giường không null
-                if (maGiuong != null) {
-                    String sqlUpdateGiuong = "UPDATE Giuong SET TrangThaiGiuong = N'Trống' WHERE MaGiuong = ?";
-                    PreparedStatement psUpdate = con.prepareStatement(sqlUpdateGiuong);
-                    psUpdate.setString(1, maGiuong);
-                    psUpdate.executeUpdate();
+                String maGiuong = null;
+                if (rs.next()) {
+                    maGiuong = rs.getString("MaGiuong");
                 }
 
-                // B4: Hiển thị thông báo và load lại dữ liệu
-                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                // B2: Thực hiện xoá hồ sơ nhập viện
+                String sqlDelete = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+                PreparedStatement psDelete = con.prepareStatement(sqlDelete);
+                psDelete.setString(1, bn);
+                int rowsDeleted = psDelete.executeUpdate();
 
-                load_hsnv();  // Tải lại danh sách hồ sơ nhập viện
-                loadComboBoxMaGiuong();  // Cập nhật lại ComboBox mã giường
-                xoatrang();  // Xóa thông tin trên giao diện
+                if (rowsDeleted > 0) {
+                    // B3: Cập nhật trạng thái giường thành "Trống" nếu mã giường không null
+                    if (maGiuong != null) {
+                        String sqlUpdateGiuong = "UPDATE Giuong SET TrangThaiGiuong = N'Trống' WHERE MaGiuong = ?";
+                        PreparedStatement psUpdate = con.prepareStatement(sqlUpdateGiuong);
+                        psUpdate.setString(1, maGiuong);
+                        psUpdate.executeUpdate();
+                    }
+
+                    // B4: Hiển thị thông báo và load lại dữ liệu
+                    JOptionPane.showMessageDialog(this, "Xoá thành công");
+
+                    load_hsnv();  // Tải lại danh sách hồ sơ nhập viện
+                    loadComboBoxMaGiuong();  // Cập nhật lại ComboBox mã giường
+                    xoatrang();  // Xóa thông tin trên giao diện
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xoá");
+                }
+
+                // Đóng kết nối
+                con.close();
             } else {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xoá");
+                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
             }
-
-            // Đóng kết nối
-            con.close();
-        } else {
-            JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
         }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
-    }
-
 
     }//GEN-LAST:event_btxoaActionPerformed
 
@@ -813,18 +819,10 @@ private boolean trungmbn(String mbn) {
         dispose();
     }//GEN-LAST:event_btthoatActionPerformed
 
-    private void cbmbn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmbn3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbmbn3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         xoatrang();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -854,9 +852,9 @@ private boolean trungmbn(String mbn) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new NewJFrame().setVisible(true);
+                    new NewJFrameinternal().setVisible(true);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(NewJFrameinternal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
