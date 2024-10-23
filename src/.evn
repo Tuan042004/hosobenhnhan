@@ -1,3 +1,0 @@
-URL_DB=jdbc:sqlserver://localhost\ConMeoHuDon\SQLEXPRESS02:1433;databaseName=QuanLyBenhNhan;encrypt=true;trustServerCertificate=true
-USERNAME_DB=sa
-PASS_DB=123456
