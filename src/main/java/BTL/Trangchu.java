@@ -13,9 +13,9 @@ import QLBN.QuanLyBenhNhan1;
 import QLBN.QuanLyKhoa;
 import QLBN.QuanLyNhanVien;
 import Van.IFhsnv;
-import com.formdev.flatlaf.FlatLightLaf;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
 /**
@@ -88,7 +88,6 @@ public class Trangchu extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        btbn.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\Benhnhan.png")); // NOI18N
         btbn.setText("Thông tin bệnh nhân");
         btbn.setFocusable(false);
         btbn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -100,7 +99,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btbn);
 
-        btkhoa.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\khoa.png")); // NOI18N
         btkhoa.setText("Khoa");
         btkhoa.setFocusable(false);
         btkhoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -113,7 +111,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btkhoa);
 
-        btnv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\bacsi.png")); // NOI18N
         btnv.setFocusable(false);
         btnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnv.setLabel("Nhân viên y tế");
@@ -125,7 +122,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btnv);
 
-        btt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\thuoc.png")); // NOI18N
         btt.setText("Thuốc");
         btt.setFocusable(false);
         btt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -138,7 +134,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btt);
 
-        btpb.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\phong.png")); // NOI18N
         btpb.setText("Phòng bệnh");
         btpb.setFocusable(false);
         btpb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -146,7 +141,6 @@ public class Trangchu extends javax.swing.JFrame {
         btpb.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btpb);
 
-        btg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\giuong.png")); // NOI18N
         btg.setText("Giường bệnh");
         btg.setFocusable(false);
         btg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -154,7 +148,6 @@ public class Trangchu extends javax.swing.JFrame {
         btg.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btg);
 
-        bthsnv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\nhapvien.png")); // NOI18N
         bthsnv.setText("Hồ sơ nhập viện");
         bthsnv.setFocusable(false);
         bthsnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -166,7 +159,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bthsnv);
 
-        btdt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\quatrinhdieutri.png")); // NOI18N
         btdt.setText("Quá trình điều trị");
         btdt.setFocusable(false);
         btdt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -178,7 +170,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btdt);
 
-        bthsxv.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\xuatvien.png")); // NOI18N
         bthsxv.setText("Hồ sơ xuất viện");
         bthsxv.setFocusable(false);
         bthsxv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -190,7 +181,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bthsxv);
 
-        bttt.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\thanhtoan.png")); // NOI18N
         bttt.setText("Thanh toán");
         bttt.setFocusable(false);
         bttt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -203,7 +193,6 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bttt);
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Anh\\nutthoat.png")); // NOI18N
         jButton1.setText("Thoát");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -402,4 +391,35 @@ public class Trangchu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    private static class FlatLightLaf extends LookAndFeel {
+
+        public FlatLightLaf() {
+        }
+
+        @Override
+        public String getName() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public String getID() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public String getDescription() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public boolean isNativeLookAndFeel() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public boolean isSupportedLookAndFeel() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    }
 }

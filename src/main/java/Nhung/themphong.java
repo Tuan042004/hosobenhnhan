@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +28,8 @@ public class themphong extends javax.swing.JFrame {
     public themphong() {
         initComponents();
         load_Pb();
+        load_CCB();
+        
     }
     private void load_Pb(){
          try {
@@ -51,6 +55,25 @@ public class themphong extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+private void load_CCB() {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String query = "SELECT TenKhoa FROM Khoa"; // Thay đổi truy vấn để lấy mã bệnh nhân
+        Statement statement = con.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()) {
+            tenk.addItem(rs.getString("TenKhoa")); // Thêm mã bệnh nhân vào ComboBox
+        }
+} catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }   catch (ClassNotFoundException ex) {
+            Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+
+
+
 
     private boolean checkTrungMaPhong(String maPhong) {
     String sql = "SELECT COUNT(*) FROM PhongBenh WHERE MaPhong = ?";
@@ -96,6 +119,7 @@ public class themphong extends javax.swing.JFrame {
         Refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(680, 430));
 
         them.setText("Thêm ");
         them.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +136,7 @@ public class themphong extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("QUẢN LÝ PHÒNG BỆNH");
+        jLabel1.setText("THÔNG TIN PHÒNG BỆNH");
 
         xoa.setText("Xóa");
         xoa.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +160,12 @@ public class themphong extends javax.swing.JFrame {
 
         jLabel5.setText("Loại phòng:");
 
-        tenk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập tên Khoa --", "Khoa Nội", "Khoa Ngoại", "Khoa Nhi", "Khoa Sản", "Khoa Cấp cứu", "Khoa Da liễu", "Khoa Tim mạch", "Khoa Hô hấp", "Khoa Thần kinh", "Khoa Xét nghiệm", "Khoa Chẩn đoán hình ảnh", "Khoa Phục hồi chức năng", "Khoa Dinh dưỡng", "Khoa Y học cổ truyền", "Khoa Tâm lý" }));
+        tenk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập tên Khoa --" }));
+        tenk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenkActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Số giường:");
 
@@ -259,7 +288,7 @@ public class themphong extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(5, 5, 5)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -294,16 +323,16 @@ public class themphong extends javax.swing.JFrame {
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
+                .addGap(203, 203, 203)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -502,7 +531,7 @@ public class themphong extends javax.swing.JFrame {
         PreparedStatement deleteStmt = null;
 
         try {
-            con = BTL.Connect.KetnoiDB(); 
+            con = BTL.Connect.KetnoiDB();
 
             String sql = "DELETE FROM PhongBenh WHERE MaPhong = ?";
             deleteStmt = con.prepareStatement(sql);
@@ -603,6 +632,29 @@ public class themphong extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_RefreshActionPerformed
 
+    private void tenkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenkActionPerformed
+     // Lấy tên khoa đã chọn
+    String tenKhoa = (String) tenk.getSelectedItem();
+    
+    // Kiểm tra nếu tên khoa không phải là giá trị mặc định
+    if (tenKhoa == null || tenKhoa.equals("-- Nhập mã khoa --")) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một tên khoa hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return; // Kết thúc phương thức nếu chọn giá trị không hợp lệ
+    }
+
+        try {
+            // Tạo kết nối với cơ sở dữ liệu
+            con = BTL.Connect.KetnoiDB();
+            // Nếu bạn cần xử lý thêm thông tin nào đó với tên khoa ở đây, bạn có thể làm điều đó
+            // Hiện tại không cần thêm truy vấn nào khác, chỉ đơn giản là bạn đã có tên khoa
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }//GEN-LAST:event_tenkActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -628,6 +680,7 @@ public class themphong extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(themphong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

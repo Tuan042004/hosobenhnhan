@@ -3,6 +3,9 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[680, 360]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -43,7 +46,7 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -155,54 +158,8 @@
         <Component class="javax.swing.JComboBox" name="ma_p">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="47">
+              <StringArray count="1">
                 <StringItem index="0" value="-- Nh&#x1ead;p m&#xe3; ph&#xf2;ng --"/>
-                <StringItem index="1" value="101"/>
-                <StringItem index="2" value="102"/>
-                <StringItem index="3" value="103"/>
-                <StringItem index="4" value="104"/>
-                <StringItem index="5" value="105"/>
-                <StringItem index="6" value="106"/>
-                <StringItem index="7" value="107"/>
-                <StringItem index="8" value="108"/>
-                <StringItem index="9" value="109"/>
-                <StringItem index="10" value="110"/>
-                <StringItem index="11" value="111"/>
-                <StringItem index="12" value="112"/>
-                <StringItem index="13" value="113"/>
-                <StringItem index="14" value="114"/>
-                <StringItem index="15" value="115"/>
-                <StringItem index="16" value="201"/>
-                <StringItem index="17" value="202"/>
-                <StringItem index="18" value="203"/>
-                <StringItem index="19" value="204"/>
-                <StringItem index="20" value="205"/>
-                <StringItem index="21" value="206"/>
-                <StringItem index="22" value="207"/>
-                <StringItem index="23" value="208"/>
-                <StringItem index="24" value="209"/>
-                <StringItem index="25" value="210"/>
-                <StringItem index="26" value="211"/>
-                <StringItem index="27" value="212"/>
-                <StringItem index="28" value="213"/>
-                <StringItem index="29" value="214"/>
-                <StringItem index="30" value="215"/>
-                <StringItem index="31" value="301"/>
-                <StringItem index="32" value="302"/>
-                <StringItem index="33" value="303"/>
-                <StringItem index="34" value="304"/>
-                <StringItem index="35" value="305"/>
-                <StringItem index="36" value="306"/>
-                <StringItem index="37" value="307"/>
-                <StringItem index="38" value="308"/>
-                <StringItem index="39" value="309"/>
-                <StringItem index="40" value="310"/>
-                <StringItem index="41" value="311"/>
-                <StringItem index="42" value="312"/>
-                <StringItem index="43" value="313"/>
-                <StringItem index="44" value="314"/>
-                <StringItem index="45" value="315"/>
-                <StringItem index="46" value=" "/>
               </StringArray>
             </Property>
           </Properties>

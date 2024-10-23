@@ -105,6 +105,8 @@ public class phongbenh extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TbPhong = new javax.swing.JTable();
 
+        setPreferredSize(new java.awt.Dimension(980, 600));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("QUẢN LÝ PHÒNG BỆNH");
 
@@ -388,7 +390,6 @@ public class phongbenh extends javax.swing.JInternalFrame {
 
     private void timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timkiemActionPerformed
         String maPhong = tk_mp.getText().trim();
-
         if (maPhong.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mã phòng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             return;
@@ -397,12 +398,15 @@ public class phongbenh extends javax.swing.JInternalFrame {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            con = BTL.Connect.KetnoiDB();
+            try {
+                con = BTL.Connect.KetnoiDB();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(phongbenh.class.getName()).log(Level.SEVERE, null, ex);
+            }
             String checkMaPhongSQL = "SELECT MaPhong, TenKhoa, LoaiPhong, SoGiuong, TrangThai FROM PhongBenh WHERE MaPhong = ?";
             pst = con.prepareStatement(checkMaPhongSQL);
             pst.setString(1, maPhong);
             rs = pst.executeQuery(); 
-
             if (rs.next()) {
                 // Lấy dữ liệu từ ResultSet
                 String tenKhoa = rs.getString("TenKhoa");
@@ -422,8 +426,6 @@ public class phongbenh extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Lỗi SQL: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(phongbenh.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -752,6 +754,7 @@ public class phongbenh extends javax.swing.JInternalFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(phongbenh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
