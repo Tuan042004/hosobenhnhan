@@ -6,8 +6,6 @@ package Van;
 import Van.HSNV;
 import BTL.Connect;
 import Van.NewJFrame;
-import Van.NewJFrameinternal;
-import Van.Suainternal;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -60,7 +58,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class HSNVinternal extends javax.swing.JInternalFrame {
 
-    private NewJFrameinternal f1;
+    private NewJFrame f1;
      /* Creates new form HSNVinternal
      */
     public HSNVinternal() throws ClassNotFoundException {
@@ -69,7 +67,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         load_hsnv();
         loadcbo();
     }
-    public HSNVinternal(NewJFrameinternal f1){
+    public HSNVinternal(NewJFrame f1){
         this.f1 = f1;
         initComponents();
     }
@@ -90,10 +88,10 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     public class Form2 {
-    private NewJFrameinternal form1;
+    private NewJFrame form1;
     private DefaultTableModel model;
 
-    public Form2(NewJFrameinternal form1) {
+    public Form2(NewJFrame form1) {
         this.form1 = form1;  // Lưu tham chiếu đến form1
         model = (DefaultTableModel) tbhs.getModel();
     }
@@ -103,7 +101,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
     }
 }
 
-    HSNVinternal (NewJFrameinternal.Form1 aThis) {
+    HSNVinternal (NewJFrame.Form1 aThis) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     public void load_hsnv(){
@@ -959,11 +957,11 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //               xoatrang();
         //close();
-        NewJFrameinternal an = null;
+        NewJFrame an = null;
         try {
-            an = new NewJFrameinternal();
+            an = new NewJFrame();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HSNVinternal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HSNV.class.getName()).log(Level.SEVERE, null, ex);
         }
         an.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -1020,9 +1018,9 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        Suainternal s = null;
+        Sua s = null;
         try {
-            s = new Suainternal();
+            s = new Sua();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HSNVinternal.class.getName()).log(Level.SEVERE, null, ex);
         }
