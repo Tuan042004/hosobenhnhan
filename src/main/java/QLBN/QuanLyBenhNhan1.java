@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package QLBN;
 
@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -53,19 +54,21 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author dqduc
  */
-public class QuanLyBenhNhan extends javax.swing.JFrame {
+public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form QuanLyBenhNhan
+     * Creates new form QuanLyBenhNhan1
      */
-    public QuanLyBenhNhan() {
+    public QuanLyBenhNhan1() {
+                this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
+        ui.setNorthPane(null);
         initComponents();
-        load_qtdt();
+        btluu.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
-        btluu.setEnabled(false);
+         load_qtdt();
     }
-    
     Connection con;
     private void Thembenhnhan(String mbn, String mht, String dcngaysinh, String gioitinh, String dc, String sdt, String cccd, String bhyt) {
     try {
@@ -292,12 +295,11 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         btsua = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btn_xuatbc = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(980, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
@@ -417,7 +419,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtcccd, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtbhyt, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -499,7 +501,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -528,13 +530,6 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Thoát");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
             }
         });
 
@@ -572,15 +567,13 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 .addComponent(btsua)
                 .addGap(12, 12, 12)
                 .addComponent(btxoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(btnhapexcel)
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnhapexcel, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
                 .addComponent(btn_xuatbc)
-                .addGap(29, 29, 29)
-                .addComponent(jButton5)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,7 +584,6 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                     .addComponent(btsua)
                     .addComponent(btxoa)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
                     .addComponent(jButton1)
                     .addComponent(btn_xuatbc)
                     .addComponent(btnhapexcel))
@@ -631,7 +623,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTimkiemKeyReleased
 
     private void bttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttimkiemActionPerformed
-          try{
+        try{
             //lấy dữ liệu từ compoment đưa vài biến
             String mbn = txtTimkiem.getText().trim();
             con = BTL.Connect.KetnoiDB();
@@ -639,14 +631,14 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             String[] tieude={ "Họ và tên","Mã bệnh nhân","Ngày sinh","Giới tính","Địa chỉ","Số điện thoại", "CCCD", "BHYT"};
-            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        // Tất cả các ô sẽ không thể chỉnh sửa
-                        return false;
-                    }
-                    };
-            
+            DefaultTableModel tb=new DefaultTableModel(tieude,0)    {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    // Tất cả các ô sẽ không thể chỉnh sửa
+                    return false;
+                }
+            };
+
             while(rs.next()){
                 Vector v = new Vector();
                 v.add(rs.getString("HoTenBenhNhan"));
@@ -665,6 +657,14 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_bttimkiemActionPerformed
+
+    private void txtmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmbnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmbnActionPerformed
+
+    private void cboxgioitinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxgioitinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxgioitinhActionPerformed
 
     private void tbqlbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbqlbnMouseClicked
         btluu.setEnabled(false);
@@ -691,7 +691,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     }//GEN-LAST:event_tbqlbnMouseClicked
 
     private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
-      // B1: lấy dữ liệu các components đưa vào biến
+        // B1: lấy dữ liệu các components đưa vào biến
         String mht = txthoten.getText().trim();
         String mbn = txtmbn.getText().trim();
         String gioitinh = cboxgioitinh.getSelectedItem().toString().trim();
@@ -796,7 +796,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             st.executeUpdate(sql);
             con.close();
 
-            load_qtdt(); 
+            load_qtdt();
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
 
             // Xóa trang
@@ -806,130 +806,120 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btluuActionPerformed
 
     private void btsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsuaActionPerformed
-    try {
-        String mht = txthoten.getText();
-        if (mht.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập họ và tên!");
-            return;
-        }
-        String mbn = txtmbn.getText();
-        if (mbn.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập mã bệnh nhân!");
-            return;
-        }
-        Date ns = new Date(dcngaysinh.getDate().getTime());
-        if (ns == null) {
-            JOptionPane.showMessageDialog(this, "Phải nhập ngày sinh!");
-            return;
-        }
-        String gioitinh = cboxgioitinh.getSelectedItem().toString();
-        if (gioitinh.equals("Chọn giới tính")) {
-            gioitinh = "";
-        }
-        if (gioitinh.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập giới tính!");
-            return;
-        }
-        String dc = txtdiachi.getText();
-        if (dc.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập địa chỉ!");
-            return;
-        }
-        String sdt = txtsdt.getText();
-        if (sdt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập số điện thoại!");
-            return;
-        }
+        try {
+            String mht = txthoten.getText();
+            if (mht.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập họ và tên!");
+                return;
+            }
+            String mbn = txtmbn.getText();
+            if (mbn.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập mã bệnh nhân!");
+                return;
+            }
+            Date ns = new Date(dcngaysinh.getDate().getTime());
+            if (ns == null) {
+                JOptionPane.showMessageDialog(this, "Phải nhập ngày sinh!");
+                return;
+            }
+            String gioitinh = cboxgioitinh.getSelectedItem().toString();
+            if (gioitinh.equals("Chọn giới tính")) {
+                gioitinh = "";
+            }
+            if (gioitinh.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập giới tính!");
+                return;
+            }
+            String dc = txtdiachi.getText();
+            if (dc.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập địa chỉ!");
+                return;
+            }
+            String sdt = txtsdt.getText();
+            if (sdt.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập số điện thoại!");
+                return;
+            }
 
-        String cccd = txtcccd.getText().trim();
-        if (cccd.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập số CCCD!");
-            return;
-        }
-        String bhyt = txtbhyt.getText().trim();
-        if (bhyt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập mã BHYT!");
-            return;
-        }
+            String cccd = txtcccd.getText().trim();
+            if (cccd.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập số CCCD!");
+                return;
+            }
+            String bhyt = txtbhyt.getText().trim();
+            if (bhyt.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải nhập mã BHYT!");
+                return;
+            }
 
-        String regex_cccd = "^[0-9]{12}$";
-        Pattern pattern_cccd = Pattern.compile(regex_cccd);
-        Matcher matcher_cccd = pattern_cccd.matcher(cccd);
-        if (!matcher_cccd.matches()) {
-            JOptionPane.showMessageDialog(this, "Nhập sai số CCCD!");
-            txtcccd.requestFocus();
-            return;
-        }
+            String regex_cccd = "^[0-9]{12}$";
+            Pattern pattern_cccd = Pattern.compile(regex_cccd);
+            Matcher matcher_cccd = pattern_cccd.matcher(cccd);
+            if (!matcher_cccd.matches()) {
+                JOptionPane.showMessageDialog(this, "Nhập sai số CCCD!");
+                txtcccd.requestFocus();
+                return;
+            }
 
-        String regex_bhyt = "^[A-Z]{2}[0-9]{13}$";
-        Pattern pattern_bhyt = Pattern.compile(regex_bhyt);
-        Matcher matcher_bhyt = pattern_bhyt.matcher(bhyt);
-        if (!matcher_bhyt.matches()) {
-            JOptionPane.showMessageDialog(this, "Nhập sai mã BHYT!");
-            txtbhyt.requestFocus();
-            return;
-        }
+            String regex_bhyt = "^[A-Z]{2}[0-9]{13}$";
+            Pattern pattern_bhyt = Pattern.compile(regex_bhyt);
+            Matcher matcher_bhyt = pattern_bhyt.matcher(bhyt);
+            if (!matcher_bhyt.matches()) {
+                JOptionPane.showMessageDialog(this, "Nhập sai mã BHYT!");
+                txtbhyt.requestFocus();
+                return;
+            }
 
-        String regex_dt = "(84|0[3|5|7|8|9])+([0-9]{8})";
-        Pattern pattern_dt = Pattern.compile(regex_dt);
-        Matcher matcher_dt = pattern_dt.matcher(sdt);
-        if (!matcher_dt.matches()) {
-            JOptionPane.showMessageDialog(this, "Nhập sai số điện thoại!");
-            txtsdt.requestFocus();
-            return;
-        }
+            String regex_dt = "(84|0[3|5|7|8|9])+([0-9]{8})";
+            Pattern pattern_dt = Pattern.compile(regex_dt);
+            Matcher matcher_dt = pattern_dt.matcher(sdt);
+            if (!matcher_dt.matches()) {
+                JOptionPane.showMessageDialog(this, "Nhập sai số điện thoại!");
+                txtsdt.requestFocus();
+                return;
+            }
 
-        con = BTL.Connect.KetnoiDB();
+            con = BTL.Connect.KetnoiDB();
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "UPDATE BenhNhan SET HoTenBenhNhan=N'" + mht + "', NgaySinh='" + format.format(ns) +
-                     "', GioiTinh=N'" + gioitinh + "', DiaChi=N'" + dc + "', SDT='" + sdt +
-                     "', CCCD='" + cccd + "', MBHYT='" + bhyt + "' WHERE MaBenhNhan='" + mbn + "'";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String sql = "UPDATE BenhNhan SET HoTenBenhNhan=N'" + mht + "', NgaySinh='" + format.format(ns) +
+            "', GioiTinh=N'" + gioitinh + "', DiaChi=N'" + dc + "', SDT='" + sdt +
+            "', CCCD='" + cccd + "', MBHYT='" + bhyt + "' WHERE MaBenhNhan='" + mbn + "'";
 
-        Statement st = con.createStatement();
-        st.executeUpdate(sql);
-        con.close();
-
-        JOptionPane.showMessageDialog(this, "Sửa thành công");
-        load_qtdt();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Sửa không thành công");
-    }
-    }//GEN-LAST:event_btsuaActionPerformed
-
-    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-    try{
-        String mbn = txtmbn.getText();
-        int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (choice == JOptionPane.YES_OPTION) {
-            Connection con = BTL.Connect.KetnoiDB();
-            String sql = "Delete From BenhNhan Where MaBenhNhan='"+mbn+"'";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             con.close();
-            JOptionPane.showMessageDialog(this, "Xoá thành công");
+
+            JOptionPane.showMessageDialog(this, "Sửa thành công");
             load_qtdt();
-        } else {
-            JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Sửa không thành công");
         }
-    }catch (Exception ex){
+    }//GEN-LAST:event_btsuaActionPerformed
+
+    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
+        try{
+            String mbn = txtmbn.getText();
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (choice == JOptionPane.YES_OPTION) {
+                Connection con = BTL.Connect.KetnoiDB();
+                String sql = "Delete From BenhNhan Where MaBenhNhan='"+mbn+"'";
+                Statement st = con.createStatement();
+                st.executeUpdate(sql);
+                con.close();
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
+                load_qtdt();
+            } else {
+                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+            }
+        }catch (Exception ex){
             ex.printStackTrace();
         }
     }//GEN-LAST:event_btxoaActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        dispose();
-
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void txtmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmbnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtmbnActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -939,13 +929,12 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
         load_qtdt();
-         
-         
+
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-           // TODO add your handling code here:
+        // TODO add your handling code here:
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.createSheet("Khoa");
@@ -969,7 +958,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             cell = row.createCell(0, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("STT");
-                
+
             cell = row.createCell(1, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Mã bệnh nhân");
@@ -981,27 +970,27 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Ngày sinh");
-            
+
             cell = row.createCell(4, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Giới tính");
-            
+
             cell = row.createCell(5, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Địa chỉ");
-            
+
             cell = row.createCell(6, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Số điện thoại");
-            
+
             cell = row.createCell(7, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("CCCD");
-            
+
             cell = row.createCell(8, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("BHYT");
-             //Kết nối DB
+            //Kết nối DB
             con = BTL.Connect.KetnoiDB();
             String sql = "Select * From BenhNhan";
             PreparedStatement st = con.prepareStatement(sql);
@@ -1040,19 +1029,19 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
                 cell = row.createCell(4);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("GioiTinh"));
-                
+
                 cell = row.createCell(5);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("DiaChi"));
-                
+
                 cell = row.createCell(6);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("SDT"));
-                
+
                 cell = row.createCell(7);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("CCCD"));
-                
+
                 cell = row.createCell(8);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("MBHYT"));
@@ -1068,7 +1057,7 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             workbook.write(out);
             out.close();
         } catch (Exception e) {
-        }       
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_xuatbcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatbcActionPerformed
@@ -1077,13 +1066,13 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
             //String mht = txthoten.getText().trim();
 
             Connection con = BTL.Connect.KetnoiDB();
-           
+
             JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report2.jrxml");
-            
-            String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'"; 
+
+            String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'";
             JRDesignQuery updateQuery=new JRDesignQuery();
             updateQuery.setText(sql);
-            
+
             jdesign.setQuery(updateQuery);
             JasperReport jreport=JasperCompileManager.compileReport(jdesign);
             JasperPrint jprint=JasperFillManager.fillReport(jreport, null,con);
@@ -1113,44 +1102,6 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnhapexcelActionPerformed
 
-    private void cboxgioitinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxgioitinhActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboxgioitinhActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuanLyBenhNhan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuanLyBenhNhan().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btluu;
@@ -1163,7 +1114,6 @@ public class QuanLyBenhNhan extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dcngaysinh;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

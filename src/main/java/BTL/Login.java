@@ -4,6 +4,7 @@
  */
 package BTL;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -90,9 +91,11 @@ try {
         if (rs.next()) {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
             // Mở form Menu
-            Menu1 menu = new Menu1();
+            Trangchu menu = new Trangchu();
             menu.setVisible(true);
-            this.dispose();
+          
+           
+                this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu!");
         }
