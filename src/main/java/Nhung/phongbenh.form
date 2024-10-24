@@ -3,7 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[980, 600]"/>
+      <Dimension value="[1010, 600]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -24,34 +24,26 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="1" pref="962" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="themmoi" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="xuatex" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="nhapex" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="refresh" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="thoát" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="650" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel1" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -67,16 +59,16 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="157" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jScrollPane2" min="-2" pref="227" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="themmoi" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="xuatex" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nhapex" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="thoát" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="refresh" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="thoát" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="61" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,8 +77,9 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
         </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; PH&#xd2;NG B&#x1ec6;NH"/>
       </Properties>
     </Component>
@@ -260,23 +253,8 @@
         <Component class="javax.swing.JComboBox" name="tenk">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="16">
+              <StringArray count="1">
                 <StringItem index="0" value="-- Nh&#x1ead;p t&#xea;n Khoa --"/>
-                <StringItem index="1" value="Khoa N&#x1ed9;i"/>
-                <StringItem index="2" value="Khoa Ngo&#x1ea1;i"/>
-                <StringItem index="3" value="Khoa Nhi"/>
-                <StringItem index="4" value="Khoa S&#x1ea3;n"/>
-                <StringItem index="5" value="Khoa C&#x1ea5;p c&#x1ee9;u"/>
-                <StringItem index="6" value="Khoa Da li&#x1ec5;u"/>
-                <StringItem index="7" value="Khoa Tim m&#x1ea1;ch"/>
-                <StringItem index="8" value="Khoa H&#xf4; h&#x1ea5;p"/>
-                <StringItem index="9" value="Khoa Th&#x1ea7;n kinh"/>
-                <StringItem index="10" value="Khoa X&#xe9;t nghi&#x1ec7;m"/>
-                <StringItem index="11" value="Khoa Ch&#x1ea9;n &#x111;o&#xe1;n h&#xec;nh &#x1ea3;nh"/>
-                <StringItem index="12" value="Khoa Ph&#x1ee5;c h&#x1ed3;i ch&#x1ee9;c n&#x103;ng"/>
-                <StringItem index="13" value="Khoa Dinh d&#x1b0;&#x1ee1;ng"/>
-                <StringItem index="14" value="Khoa Y h&#x1ecd;c c&#x1ed5; truy&#x1ec1;n"/>
-                <StringItem index="15" value="Khoa T&#xe2;m l&#xfd;"/>
               </StringArray>
             </Property>
           </Properties>
