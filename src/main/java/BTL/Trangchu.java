@@ -9,6 +9,7 @@ import Hosoxuatvien.HoaDonThanhToan;
 import Kien.Thuoc;
 import Kien.DieuTri;
 import Kien.ThuocThang;
+import Nhung.phongbenh;
 import QLBN.QuanLyBenhNhan1;
 import QLBN.QuanLyKhoa;
 import QLBN.QuanLyNhanVien;
@@ -139,6 +140,11 @@ public class Trangchu extends javax.swing.JFrame {
         btpb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btpb.setMargin(new java.awt.Insets(2, 15, 3, 15));
         btpb.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btpb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btpbActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btpb);
 
         btg.setText("Giường bệnh");
@@ -337,6 +343,12 @@ public class Trangchu extends javax.swing.JFrame {
     Login login = new Login();
     login.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void btpbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btpbActionPerformed
+        // TODO add your handling code here:
+        Nhung.phongbenh pb = new Nhung.phongbenh();
+        pb.setVisible(true);
+    }//GEN-LAST:event_btpbActionPerformed
 
     /**
      * @param args the command line arguments
