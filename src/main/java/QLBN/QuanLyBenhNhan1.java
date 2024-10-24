@@ -307,7 +307,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
         btn_xuatbc = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(980, 600));
+        setPreferredSize(new java.awt.Dimension(1010, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));

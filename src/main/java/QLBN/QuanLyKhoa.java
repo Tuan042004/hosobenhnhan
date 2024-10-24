@@ -214,7 +214,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(980, 600));
+        setPreferredSize(new java.awt.Dimension(1010, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
@@ -337,7 +337,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                         .addGap(43, 43, 43)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 27, Short.MAX_VALUE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
