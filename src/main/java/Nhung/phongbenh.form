@@ -132,13 +132,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="tk_mp">
           <Events>
-<<<<<<< HEAD:src/main/java/Nhung/phongbenh.form
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tk_mpKeyReleased"/>
-=======
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tk_maMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tk_maActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tk_maKeyReleased"/>
->>>>>>> 12febcbdd34c8256614c6141b319f04d0bd9bdd2:src/main/java/Nhung/QuanLyLsXuatVien.form
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="timkiem">

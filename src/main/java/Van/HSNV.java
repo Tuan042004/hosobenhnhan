@@ -5,7 +5,6 @@
 package Van;
 //import BTL.Connect;
 import Van.NewJFrame;
-import demo.*;
 import BTL.Connect;
 import Van.Sua;
 import java.awt.Toolkit;
