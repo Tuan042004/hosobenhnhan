@@ -58,6 +58,8 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
         initComponents();
+        txthoten.setEnabled(false);
+        txtmbn.setEnabled(false);
         btluu.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
@@ -620,6 +622,8 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
+        txthoten.setEnabled(true);
+        txtmbn.setEnabled(true);
         txtmbn.setEnabled(true);
         btluu.setEnabled(true);
         btsua.setEnabled(false);

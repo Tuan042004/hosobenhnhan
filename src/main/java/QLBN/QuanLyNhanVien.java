@@ -60,7 +60,15 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
-      initComponents();
+        initComponents();
+        txthoten.setEnabled(false);
+        txtmnv.setEnabled(false);
+        dcngaysinh.setEnabled(false);
+        cbogioitinh.setEnabled(false);
+        txtdiachi.setEnabled(false);
+        txtsdt.setEnabled(false);
+        txtcccd.setEnabled(false);
+        cbokhoa.setEnabled(false);
         btthem.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
@@ -931,6 +939,14 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
+        txthoten.setEnabled(true);
+        txtmnv.setEnabled(true);
+        dcngaysinh.setEnabled(true);
+        cbogioitinh.setEnabled(true);
+        txtdiachi.setEnabled(true);
+        txtsdt.setEnabled(true);
+        txtcccd.setEnabled(true);
+        cbokhoa.setEnabled(true);
         txtmnv.setEnabled(true);
         btthem.setEnabled(true);
 

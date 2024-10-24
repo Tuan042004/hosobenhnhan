@@ -64,6 +64,14 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
         initComponents();
+        txthoten.setEnabled(false);
+        txtmbn.setEnabled(false);
+        dcngaysinh.setEnabled(false);
+        cboxgioitinh.setEnabled(false);
+        txtdiachi.setEnabled(false);
+        txtsdt.setEnabled(false);
+        txtcccd.setEnabled(false);
+        txtbhyt.setEnabled(false);
         btluu.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
@@ -924,7 +932,14 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
+        txthoten.setEnabled(true);
         txtmbn.setEnabled(true);
+        dcngaysinh.setEnabled(true);
+        cboxgioitinh.setEnabled(true);
+        txtdiachi.setEnabled(true);
+        txtsdt.setEnabled(true);
+        txtcccd.setEnabled(true);
+        txtbhyt.setEnabled(true);
         btluu.setEnabled(true);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
