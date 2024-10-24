@@ -28,9 +28,9 @@ public class xoagiuong extends javax.swing.JFrame {
 
     //contrustor không tham số
     public xoagiuong() throws SQLException, ClassNotFoundException {
-        initComponents();  // Khởi tạo các thành phần giao diện
-        load_Gb();        // Tải danh sách giường
-        loadTableData();  // Tải dữ liệu bảng
+        initComponents(); 
+        load_Gb();      
+        loadTableData(); 
 
         // Lắng nghe sự kiện khi chọn mã phòng
         ma_p.addActionListener(new ActionListener() {
@@ -60,7 +60,7 @@ public class xoagiuong extends javax.swing.JFrame {
         model.setRowCount(0); // Xóa tất cả các hàng hiện có
 
         try (Connection con = BTL.Connect.KetnoiDB()) {
-            String sql = "SELECT * FROM Giuong"; // Truy vấn tất cả dữ liệu từ bảng Giuong
+            String sql = "SELECT * FROM Giuong"; 
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -98,7 +98,6 @@ public class xoagiuong extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi nạp danh sách mã giường!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Nạp lại mã phòng tương tự như trên
         try (Connection con = BTL.Connect.KetnoiDB()) {
             String sql = "SELECT MaPhong FROM PhongBenh"; // Câu lệnh SQL lấy mã phòng
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -113,7 +112,6 @@ public class xoagiuong extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi nạp danh sách mã phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
-
     // Hàm chung để nạp dữ liệu vào ComboBox
     private void loadComboBoxData(JComboBox<String> comboBox, String query, String defaultItem) {
         comboBox.removeAllItems();  // Xóa các mục hiện tại
@@ -137,7 +135,6 @@ public class xoagiuong extends javax.swing.JFrame {
             Logger.getLogger(xoagiuong.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 // Kiểm tra xem mục đã tồn tại trong ComboBox hay chưa
     private boolean itemExistsInComboBox(JComboBox<String> comboBox, String item) {
         for (int i = 0; i < comboBox.getItemCount(); i++) {
@@ -223,6 +220,7 @@ public class xoagiuong extends javax.swing.JFrame {
         ma_g = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(580, 320));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("XÓA GIƯỜNG BỆNH");
@@ -301,7 +299,7 @@ public class xoagiuong extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -337,11 +335,12 @@ public class xoagiuong extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ma_p, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ma_p, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ma_g, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(ma_g, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +351,7 @@ public class xoagiuong extends javax.swing.JFrame {
                     .addComponent(ma_g, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(ma_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34))
+                .addGap(10, 10, 10))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -391,7 +390,7 @@ public class xoagiuong extends javax.swing.JFrame {
                     .addComponent(xoa)
                     .addComponent(thoát)
                     .addComponent(Refresh))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -547,6 +546,7 @@ public class xoagiuong extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(xoagiuong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

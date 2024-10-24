@@ -49,7 +49,7 @@ public class giuongbenh extends javax.swing.JInternalFrame {
     public giuongbenh() {
         initComponents();
         load_Gb();
-// Thêm DocumentListener cho trường văn bản mã giường
+  //sự kiện nút combobox mp trong tìm kiếm
     tk_mg.getDocument().addDocumentListener(new DocumentListener() {
     @Override
     public void insertUpdate(DocumentEvent e) {
@@ -59,7 +59,6 @@ public class giuongbenh extends javax.swing.JInternalFrame {
             Logger.getLogger(giuongbenh.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     @Override
     public void removeUpdate(DocumentEvent e) {
         try {
@@ -68,7 +67,6 @@ public class giuongbenh extends javax.swing.JInternalFrame {
             Logger.getLogger(giuongbenh.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     @Override
     public void changedUpdate(DocumentEvent e) {
         try {
@@ -79,53 +77,25 @@ public class giuongbenh extends javax.swing.JInternalFrame {
     }
     });
     }
-private void load_tt(String maGiuong) {
-    // Kiểm tra xem mã giường có được nhập hay không
-    if (maGiuong == null || maGiuong.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập mã giường để xem thông tin.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        return; 
-    }
-
-    String sql = "SELECT * FROM Giuong WHERE MaGiuong = ?"; 
-
-    String[] tieude = {"Mã giường", "Mã phòng", "Trạng thái"};
-    DefaultTableModel tb = new DefaultTableModel(tieude, 0);
-
-    try (Connection con = BTL.Connect.KetnoiDB();
-         PreparedStatement pst = con.prepareStatement(sql)) {
-        pst.setString(1, maGiuong);
-        ResultSet rs = pst.executeQuery();
-
-        // Kiểm tra xem có kết quả trả về hay không
-        if (!rs.isBeforeFirst()) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy giường với mã đã nhập!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+    //hiển thị duy nhất 1 thông tin vừa tìm kiếm ở table
+    private void load_tt(String maGiuong) {
+        if (maGiuong == null || maGiuong.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã giường để xem thông tin.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             return; 
         }
-        // Thêm dữ liệu vào bảng
-        while (rs.next()) {
-            Vector<String> v = new Vector<>();
-            v.add(rs.getString("MaGiuong")); 
-            v.add(rs.getString("MaPhong")); 
-            v.add(rs.getString("TrangThaiGiuong"));
-            tb.addRow(v); 
-        }
-        tbGiuong.setModel(tb); 
-        tbGiuong.repaint();  // Làm mới bảng
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi khi tải thông tin giường.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
-}
-
-    private void load_Gb() {
-        String sql = "SELECT * FROM Giuong";
+        String sql = "SELECT * FROM Giuong WHERE MaGiuong = ?"; 
         String[] tieude = {"Mã giường", "Mã phòng", "Trạng thái"};
         DefaultTableModel tb = new DefaultTableModel(tieude, 0);
-
         try (Connection con = BTL.Connect.KetnoiDB();
-             Statement st = con.createStatement(); 
-             ResultSet rs = st.executeQuery(sql)) {
-
+             PreparedStatement pst = con.prepareStatement(sql)) {
+            pst.setString(1, maGiuong);
+            ResultSet rs = pst.executeQuery();
+            // Kiểm tra xem có kết quả trả về hay không
+            if (!rs.isBeforeFirst()) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy giường với mã đã nhập!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return; 
+            }
+            // Thêm dữ liệu vào bảng
             while (rs.next()) {
                 Vector<String> v = new Vector<>();
                 v.add(rs.getString("MaGiuong")); 
@@ -134,11 +104,35 @@ private void load_tt(String maGiuong) {
                 tb.addRow(v); 
             }
             tbGiuong.setModel(tb); 
-            tbGiuong.repaint();  // Thêm lệnh này để làm mới bảng
+            tbGiuong.repaint();  // Làm mới bảng
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi tải thông tin giường.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    //tải lại dữ liệu trong table
+    private void load_Gb() {
+        String sql = "SELECT * FROM Giuong";
+        String[] tieude = {"Mã giường", "Mã phòng", "Trạng thái"};
+        DefaultTableModel tb = new DefaultTableModel(tieude, 0);
+
+        try (Connection con = BTL.Connect.KetnoiDB();
+             Statement st = con.createStatement(); 
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                Vector<String> v = new Vector<>();
+                v.add(rs.getString("MaGiuong")); 
+                v.add(rs.getString("MaPhong")); 
+                v.add(rs.getString("TrangThaiGiuong"));
+                tb.addRow(v); 
+            }
+            tbGiuong.setModel(tb); 
+            tbGiuong.repaint();  //  làm mới bảng
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
     //cập nhật ds mã phòng dựa trên mã giường
     private void updateRoomComboBox(String maGiuong) throws ClassNotFoundException {
         tk_mp.removeAllItems(); 
@@ -158,7 +152,6 @@ private void load_tt(String maGiuong) {
             if (tk_mp.getItemCount() > 1) { // Nếu có mã phòng được thêm
                 tk_mp.setSelectedIndex(0); // Chọn mục "--nhập mã phòng--"
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi truy vấn mã phòng: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -181,7 +174,7 @@ private void load_tt(String maGiuong) {
         tt.setText(trangThai);
     }
 
-//lấy ds mp tương ứng ,g
+//lấy ds mp tương ứng mg
     private List<String> getMaPhongsByMaGiuong(String maGiuong) throws ClassNotFoundException {
         List<String> maPhongs = new ArrayList<>();
 
@@ -227,6 +220,8 @@ private void load_tt(String maGiuong) {
         thoát = new javax.swing.JButton();
         themmoi = new javax.swing.JButton();
         ref = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(980, 600));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
@@ -530,58 +525,58 @@ private void load_tt(String maGiuong) {
     }//GEN-LAST:event_tk_mgKeyReleased
 
     private void timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timkiemActionPerformed
-    String maGiuong = tk_mg.getText().trim();
-        String maPhong = tk_mp.getSelectedItem() != null ? tk_mp.getSelectedItem().toString() : "";
+        String maGiuong = tk_mg.getText().trim();
+            String maPhong = tk_mp.getSelectedItem() != null ? tk_mp.getSelectedItem().toString() : "";
 
-    if (maGiuong.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập mã giường!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    if ("-- Nhập mã phòng --".equals(maPhong)) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn một mã phòng hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    Connection con = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-
-    try {
-        con = BTL.Connect.KetnoiDB();
-        String sqlCheckMaGiuongVaPhong = "SELECT * FROM Giuong WHERE MaGiuong = ? AND MaPhong = ?";
-        pst = con.prepareStatement(sqlCheckMaGiuongVaPhong);
-        pst.setString(1, maGiuong);
-        pst.setString(2, maPhong);
-        rs = pst.executeQuery();
-        if (rs.next()) {
-            // Hiển thị thông tin giường và phòng
-            ma_g.setText(rs.getString("MaGiuong"));
-            map.removeAllItems(); // Xóa các mục cũ trong JComboBox
-            map.addItem(rs.getString("MaPhong"));
-            map.setSelectedItem(rs.getString("MaPhong"));
-            tt.setText(rs.getString("TrangThaiGiuong")); 
-            load_Gb(); // Tải lại dữ liệu bảng
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy giường với mã và phòng đã nhập!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        if (maGiuong.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã giường!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-       JOptionPane.showMessageDialog(this, "Lỗi SQL: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-       e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    } finally {
+
+        if ("-- Nhập mã phòng --".equals(maPhong)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một mã phòng hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
         try {
-          if (rs != null) rs.close();
-           if (pst != null) pst.close();
-          if (con != null) con.close();
-       } catch (SQLException e) {
+            con = BTL.Connect.KetnoiDB();
+            String sqlCheckMaGiuongVaPhong = "SELECT * FROM Giuong WHERE MaGiuong = ? AND MaPhong = ?";
+            pst = con.prepareStatement(sqlCheckMaGiuongVaPhong);
+            pst.setString(1, maGiuong);
+            pst.setString(2, maPhong);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                // Hiển thị thông tin giường và phòng
+                ma_g.setText(rs.getString("MaGiuong"));
+                map.removeAllItems(); // Xóa các mục cũ trong JComboBox
+                map.addItem(rs.getString("MaPhong"));
+                map.setSelectedItem(rs.getString("MaPhong"));
+                tt.setText(rs.getString("TrangThaiGiuong")); 
+                load_Gb(); // Tải lại dữ liệu bảng
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy giường với mã và phòng đã nhập!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+           JOptionPane.showMessageDialog(this, "Lỗi SQL: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
            e.printStackTrace();
-        }
-        }
+            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+              if (rs != null) rs.close();
+               if (pst != null) pst.close();
+              if (con != null) con.close();
+           } catch (SQLException e) {
+               e.printStackTrace();
+            }
+            }
     }//GEN-LAST:event_timkiemActionPerformed
     private static CellStyle DinhDangHeader(XSSFSheet sheet){
         // Tạo font
@@ -888,6 +883,7 @@ private void load_tt(String maGiuong) {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(giuongbenh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
