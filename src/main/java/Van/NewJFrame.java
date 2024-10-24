@@ -4,8 +4,11 @@
  */
 package Van;
 
+
+import Van.HSNV;
 import BTL.Connect;
-//import folder.HSNV;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +16,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,9 +35,10 @@ public class NewJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public NewJFrame() throws ClassNotFoundException {
-        initComponents();
+        initComponents(); //khoi tao cac thanh phan giao dien
         load_hsnv();
-        loadcbo();
+        loadcbo(); //load du lieu vao combobox
+        addComboBoxListeners(); //them su kien lang nghe cho combobox
     }
     public class Form1 {
     private HSNV form2;
@@ -44,7 +51,16 @@ public class NewJFrame extends javax.swing.JFrame {
         form2.addRowToTable(rowData);  // Gọi phương thức của form2 để thêm dữ liệu
     }
 }
-
+    private void checkAndReconnect() throws SQLException {
+    if (con == null || con.isClosed()) {
+        try {
+            con = BTL.Connect.KetnoiDB(); // Gọi hàm kết nối lại nếu kết nối bị đóng
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+    Connection con;
     public void load_hsnv(){
         try {
     // Làm sạch bảng trước khi thêm dữ liệu mới
@@ -71,12 +87,15 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Thêm dữ liệu vào bảng
     while (rs.next()) {
+       String sql1  = "UPDATE Giuong set TrangThaiGiuong = N'Đã có bệnh nhân' where MaGiuong = '"+rs.getString("MaGiuong")+"'";
+       Statement st1 = con.createStatement( );
+       st1.executeUpdate(sql1);
         Vector<String> v = new Vector<>();
         v.add(rs.getString("MaHoSoNhapVien"));        // Mã hồ sơ
         v.add(rs.getString("MaBenhNhan"));             // Mã bệnh nhân
         v.add(rs.getDate("NgayNhapVien").toString());   // Ngày nhập viện điều trị
-//        v.add(rs.getDate("NgayXuat").toString()); // Ngày xuất viện        
-        v.add(rs.getString("ChanDoan")); //chẩn đoán bệnh
+//        v.add(rs.getDate("NgayXuat").toString());  // Ngày xuất viện        
+        v.add(rs.getString("ChanDoan"));  //chẩn đoán bệnh
         v.add(rs.getString("MaPhong"));                  // Mã phòng
         v.add(rs.getString("MaGiuong"));                 // mã giường
         v.add(rs.getString("MaKhoa"));            // mã khoa
@@ -86,7 +105,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Đóng kết nối
     tbhs3.setModel(tb);
-    con.close();
+//    con.close();
 
     } catch (SQLException e) {
         // Xử lý lỗi SQL
@@ -108,12 +127,83 @@ public class NewJFrame extends javax.swing.JFrame {
         dcnnv3.setDate(null);   
         txtcd3.setText("");
         
-        // Mở khóa lại các trường txtmhs và cbmbn
+    // Mở khóa lại các trường txtmhs và cbmbn
     txtmhs3.setEnabled(true);  // Mở lại trường mã hồ sơ để người dùng nhập
     cbmbn3.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
 
     }
+     private HashMap<String, String> khoaMap = new HashMap<>();
+     private void addComboBoxListeners() {
+    // Lắng nghe sự kiện thay đổi trên ComboBox Tên Khoa
+    cbtk3.addActionListener(e -> {
+        String selectedTenKhoa = (String) cbtk3.getSelectedItem();
+        if (selectedTenKhoa != null) {
+            // Cập nhật ComboBox Mã Khoa
+            String maKhoa = khoaMap.get(selectedTenKhoa);  // Lấy Mã Khoa tương ứng từ HashMap nếu cần (giả sử bạn vẫn muốn hiển thị Mã Khoa)
+            cbmk3.removeAllItems();  // Xóa mục cũ trong ComboBox Mã Khoa
+            cbmk3.addItem(maKhoa);   // Thêm Mã Khoa vào ComboBox
+            
+            // Tải các phòng có giường trống dựa theo Tên Khoa
+            loadPhongWithEmptyBeds(selectedTenKhoa);  // Sử dụng trực tiếp Tên Khoa thay vì MaKhoa
+        }
+    });
+    
+    // Lắng nghe sự kiện thay đổi trên ComboBox Mã Phòng để tải giường trống
+    cbmp3.addActionListener(e -> {
+        String selectedPhong = (String) cbmp3.getSelectedItem();  // Lấy mã phòng đã chọn
+        if (selectedPhong != null) {
+            loadGiuongForPhong(selectedPhong);  // Tải giường trống cho phòng đó
+        }
+    });
+}
+
+     // Phương thức tải danh sách các phòng có giường trống theo mã khoa
+private void loadPhongWithEmptyBeds(String tenKhoa) {
+    try {
+        checkAndReconnect();  // Kiểm tra và kết nối lại nếu cần
+        
+        cbmp3.removeAllItems(); // Xóa mục cũ trong ComboBox Mã Phòng
+
+        String queryPhong = "SELECT DISTINCT pb.MaPhong " +
+                            "FROM PhongBenh pb " +
+                            "JOIN Giuong g ON pb.MaPhong = g.MaPhong " +
+                            "WHERE pb.TenKhoa = ? AND g.TrangThaiGiuong = N'Trống'";
+        PreparedStatement statementPhong = con.prepareStatement(queryPhong);
+        statementPhong.setString(1, tenKhoa);
+
+        ResultSet rsPhong = statementPhong.executeQuery();
+        while (rsPhong.next()) {
+            cbmp3.addItem(rsPhong.getString("MaPhong"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi tải phòng: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private void loadGiuongForPhong(String maPhong) {
+    try {
+        checkAndReconnect();  // Kiểm tra và kết nối lại nếu cần
+
+        cbmg3.removeAllItems();  // Xóa các mục cũ trong ComboBox giường
+
+        String queryGiuong = "SELECT MaGiuong FROM Giuong WHERE MaPhong = ? AND TrangThaiGiuong = N'Trống'";
+        PreparedStatement statementGiuong = con.prepareStatement(queryGiuong);
+        statementGiuong.setString(1, maPhong);
+
+        ResultSet rsGiuong = statementGiuong.executeQuery();
+        while (rsGiuong.next()) {
+            cbmg3.addItem(rsGiuong.getString("MaGiuong"));
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi tải giường: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+     // Khai báo biến toàn cục để lưu liên kết giữa Tên Khoa và Mã Khoa
      private void loadcbo() throws ClassNotFoundException {
+         HashSet<String> existingCodes = new HashSet<>();
     try {
         con = Connect.KetnoiDB();
         String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
@@ -122,45 +212,49 @@ public class NewJFrame extends javax.swing.JFrame {
         while (rs.next()) {
             cbmbn3.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
         }
+         String newPatientCode = "newPatientCode"; // Thay thế bằng mã bệnh nhân bạn muốn kiểm tra
+            if (!existingCodes.contains(newPatientCode)) {
+                cbmbn3.addItem(newPatientCode); // Thêm mã bệnh nhân vào ComboBox
+            } else {
+                System.out.println("Mã bệnh nhân đã tồn tại!");
+            }
+
         
-    // Lấy TenKhoa từ bảng Khoa
-    String queryKhoa = "SELECT MaKhoa FROM Khoa";
-    Statement statementKhoa = con.createStatement();
-    ResultSet rsKhoa = statementKhoa.executeQuery(queryKhoa);
-    while (rsKhoa.next()) {
-        cbmk3.addItem(rsKhoa.getString("MaKhoa")); // thêm mã khoa vào combo box
-    }
-        
-    // Lấy TenKhoa từ bảng Khoa
-    String queryTenKhoa = "SELECT TenKhoa FROM Khoa";
-    Statement statementTenKhoa = con.createStatement();
-    ResultSet rsTenKhoa = statementTenKhoa.executeQuery(queryTenKhoa);
-    while (rsTenKhoa.next()) {
-        cbtk3.addItem(rsTenKhoa.getString("TenKhoa")); //thêm tên khoa vào combo box
-    }
+    // Truy vấn và lưu dữ liệu liên kết giữa Tên Khoa và Mã Khoa
+        String queryKhoa = "SELECT MaKhoa, TenKhoa FROM Khoa";
+        Statement statementKhoa = con.createStatement();
+        ResultSet rsKhoa = statementKhoa.executeQuery(queryKhoa);
+        while (rsKhoa.next()) {
+            String maKhoa = rsKhoa.getString("MaKhoa");
+            String tenKhoa = rsKhoa.getString("TenKhoa");
+            cbtk3.addItem(tenKhoa); // Thêm Tên Khoa vào ComboBox
+            khoaMap.put(tenKhoa, maKhoa); // Lưu liên kết giữa Tên Khoa và Mã Khoa
+        }
     
-            // Lấy MaPhong từ bảng PhongBenh
-    String queryPhong = "SELECT MaPhong FROM PhongBenh";
-    Statement statementNhanVien = con.createStatement();
-    ResultSet rsPhong = statementNhanVien.executeQuery(queryPhong);
-    while (rsPhong.next()) {
-        cbmp3.addItem(rsPhong.getString("MaPhong")); //thêm mã phòng vào combo box
-    }
-    
-     // Lấy MaGiuong từ bảng Giường
-    String queryGiuong = "SELECT MaGiuong FROM Giuong";
-    Statement statementGiuong = con.createStatement();
-    ResultSet rsGiuong = statementGiuong.executeQuery(queryGiuong);
-    while (rsGiuong.next()) {
-        cbmg3.addItem(rsGiuong.getString("MaGiuong")); //thêm mã giư vào combo box
-    }
+             // 3. Lấy danh sách mã phòng từ bảng PhongBenh và thêm vào ComboBox
+        String queryPhong = "SELECT MaPhong FROM PhongBenh";
+        Statement statementPhong = con.createStatement();
+        ResultSet rsPhong = statementPhong.executeQuery(queryPhong);
+        while (rsPhong.next()) {
+            cbmp3.addItem(rsPhong.getString("MaPhong"));  // Thêm mã phòng vào ComboBox
+        }
+
+        // 4. Thêm sự kiện cho ComboBox phòng để lọc giường trống dựa theo phòng được chọn
+        cbmp3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedPhong = (String) cbmp3.getSelectedItem();  // Lấy mã phòng đã chọn
+                loadGiuongForPhong(selectedPhong);  // Gọi hàm để tải giường trống cho phòng
+            }
+        });
     
     } catch (SQLException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 }
-    Connection con;
+     
+         
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -185,16 +279,17 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         txtcd3 = new javax.swing.JTextField();
         cbmbn3 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         btluu = new javax.swing.JButton();
-        btcapnhat = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
         btthoat = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Cập nhật thông tin chi tiết"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Quản lý thông tin chi tiết"));
 
         jLabel27.setText("Mã hồ sơ:");
 
@@ -203,8 +298,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel29.setText("Ngày nhập viện: ");
 
         jLabel30.setText("Mã Phòng:");
-
-        dcnnv3.setDateFormatString("yyyy-MM-dd");
 
         tbhs3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -272,6 +365,13 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         cbmbn3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Bệnh Nhân" }));
+        cbmbn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbmbn3ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -354,17 +454,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        btluu.setText("Lưu");
+        btluu.setText("Thêm");
         btluu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btluuActionPerformed(evt);
-            }
-        });
-
-        btcapnhat.setText("Sửa");
-        btcapnhat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btcapnhatActionPerformed(evt);
             }
         });
 
@@ -382,15 +475,22 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Load");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(btluu, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btcapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(206, 206, 206)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(btluu, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -402,9 +502,9 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btluu)
-                    .addComponent(btcapnhat)
                     .addComponent(btxoa)
-                    .addComponent(btthoat))
+                    .addComponent(btthoat)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -415,7 +515,7 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -440,13 +540,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbhs3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhs3MouseClicked
-        cbmk3.setEnabled(false);
-        cbmp3.setEnabled(true);
-        cbmg3.setEnabled(true);
-        cbmk3.setEnabled(true);
-        cbtk3.setEnabled(true);
-        cbmbn3.setEnabled(false);
-        txtmhs3.setEnabled(false);
+        //Lấy chỉ số của dòng được click
         int i = tbhs3.getSelectedRow();
         DefaultTableModel tb = (DefaultTableModel) tbhs3.getModel();
         //gán giá trị cho textfield
@@ -494,7 +588,44 @@ public class NewJFrame extends javax.swing.JFrame {
     private void txtcd3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcd3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcd3ActionPerformed
+    // Phương thức kiểm tra trùng mã hồ sơ và mã bệnh nhân
+// Phương thức kiểm tra trùng mã hồ sơ
+private boolean trungmhs(String mhs) {
+    try {
+        Connection con = Connect.KetnoiDB();
+        String sql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaHoSoNhapVien = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, mhs);
 
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;  // Trả về true nếu mã hồ sơ đã tồn tại
+        }
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;  // Trả về false nếu không trùng
+}
+
+// Phương thức kiểm tra trùng mã bệnh nhân
+private boolean trungmbn(String mbn) {
+    try {
+        Connection con = Connect.KetnoiDB();
+        String sql = "SELECT COUNT(*) FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, mbn);
+
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;  // Trả về true nếu mã bệnh nhân đã tồn tại
+        }
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;  // Trả về false nếu không trùng
+}
     private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
         // B1: Lấy dữ liệu từ các components và đưa vào biến
         String mhs = txtmhs3.getText().trim();  // Mã hồ sơ nhập viện
@@ -554,7 +685,17 @@ public class NewJFrame extends javax.swing.JFrame {
             dcnnv3.requestFocus();
             return;
         }
+        if (trungmhs(mhs)) {
+            JOptionPane.showMessageDialog(this, "Mã hồ sơ đã tồn tại!");
+            txtmhs3.requestFocus();
+            return;
+        }
 
+        if (trungmbn(mbn)) {
+            JOptionPane.showMessageDialog(this, "Mã bệnh nhân đã tồn tại!");
+            cbmbn3.requestFocus();
+            return;
+        }
         // B2: Kết nối Database
         try {
             Connection con = Connect.KetnoiDB();
@@ -564,162 +705,122 @@ public class NewJFrame extends javax.swing.JFrame {
             "VALUES ('" + mhs + "', '" + mbn + "', '" + format.format(nnv) + "', N'" + cd + "', '" + mp + "', '" + mg + "', '" + mk + "', N'" + tk + "')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
-
-            // Đóng kết nối
-            con.close();
+            
+              // Sau khi thêm thành công, cập nhật lại danh sách phòng và giường trống
+        loadPhongWithEmptyBeds(mk);  // Load lại danh sách phòng trong khoa
+        loadGiuongForPhong(mp);      // Load lại danh sách giường trống của phòng đã chọn
+            
             load_hsnv(); // Cập nhật bảng hiển thị hồ sơ nhập viện
             JOptionPane.showMessageDialog(this, "Thêm mới thành công");
             xoatrang(); // Xóa trắng các trường nhập
+            con.close();// Đóng kết nối sau khi thực hiện thành công
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
     }//GEN-LAST:event_btluuActionPerformed
+    private void loadComboBoxMaGiuong() {
+    try {
+        Connection con = null;
+        try {
+            con = Connect.KetnoiDB();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "SELECT MaGiuong FROM Giuong WHERE TrangThaiGiuong = N'Trống'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+
+        cbmg3.removeAllItems();  // Xóa dữ liệu cũ trong ComboBox
+
+        while (rs.next()) {
+            cbmg3.addItem(rs.getString("MaGiuong"));  // Thêm mã giường vào ComboBox
+        }
+
+        con.close();  // Đóng kết nối sau khi hoàn tất
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi tải mã giường: " + e.getMessage());
+    }
+}
 
     private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-        //        try{
-            //            String bn = cbmbn.getSelectedItem().toString();
-            ////            String bn =txtmbn.getText().trim();
-            //            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            //            if (choice == JOptionPane.YES_OPTION) {
-                //                Connection con = Connect.KetnoiDB();
-                //                String sql = "Delete From HoSoNhapVien Where MaBenhNhan='"+bn+"'";
-                //                Statement st = con.createStatement();
-                //                st.executeUpdate(sql);
-                //                con.close();
-                //                JOptionPane.showMessageDialog(this, "Xoá thành công");
-                //                loadyt();
-                //                xoatrang();
-                //            } else {
-                //                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
-                //            }
-            //        }catch (Exception ex){
-            //            ex.printStackTrace();
-            //        }
+                                                 
+    try {
+        String bn = cbmbn3.getSelectedItem().toString(); // Lấy mã bệnh nhân từ ComboBox
 
-        try {
-            String bn = cbmbn3.getSelectedItem().toString();
-            int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá không?", "Xác nhận", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (choice == JOptionPane.YES_OPTION) {
-                Connection con = Connect.KetnoiDB();
-                String sql = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = ?";
-                PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, bn);
-                int rowsDeleted = ps.executeUpdate();
-                con.close();
+        // Xác nhận từ người dùng trước khi xoá
+        int choice = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc chắn muốn xoá không?", 
+                "Xác nhận", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
 
-                if (rowsDeleted > 0) {
-                    JOptionPane.showMessageDialog(this, "Xoá thành công");
-                    load_hsnv();  // Hàm này có thể là để tải lại danh sách?
-                    xoatrang();  // Hàm này để xóa thông tin hiện tại?
-                } else {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xoá");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
+        if (choice == JOptionPane.YES_OPTION) {
+            // Kết nối đến cơ sở dữ liệu
+             con = Connect.KetnoiDB();
+
+            // B1: Lấy mã giường của bệnh nhân cần xoá
+            String sqlSelect = "SELECT MaGiuong FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+            PreparedStatement psSelect = con.prepareStatement(sqlSelect);
+            psSelect.setString(1, bn);
+            ResultSet rs = psSelect.executeQuery();
+
+            String maGiuong = null;
+            if (rs.next()) {
+                maGiuong = rs.getString("MaGiuong");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+
+            // B2: Thực hiện xoá hồ sơ nhập viện
+            String sqlDelete = "DELETE FROM HoSoNhapVien WHERE MaBenhNhan = ?";
+            PreparedStatement psDelete = con.prepareStatement(sqlDelete);
+            psDelete.setString(1, bn);
+            int rowsDeleted = psDelete.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                // B3: Cập nhật trạng thái giường thành "Trống" nếu mã giường không null
+                if (maGiuong != null) {
+                    String sqlUpdateGiuong = "UPDATE Giuong SET TrangThaiGiuong = N'Trống' WHERE MaGiuong = ?";
+                    PreparedStatement psUpdate = con.prepareStatement(sqlUpdateGiuong);
+                    psUpdate.setString(1, maGiuong);
+                    psUpdate.executeUpdate();
+                }
+
+                // B4: Hiển thị thông báo và load lại dữ liệu
+                JOptionPane.showMessageDialog(this, "Xoá thành công");
+
+                load_hsnv();  // Tải lại danh sách hồ sơ nhập viện
+                loadComboBoxMaGiuong();  // Cập nhật lại ComboBox mã giường
+                xoatrang();  // Xóa thông tin trên giao diện
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy bệnh nhân để xoá");
+            }
+
+            // Đóng kết nối
+            con.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không xoá nữa thì thôi");
         }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
+    }
+
+
     }//GEN-LAST:event_btxoaActionPerformed
 
     private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
         dispose();
     }//GEN-LAST:event_btthoatActionPerformed
 
-    private void btcapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcapnhatActionPerformed
-        try {
-            // B1: Lấy dữ liệu từ các components và đưa vào biến
-            String mhs = txtmhs3.getText().trim();  // Mã điều hồ sơ
-            String mbn = cbmbn3.getSelectedItem().toString();  // Mã bệnh nhân (ComboBox)
+    private void cbmbn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmbn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbmbn3ActionPerformed
 
-            // Lấy ngày điều trị từ JDateChooser
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date nnv = new Date(dcnnv3.getDate().getTime());
-            //        Date nxv = new Date(dcngayxv.getDate().getTime());
-            String mp = cbmp3.getSelectedItem().toString(); //mã phòng
-            String mg = cbmg3.getSelectedItem().toString(); //mã giường
-            String mk = cbmk3.getSelectedItem().toString();  // Mã khoa (ComboBox)
-            String tk = cbtk3.getSelectedItem().toString();  // Tên khoa (ComboBox)
-            String cd = txtcd3.getText().trim();  // chẩn đoán bệnh
-
-            // Kiểm tra nếu các trường không được để trống
-            if (mhs.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống mã hồ sơ");
-                return;
-            }
-            if (mbn.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống mã bệnh nhân");
-                return;
-            }
-            if (mk.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống mã khoa");
-                return;
-            }
-            if (mp.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống mã phòng");
-                return;
-            }
-            if (tk.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống khoa");
-                return;
-            }
-            if (mg.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống mã giường");
-                return;
-            }
-            if (cd.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống chẩn đoán bệnh");
-                return;
-            }
-            if (nnv == null) {
-                JOptionPane.showMessageDialog(this, "Không được để trống ngày nhập viện");
-                return;
-            }
-
-            // Định dạng ngày điều trị thành kiểu chuỗi
-            java.sql.Date sqlDateNhapVien = new java.sql.Date(nnv.getTime());
-
-            // Kết nối tới database
-            con = Connect.KetnoiDB();
-
-            // Câu lệnh SQL để cập nhật bản ghi trong bảng QuaTrinhDieuTri
-            String sql = "UPDATE HoSoNhapVien SET "
-            + "NgayNhapVien = ?, "
-            + "ChanDoan = ?, "
-            + "MaPhong = ?, "
-            + "MaGiuong = ?, "
-            + "MaKhoa = ?, "
-            + "TenKhoa = ? "
-            + "WHERE MaHoSoNhapVien = ? AND MaBenhNhan = ?";
-
-            // Sử dụng PreparedStatement để tránh SQL Injection
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDate(1, sqlDateNhapVien);  // Gán ngày nhập viện
-            ps.setString(2, cd); //gán chẩn đoán bệnh
-            ps.setString(3, mp);
-            ps.setString(4, mg);
-            ps.setString(5, mk);
-            ps.setString(6, tk);
-            ps.setString(7, mhs);    //gán mã hồ sơ nhập viện
-            ps.setString(8, mbn);    // Gán mã bệnh nhân
-
-            // Thực hiện câu lệnh cập nhật
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Sửa thành công");
-                load_hsnv();  // Tải lại dữ liệu sau khi cập nhật
-                xoatrang();   // Xóa các trường nhập liệu
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu để sửa");
-            }
-
-            con.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Sửa không thành công");
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btcapnhatActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        xoatrang();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -747,6 +848,7 @@ public class NewJFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -761,7 +863,6 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btcapnhat;
     private javax.swing.JButton btluu;
     private javax.swing.JButton btthoat;
     private javax.swing.JButton btxoa;
@@ -771,6 +872,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbmp3;
     private javax.swing.JComboBox<String> cbtk3;
     private com.toedter.calendar.JDateChooser dcnnv3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
