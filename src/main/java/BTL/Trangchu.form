@@ -274,9 +274,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Admin\Documents\NetBeansProjects\hosobenhnhann\src\main\java\Anh\nutthoat.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Tho&#xe1;t"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
