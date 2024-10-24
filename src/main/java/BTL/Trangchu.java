@@ -69,6 +69,7 @@ public class Trangchu extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1000, 800));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 204));
         jLabel1.setText("HỆ THỐNG QUẢN LÝ DANH SÁCH BỆNH NHÂN NỘI TRÚ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -90,6 +91,7 @@ public class Trangchu extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
+        btbn.setForeground(new java.awt.Color(0, 153, 204));
         btbn.setText("Thông tin bệnh nhân");
         btbn.setFocusable(false);
         btbn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -101,6 +103,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btbn);
 
+        btkhoa.setForeground(new java.awt.Color(0, 153, 204));
         btkhoa.setText("Khoa");
         btkhoa.setFocusable(false);
         btkhoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -113,6 +116,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btkhoa);
 
+        btnv.setForeground(new java.awt.Color(0, 153, 204));
         btnv.setFocusable(false);
         btnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnv.setLabel("Nhân viên y tế");
@@ -124,6 +128,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btnv);
 
+        btt.setForeground(new java.awt.Color(0, 153, 204));
         btt.setText("Thuốc");
         btt.setFocusable(false);
         btt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -136,6 +141,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btt);
 
+        btpb.setForeground(new java.awt.Color(0, 153, 204));
         btpb.setText("Phòng bệnh");
         btpb.setFocusable(false);
         btpb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -148,6 +154,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btpb);
 
+        btg.setForeground(new java.awt.Color(0, 153, 204));
         btg.setText("Giường bệnh");
         btg.setFocusable(false);
         btg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -160,6 +167,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btg);
 
+        bthsnv.setForeground(new java.awt.Color(0, 153, 204));
         bthsnv.setText("Hồ sơ nhập viện");
         bthsnv.setFocusable(false);
         bthsnv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -171,6 +179,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bthsnv);
 
+        btdt.setForeground(new java.awt.Color(0, 153, 204));
         btdt.setText("Quá trình điều trị");
         btdt.setFocusable(false);
         btdt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -182,6 +191,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(btdt);
 
+        bthsxv.setForeground(new java.awt.Color(0, 153, 204));
         bthsxv.setText("Hồ sơ xuất viện");
         bthsxv.setFocusable(false);
         bthsxv.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -193,6 +203,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bthsxv);
 
+        bttt.setForeground(new java.awt.Color(0, 153, 204));
         bttt.setText("Thanh toán");
         bttt.setFocusable(false);
         bttt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -205,6 +216,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bttt);
 
+        jButton1.setForeground(new java.awt.Color(0, 153, 204));
         jButton1.setText("Thoát");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
