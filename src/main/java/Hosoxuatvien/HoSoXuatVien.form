@@ -29,7 +29,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jPanel3" pref="956" max="32767" attributes="0"/>
+                  <Component id="jPanel3" pref="986" max="32767" attributes="0"/>
                   <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -439,6 +439,8 @@
                   <Component id="btxoa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btxuatexcel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnhapexcel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -455,6 +457,7 @@
                       <Component id="btsua" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btxoa" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btxuatexcel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnhapexcel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
@@ -498,6 +501,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Tho&#xe1;t"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnhapexcel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p Excel"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnhapexcelActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

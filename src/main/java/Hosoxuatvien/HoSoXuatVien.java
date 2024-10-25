@@ -228,7 +228,129 @@ private boolean Checktrungmbn(String mbn) {
 //        return tenKhoa; // Trả về tên khoa
 //    }
 
-    
+        private void Themhs(String mhs, String mbn, String dcngaynv, String dcngayxv, String mk, String k, String bs, String ld) {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String sql = "INSERT INTO HoSoXuatVien ( MaHoSoXuatVien, MaBenhNhan, NgayNhapVien, NgayXuat,MaKhoa, TenKhoa, BacSiDieuTri, LyDoXuat ) "
+                   + "VALUES ('" + mhs + "', '" + mbn + "', '" + dcngaynv + "', '" + dcngayxv + "', '" + mk + "', N'" + k + "', N'" + bs + "', N'" + ld + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}   
+
+    private void ReadExcel(String tenfilepath) {
+        try {
+        FileInputStream fis = new FileInputStream(tenfilepath);
+        XSSFWorkbook wb = new XSSFWorkbook(fis);
+        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+        Iterator<Row> itr = sheet.iterator();
+        int row_count = 0;
+
+        while (itr.hasNext()) {
+            Row row = itr.next();
+            if (row_count > 0) { // Bỏ qua dòng tiêu đề
+                String mhs = "";
+                Cell cell1 = row.getCell(0);
+                if (cell1 != null) {
+                    if (cell1.getCellType() == CellType.STRING) {
+                        mhs = cell1.getStringCellValue().trim();
+                    } else if (cell1.getCellType() == CellType.NUMERIC) {
+                        mhs = String.valueOf((int) cell1.getNumericCellValue());
+                    }
+                }
+
+                // Kiểm tra xem mbn có phải là chuỗi rỗng không
+                if (mhs.isEmpty()) {
+                    row_count++;
+                    continue; // Bỏ qua dòng này
+                }
+
+                String mbn = "";
+                Cell cell2 = row.getCell(1);
+                if (cell2 != null) {
+                    if (cell2.getCellType() == CellType.STRING) {
+                        mbn = cell2.getStringCellValue().trim();
+                    } else if (cell2.getCellType() == CellType.NUMERIC) {
+                        mbn = String.valueOf(cell2.getNumericCellValue()).trim();
+                    }
+                }
+
+                String dcngaynv = "";
+                Cell cell3 = row.getCell(2);
+                if (cell3 != null) {
+                    if (cell3.getCellType() == CellType.STRING) {
+                        dcngaynv = cell3.getStringCellValue().trim();
+                    } else if (cell3.getCellType() == CellType.NUMERIC) {
+                        dcngaynv = new SimpleDateFormat("yyyy-MM-dd").format(cell3.getDateCellValue());
+                    }
+                }
+                
+                String dcngayxv = "";
+                Cell cell4 = row.getCell(3);
+                if (cell4 != null) {
+                    if (cell4.getCellType() == CellType.STRING) {
+                        dcngaynv = cell4.getStringCellValue().trim();
+                    } else if (cell4.getCellType() == CellType.NUMERIC) {
+                        dcngayxv = new SimpleDateFormat("yyyy-MM-dd").format(cell4.getDateCellValue());
+                    }
+                }
+
+                String mk = "";
+                Cell cell5 = row.getCell(4);
+                if (cell5 != null) {
+                    if (cell5.getCellType() == CellType.STRING) {
+                        mk = cell5.getStringCellValue().trim();
+                    } else if (cell5.getCellType() == CellType.NUMERIC) {
+                        mk = String.valueOf(cell5.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String k = "";
+                Cell cell6 = row.getCell(5);
+                if (cell6 != null) {
+                    if (cell6.getCellType() == CellType.STRING) {
+                        k = cell6.getStringCellValue().trim();
+                    } else if (cell6.getCellType() == CellType.NUMERIC) {
+                        k = String.valueOf(cell6.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String bs = "";
+                Cell cell7 = row.getCell(6);
+                if (cell7 != null) {
+                    if (cell7.getCellType() == CellType.STRING) {
+                        bs = cell7.getStringCellValue().trim();
+                    } else if (cell7.getCellType() == CellType.NUMERIC) {
+                        bs = String.valueOf(cell7.getNumericCellValue()).trim();
+                    }
+                }
+                
+                String ld = "";
+                Cell cell8 = row.getCell(7);
+                if (cell8 != null) {
+                    if (cell8.getCellType() == CellType.STRING) {
+                        ld = cell8.getStringCellValue().trim();
+                    } else if (cell8.getCellType() == CellType.NUMERIC) {
+                        ld = String.valueOf(cell8.getNumericCellValue()).trim();
+                    }
+                }
+
+
+                // Gọi phương thức thêm bệnh nhân
+                Themhs(mhs, mbn, dcngaynv, dcngayxv, mk, k, bs, ld);
+            }
+            row_count++;
+        }
+        JOptionPane.showMessageDialog(this, "Thêm hồ sơ bằng file thành công");
+        load_hsxv();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+        
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -265,6 +387,7 @@ private boolean Checktrungmbn(String mbn) {
         btxoa = new javax.swing.JButton();
         btxuatexcel = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        btnhapexcel = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1010, 600));
 
@@ -512,6 +635,13 @@ private boolean Checktrungmbn(String mbn) {
 
         jButton6.setText("Thoát");
 
+        btnhapexcel.setText("Nhập Excel");
+        btnhapexcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnhapexcelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -525,6 +655,8 @@ private boolean Checktrungmbn(String mbn) {
                 .addComponent(btxoa)
                 .addGap(18, 18, 18)
                 .addComponent(btxuatexcel)
+                .addGap(18, 18, 18)
+                .addComponent(btnhapexcel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton6)
                 .addContainerGap())
@@ -538,7 +670,8 @@ private boolean Checktrungmbn(String mbn) {
                     .addComponent(btthem)
                     .addComponent(btsua)
                     .addComponent(btxoa)
-                    .addComponent(btxuatexcel))
+                    .addComponent(btxuatexcel)
+                    .addComponent(btnhapexcel))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -551,7 +684,7 @@ private boolean Checktrungmbn(String mbn) {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 986, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1124,8 +1257,29 @@ private boolean Checktrungmbn(String mbn) {
     }
     }//GEN-LAST:event_cbmkActionPerformed
 
+    private void btnhapexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapexcelActionPerformed
+        try {
+            JFileChooser fc = new JFileChooser();
+            int lc = fc.showOpenDialog(this);
+            if (lc == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                String tenfile = file.getName();
+                if (tenfile.endsWith(".xlsx")) {    //endsWith chọn file có phần kết thúc ...
+                    ReadExcel(file.getPath());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phải chọn file excel");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnhapexcelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnhapexcel;
     private javax.swing.JButton btsua;
     private javax.swing.JButton btthem;
     private javax.swing.JButton btxoa;
