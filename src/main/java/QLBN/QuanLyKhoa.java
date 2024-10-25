@@ -58,6 +58,8 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
         initComponents();
+        txthoten.setEnabled(false);
+        txtmbn.setEnabled(false);
         btluu.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
@@ -212,7 +214,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(980, 600));
+        setPreferredSize(new java.awt.Dimension(1010, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
@@ -335,7 +337,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                         .addGap(43, 43, 43)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 27, Short.MAX_VALUE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 944, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -620,6 +622,8 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
+        txthoten.setEnabled(true);
+        txtmbn.setEnabled(true);
         txtmbn.setEnabled(true);
         btluu.setEnabled(true);
         btsua.setEnabled(false);
@@ -698,7 +702,7 @@ public class QuanLyKhoa extends javax.swing.JInternalFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\Khoa.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\QLBN\\Khoa.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();

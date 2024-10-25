@@ -64,6 +64,14 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
         initComponents();
+        txthoten.setEnabled(false);
+        txtmbn.setEnabled(false);
+        dcngaysinh.setEnabled(false);
+        cboxgioitinh.setEnabled(false);
+        txtdiachi.setEnabled(false);
+        txtsdt.setEnabled(false);
+        txtcccd.setEnabled(false);
+        txtbhyt.setEnabled(false);
         btluu.setEnabled(false);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
@@ -299,7 +307,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
         btn_xuatbc = new javax.swing.JButton();
         btnhapexcel = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(980, 600));
+        setPreferredSize(new java.awt.Dimension(1010, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 204));
@@ -924,7 +932,14 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         xoatrang();
+        txthoten.setEnabled(true);
         txtmbn.setEnabled(true);
+        dcngaysinh.setEnabled(true);
+        cboxgioitinh.setEnabled(true);
+        txtdiachi.setEnabled(true);
+        txtsdt.setEnabled(true);
+        txtcccd.setEnabled(true);
+        txtbhyt.setEnabled(true);
         btluu.setEnabled(true);
         btsua.setEnabled(false);
         btxoa.setEnabled(false);
@@ -1052,7 +1067,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\DanhsachBenhNhan.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\QLBN\\DanhsachBenhNhan.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -1067,7 +1082,7 @@ public class QuanLyBenhNhan1 extends javax.swing.JInternalFrame {
 
             Connection con = BTL.Connect.KetnoiDB();
 
-            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\dqduc\\OneDrive\\Documents\\Java\\hosobenhnhan\\src\\main\\java\\QLBN\\report2.jrxml");
+            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\QLBN\\report2.jrxml");
 
             String sql = "Select * From BenhNhan Where MaBenhNhan like N'%"+mbn+"%'";
             JRDesignQuery updateQuery=new JRDesignQuery();

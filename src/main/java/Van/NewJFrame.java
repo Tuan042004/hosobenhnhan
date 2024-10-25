@@ -5,7 +5,7 @@
 package Van;
 
 
-import Van.HSNV;
+
 import BTL.Connect;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,25 +39,23 @@ public class NewJFrame extends javax.swing.JFrame {
         load_hsnv();
         loadcbo(); //load du lieu vao combobox
         addComboBoxListeners(); //them su kien lang nghe cho combobox
+        load_bn();
+        txtten.setEnabled(false);
     }
     public class Form1 {
-    private HSNV form2;
+    private HSNVinternal form2;
 
     public Form1() {
-        form2 = new HSNV(this);  // Truyền form1 qua form2
+        form2 = new HSNVinternal(this);  // Truyền form1 qua form2
     }
 
     public void updateForm2Data(Object[] rowData) {
         form2.addRowToTable(rowData);  // Gọi phương thức của form2 để thêm dữ liệu
     }
 }
-    private void checkAndReconnect() throws SQLException {
+    private void checkAndReconnect() throws SQLException, ClassNotFoundException {
     if (con == null || con.isClosed()) {
-        try {
-            con = BTL.Connect.KetnoiDB(); // Gọi hàm kết nối lại nếu kết nối bị đóng
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        con = BTL.Connect.KetnoiDB(); // Gọi hàm kết nối lại nếu kết nối bị đóng
     }
 }
     Connection con;
@@ -75,7 +73,7 @@ public class NewJFrame extends javax.swing.JFrame {
     ResultSet rs = st.executeQuery(sql);
 
     // Định nghĩa tiêu đề cho bảng
-    String[] tieude = {"Mã hồ sơ", "Mã bệnh nhân"," Ngày nhập viện","Chẩn đoán","Mã phòng","Mã giường", "Mã khoa", "Tên khoa"};
+    String[] tieude = {"Mã hồ sơ", "Mã bệnh nhân", "Tên bệnh nhân"," Ngày nhập viện","Chẩn đoán","Mã phòng","Mã giường", "Mã khoa", "Tên khoa"};
     // Tạo DefaultTableModel
     DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
         @Override
@@ -92,7 +90,8 @@ public class NewJFrame extends javax.swing.JFrame {
        st1.executeUpdate(sql1);
         Vector<String> v = new Vector<>();
         v.add(rs.getString("MaHoSoNhapVien"));        // Mã hồ sơ
-        v.add(rs.getString("MaBenhNhan"));             // Mã bệnh nhân
+        v.add(rs.getString("MaBenhNhan"));        
+        v.add(rs.getString("HoTenBenhNhan"));// Mã bệnh nhân
         v.add(rs.getDate("NgayNhapVien").toString());   // Ngày nhập viện điều trị
 //        v.add(rs.getDate("NgayXuat").toString());  // Ngày xuất viện        
         v.add(rs.getString("ChanDoan"));  //chẩn đoán bệnh
@@ -126,12 +125,38 @@ public class NewJFrame extends javax.swing.JFrame {
         cbmp3.setSelectedItem("Chọn Phòng");
         dcnnv3.setDate(null);   
         txtcd3.setText("");
+        txtten.setText("");
         
     // Mở khóa lại các trường txtmhs và cbmbn
     txtmhs3.setEnabled(true);  // Mở lại trường mã hồ sơ để người dùng nhập
     cbmbn3.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
 
     }
+     Map<String,String> benhnhan = new HashMap<>();
+     HashSet<String> existingCodes = new HashSet<>();
+         public void load_bn(){
+             try{
+            con = Connect.KetnoiDB();
+            String sql = "Select * From BenhNhan";
+            Statement st=con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            //Đổ dữ liệu vào combobox
+            while(rs.next()){
+                cbmbn3.addItem(rs.getString("MaBenhNhan"));
+                benhnhan.put(rs.getString("MaBenhNhan"), rs.getString("HoTenBenhNhan"));
+            }
+            String newPatientCode = "newPatientCode"; // Thay thế bằng mã bệnh nhân bạn muốn kiểm tra
+            if (!existingCodes.contains(newPatientCode)) {
+                cbmbn3.addItem(newPatientCode); // Thêm mã bệnh nhân vào ComboBox
+            } else {
+                System.out.println("Mã bệnh nhân đã tồn tại!");
+            }
+//            con.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+         }
+         
      private HashMap<String, String> khoaMap = new HashMap<>();
      private void addComboBoxListeners() {
     // Lắng nghe sự kiện thay đổi trên ComboBox Tên Khoa
@@ -142,9 +167,12 @@ public class NewJFrame extends javax.swing.JFrame {
             String maKhoa = khoaMap.get(selectedTenKhoa);  // Lấy Mã Khoa tương ứng từ HashMap nếu cần (giả sử bạn vẫn muốn hiển thị Mã Khoa)
             cbmk3.removeAllItems();  // Xóa mục cũ trong ComboBox Mã Khoa
             cbmk3.addItem(maKhoa);   // Thêm Mã Khoa vào ComboBox
-            
-            // Tải các phòng có giường trống dựa theo Tên Khoa
-            loadPhongWithEmptyBeds(selectedTenKhoa);  // Sử dụng trực tiếp Tên Khoa thay vì MaKhoa
+            try {
+                // Tải các phòng có giường trống dựa theo Tên Khoa
+                loadPhongWithEmptyBeds(selectedTenKhoa);  // Sử dụng trực tiếp Tên Khoa thay vì MaKhoa
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     });
     
@@ -152,13 +180,17 @@ public class NewJFrame extends javax.swing.JFrame {
     cbmp3.addActionListener(e -> {
         String selectedPhong = (String) cbmp3.getSelectedItem();  // Lấy mã phòng đã chọn
         if (selectedPhong != null) {
-            loadGiuongForPhong(selectedPhong);  // Tải giường trống cho phòng đó
+            try {
+                loadGiuongForPhong(selectedPhong);  // Tải giường trống cho phòng đó
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     });
 }
 
      // Phương thức tải danh sách các phòng có giường trống theo mã khoa
-private void loadPhongWithEmptyBeds(String tenKhoa) {
+private void loadPhongWithEmptyBeds(String tenKhoa) throws ClassNotFoundException {
     try {
         checkAndReconnect();  // Kiểm tra và kết nối lại nếu cần
         
@@ -181,7 +213,7 @@ private void loadPhongWithEmptyBeds(String tenKhoa) {
     }
 }
 
-private void loadGiuongForPhong(String maPhong) {
+private void loadGiuongForPhong(String maPhong) throws ClassNotFoundException {
     try {
         checkAndReconnect();  // Kiểm tra và kết nối lại nếu cần
 
@@ -203,21 +235,21 @@ private void loadGiuongForPhong(String maPhong) {
 
      // Khai báo biến toàn cục để lưu liên kết giữa Tên Khoa và Mã Khoa
      private void loadcbo() throws ClassNotFoundException {
-         HashSet<String> existingCodes = new HashSet<>();
+//         HashSet<String> existingCodes = new HashSet<>();
     try {
         con = Connect.KetnoiDB();
-        String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
-        Statement statement = con.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()) {
-            cbmbn3.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
-        }
-         String newPatientCode = "newPatientCode"; // Thay thế bằng mã bệnh nhân bạn muốn kiểm tra
-            if (!existingCodes.contains(newPatientCode)) {
-                cbmbn3.addItem(newPatientCode); // Thêm mã bệnh nhân vào ComboBox
-            } else {
-                System.out.println("Mã bệnh nhân đã tồn tại!");
-            }
+//        String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
+//        Statement statement = con.createStatement();
+//        ResultSet rs = statement.executeQuery(query);
+//        while (rs.next()) {
+//            cbmbn3.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
+//        }
+//         String newPatientCode = "newPatientCode"; // Thay thế bằng mã bệnh nhân bạn muốn kiểm tra
+//            if (!existingCodes.contains(newPatientCode)) {
+//                cbmbn3.addItem(newPatientCode); // Thêm mã bệnh nhân vào ComboBox
+//            } else {
+//                System.out.println("Mã bệnh nhân đã tồn tại!");
+//            }
 
         
     // Truy vấn và lưu dữ liệu liên kết giữa Tên Khoa và Mã Khoa
@@ -244,7 +276,11 @@ private void loadGiuongForPhong(String maPhong) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedPhong = (String) cbmp3.getSelectedItem();  // Lấy mã phòng đã chọn
-                loadGiuongForPhong(selectedPhong);  // Gọi hàm để tải giường trống cho phòng
+                try {
+                    loadGiuongForPhong(selectedPhong);  // Gọi hàm để tải giường trống cho phòng
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     
@@ -280,6 +316,8 @@ private void loadGiuongForPhong(String maPhong) {
         txtcd3 = new javax.swing.JTextField();
         cbmbn3 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtten = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         btluu = new javax.swing.JButton();
         btxoa = new javax.swing.JButton();
@@ -299,6 +337,8 @@ private void loadGiuongForPhong(String maPhong) {
 
         jLabel30.setText("Mã Phòng:");
 
+        dcnnv3.setDateFormatString("yyyy-MM-dd");
+
         tbhs3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -307,7 +347,7 @@ private void loadGiuongForPhong(String maPhong) {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Hồ Sơ", "Mã Bệnh Nhân", "Ngày Nhập Viện", "Chẩn Đoán", "Mã Phòng", "Mã Giường", "Mã Khoa", "Tên Khoa", "Tên Bệnh Nhân"
+                "Mã Hồ Sơ", "Mã Bệnh Nhân", "Tên Bệnh Nhân", "Ngày Nhập Viện", "Chẩn Đoán", "Mã Phòng", "Mã Giường", "Mã Khoa", "Tên Khoa"
             }
         ));
         tbhs3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -365,6 +405,11 @@ private void loadGiuongForPhong(String maPhong) {
         });
 
         cbmbn3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Bệnh Nhân" }));
+        cbmbn3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbmbn3ItemStateChanged(evt);
+            }
+        });
         cbmbn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbmbn3ActionPerformed(evt);
@@ -372,6 +417,8 @@ private void loadGiuongForPhong(String maPhong) {
         });
 
         jButton1.setText("jButton1");
+
+        jLabel1.setText("Họ Tên:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -401,20 +448,20 @@ private void loadGiuongForPhong(String maPhong) {
                             .addComponent(jLabel28)
                             .addComponent(jLabel34))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbmbn3, 0, 180, Short.MAX_VALUE)
+                            .addComponent(cbmg3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtcd3))
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbmbn3, 0, 180, Short.MAX_VALUE)
-                                    .addComponent(cbmg3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel33))
-                                .addGap(45, 45, 45)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbmk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbtk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtcd3, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel1))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbmk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbtk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtten, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -448,8 +495,11 @@ private void loadGiuongForPhong(String maPhong) {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
                     .addComponent(dcnnv3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcd3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel34))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtcd3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel34)
+                    .addComponent(txtten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -492,10 +542,10 @@ private void loadGiuongForPhong(String maPhong) {
                 .addGap(18, 18, 18)
                 .addComponent(btluu, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btthoat)
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,8 +597,9 @@ private void loadGiuongForPhong(String maPhong) {
         txtmhs3.setText(tb.getValueAt(i, 0).toString());
         //gán giá trị cho combobox mã bệnh nhân
         cbmbn3.setSelectedItem(tb.getValueAt(i, 1).toString());
+        txtten.setText(tb.getValueAt(i, 2).toString());
         //gán giá trị cho datechooser ngày nhập viện
-        String nnv = tb.getValueAt(i, 2).toString();
+        String nnv = tb.getValueAt(i, 3).toString();
         java.util.Date ng;
         try {
             ng = new SimpleDateFormat("yyyy-MM-DD").parse(nnv);
@@ -557,12 +608,12 @@ private void loadGiuongForPhong(String maPhong) {
             ex.printStackTrace();
         }
         //gán giá trị cho tf chẩn đoán
-        txtcd3.setText(tb.getValueAt(i, 3).toString());
+        txtcd3.setText(tb.getValueAt(i, 4).toString());
         //gán giá trị cho cbb mã phòng
-        cbmp3.setSelectedItem(tb.getValueAt(i, 4).toString());
-        cbmg3.setSelectedItem(tb.getValueAt(i, 5).toString());
-        cbmk3.setSelectedItem(tb.getValueAt(i, 6).toString());
-        cbtk3.setSelectedItem(tb.getValueAt(i, 7).toString());
+        cbmp3.setSelectedItem(tb.getValueAt(i, 5).toString());
+        cbmg3.setSelectedItem(tb.getValueAt(i, 6).toString());
+        cbmk3.setSelectedItem(tb.getValueAt(i, 7).toString());
+        cbtk3.setSelectedItem(tb.getValueAt(i, 8).toString());
     }//GEN-LAST:event_tbhs3MouseClicked
 
     private void tbhs3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhs3MouseEntered
@@ -630,6 +681,7 @@ private boolean trungmbn(String mbn) {
         // B1: Lấy dữ liệu từ các components và đưa vào biến
         String mhs = txtmhs3.getText().trim();  // Mã hồ sơ nhập viện
         String mbn = cbmbn3.getSelectedItem().toString();  // Mã bệnh nhân (ComboBox)
+        String tbn = txtten.getText().trim(); //Tên bệnh nhân 
         String cd = txtcd3.getText().trim(); //chẩn đoán bệnh
         String mk = cbmk3.getSelectedItem().toString();  // Mã khoa (ComboBox)
         String tk = cbtk3.getSelectedItem().toString();  // Tên khoa (ComboBox)
@@ -653,11 +705,11 @@ private boolean trungmbn(String mbn) {
             return;
         }
 
-        if (mk.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã khoa không được để trống!");
-            cbmk3.requestFocus();
-            return;
-        }
+//        if (mk.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Mã khoa không được để trống!");
+//            cbmk3.requestFocus();
+//            return;
+//        }
 
         if (tk.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên khoa không được để trống!");
@@ -701,8 +753,8 @@ private boolean trungmbn(String mbn) {
             Connection con = Connect.KetnoiDB();
 
             // B3: Tạo đối tượng Statement để thực hiện lệnh truy vấn
-            String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, NgayNhapVien, ChanDoan, MaPhong, MaGiuong, MaKhoa, TenKhoa) " +
-            "VALUES ('" + mhs + "', '" + mbn + "', '" + format.format(nnv) + "', N'" + cd + "', '" + mp + "', '" + mg + "', '" + mk + "', N'" + tk + "')";
+            String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, HoTenBenhNhan, NgayNhapVien, ChanDoan, MaPhong, MaGiuong, MaKhoa, TenKhoa) " +
+            "VALUES ('" + mhs + "', '" + mbn + "', N'" + tbn + "', '" + format.format(nnv) + "', N'" + cd + "', '" + mp + "', '" + mg + "', '" + mk + "', N'" + tk + "')";
             Statement st = con.createStatement();
             st.executeUpdate(sql);
             
@@ -719,14 +771,10 @@ private boolean trungmbn(String mbn) {
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm dữ liệu: " + e.getMessage());
         }
     }//GEN-LAST:event_btluuActionPerformed
-    private void loadComboBoxMaGiuong() {
+    private void loadComboBoxMaGiuong() throws ClassNotFoundException {
     try {
         Connection con = null;
-        try {
-            con = Connect.KetnoiDB();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        con = BTL.Connect.KetnoiDB();
         String sql = "SELECT MaGiuong FROM Giuong WHERE TrangThaiGiuong = N'Trống'";
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(sql);
@@ -822,6 +870,12 @@ private boolean trungmbn(String mbn) {
         xoatrang();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cbmbn3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbmbn3ItemStateChanged
+        // TODO add your handling code here:
+        String ten = cbmbn3.getSelectedItem().toString();
+        txtten.setText(benhnhan.get(ten));
+    }//GEN-LAST:event_cbmbn3ItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -849,6 +903,8 @@ private boolean trungmbn(String mbn) {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -874,6 +930,7 @@ private boolean trungmbn(String mbn) {
     private com.toedter.calendar.JDateChooser dcnnv3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -889,5 +946,6 @@ private boolean trungmbn(String mbn) {
     private javax.swing.JTable tbhs3;
     private javax.swing.JTextField txtcd3;
     private javax.swing.JTextField txtmhs3;
+    private javax.swing.JTextField txtten;
     // End of variables declaration//GEN-END:variables
 }

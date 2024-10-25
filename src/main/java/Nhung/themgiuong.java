@@ -30,7 +30,13 @@ public class themgiuong extends javax.swing.JFrame {
     private void load_Gb() {
         String sql = "SELECT * FROM Giuong";
         String[] tieude = {"Mã giường", "Mã phòng", "Trạng thái"};
-        DefaultTableModel tb = new DefaultTableModel(tieude, 0);
+    DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
+        @Override
+        public boolean isCellEditable(int row, int column) {
+        // Tất cả các ô sẽ không thể chỉnh sửa
+        return false;
+        }
+    };
 
         try (Connection con = BTL.Connect.KetnoiDB();
 

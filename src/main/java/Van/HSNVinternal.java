@@ -3,16 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package Van;
-import Van.HSNV;
+
+
 import BTL.Connect;
 import Van.NewJFrame;
+import Van.Sua;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -27,8 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -42,7 +42,10 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
+import static org.apache.poi.ss.usermodel.CellType.STRING;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -57,15 +60,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Dell V
  */
 public class HSNVinternal extends javax.swing.JInternalFrame {
-
     private NewJFrame f1;
-     /* Creates new form HSNVinternal
+    /**
+     * Creates new form HSNVinternal
      */
     public HSNVinternal() throws ClassNotFoundException {
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
+        ui.setNorthPane(null);
         initComponents();
         load_disable();
         load_hsnv();
         loadcbo();
+        load_bn();
     }
     public HSNVinternal(NewJFrame f1){
         this.f1 = f1;
@@ -74,6 +81,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
     private void load_disable(){
         txtmhs.setEnabled(false);
         cbmbn.setEnabled(false);
+        txtten.setEnabled(false);
         dcnnv.setEnabled(false);
         txtcd.setEnabled(false);
         cbmp.setEnabled(false);
@@ -101,7 +109,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
     }
 }
 
-    HSNVinternal (NewJFrame.Form1 aThis) {
+    HSNVinternal(NewJFrame.Form1 aThis) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     public void load_hsnv(){
@@ -118,7 +126,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
     ResultSet rs = st.executeQuery(sql);
 
     // Định nghĩa tiêu đề cho bảng
-    String[] tieude = { "Mã hồ sơ", "Mã bệnh nhân", "Ngày nhập viện", "Chẩn đoán", "Mã phòng", "Mã giường", "Mã khoa", "Tên khoa" };
+    String[] tieude = { "Mã hồ sơ", "Mã bệnh nhân", "Tên bệnh nhân", "Ngày nhập viện", "Chẩn đoán", "Mã phòng", "Mã giường", "Mã khoa", "Tên khoa" };
 
     // Tạo DefaultTableModel
     DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
@@ -134,7 +142,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         Vector<String> v = new Vector<>();
         v.add(rs.getString("MaHoSoNhapVien"));        // Mã hồ sơ
         v.add(rs.getString("MaBenhNhan"));             // Mã bệnh nhân
-//        v.add(rs.getString("HoTenBenhNhan"));   // Họ Tên Bệnh Nhân
+        v.add(rs.getString("HoTenBenhNhan"));   // Họ Tên Bệnh Nhân
         v.add(rs.getDate("NgayNhapVien").toString()); // Ngày nhập viện        
         v.add(rs.getString("ChanDoan")); //chẩn đoán bệnh
         v.add(rs.getString("MaPhong"));                  // Mã phòng
@@ -167,17 +175,16 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         cbmp.setSelectedItem(null);
         dcnnv.setDate(null);   
         txtcd.setText("");
-        
-        // Mở khóa lại các trường txtmhs và cbmbn
-    txtmhs.setEnabled(true);  // Mở lại trường mã hồ sơ để người dùng nhập
-    cbmbn.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
+        txtten.setText("");
+        txtmhs.setEnabled(true);  // Mở lại trường mã hồ sơ để người dùng nhập
+        cbmbn.setEnabled(true);  // Mở lại JComboBox mã bệnh nhân để người dùng chọn
 
     }
-     public void Themhoso(String mhs, String mbn, String nnv, String cd, String mp,String mg, String mk, String tk) {
+     public void Themhoso(String mhs, String mbn, String tbn, String nnv, String cd, String mp,String mg, String mk, String tk) {
         try {
             con =Connect.KetnoiDB();
-            String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, NgayNhapVien, ChanDoan, MaPhong, MaGiuong, MaKhoa, TenKhoa) "
-                       + "VALUES ('" + mhs + "', '" + mbn + "', '" + nnv + "', N'" + cd + "', '" + mp + "', '" + mg + "',  '" + mk + "', N'" + tk + "')";
+            String sql = "INSERT INTO HoSoNhapVien (MaHoSoNhapVien, MaBenhNhan, HoTenBenhNhan, NgayNhapVien, ChanDoan, MaPhong, MaGiuong, MaKhoa, TenKhoa) "
+                       + "VALUES ('" + mhs + "', '" + mbn + "', N'" + tbn + "', '" + nnv + "', N'" + cd + "', '" + mp + "', '" + mg + "',  '" + mk + "', N'" + tk + "')";
 
             Statement st = con.createStatement();
             st.executeUpdate(sql);
@@ -188,123 +195,104 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
             
          public void ReadExcel(String tenfilepath) {
-    try {
-        FileInputStream fis = new FileInputStream(tenfilepath);
-        XSSFWorkbook wb = new XSSFWorkbook(fis);
-        XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
-        Iterator<Row> itr = sheet.iterator();
-        int row_count = 0;
+   try {
+    FileInputStream fis = new FileInputStream(tenfilepath);
+    XSSFWorkbook wb = new XSSFWorkbook(fis);
+    XSSFSheet sheet = wb.getSheetAt(0); // Lấy sheet đầu tiên
+    Iterator<Row> itr = sheet.iterator();
+    int row_count = 0;
 
-        while (itr.hasNext()) {
-            Row row = itr.next();
-            if (row_count > 0) { // Bỏ qua dòng tiêu đề
-                String mhs = "";
-                Cell cell1 = row.getCell(0);
-                if (cell1 != null) {
-                    if (cell1.getCellType() == CellType.STRING) {
-                        mhs = cell1.getStringCellValue().trim();
-                    } else if (cell1.getCellType() == CellType.NUMERIC) {
-                        mhs = String.valueOf((int) cell1.getNumericCellValue());
-                    }
-                }
-
-                // Kiểm tra xem maHoSoXuatVien có phải là chuỗi rỗng không
-                if (mhs.isEmpty()) {
-                    row_count++;
-                    continue; // Bỏ qua dòng này
-                }
-
-                String maBenhNhan = "";
-                Cell cell2 = row.getCell(1);
-                if (cell2 != null) {
-                    if (cell2.getCellType() == CellType.STRING) {
-                        maBenhNhan = cell2.getStringCellValue().trim();
-                    } else if (cell2.getCellType() == CellType.NUMERIC) {
-                        maBenhNhan = String.valueOf((int) cell2.getNumericCellValue());
-                    }
-                }
-
-                String ngayNhapVien = "";
-                Cell cell3 = row.getCell(2);
-                if (cell3 != null) {
-                    if (cell3.getCellType() == CellType.STRING) {
-                        ngayNhapVien = cell3.getStringCellValue().trim();
-                    } else if (cell3.getCellType() == CellType.NUMERIC) {
-                        ngayNhapVien = new SimpleDateFormat("yyyy-MM-dd").format(cell3.getDateCellValue());
-                    }
-                }
-
-                String Chandoan = "";
-                Cell cell4 = row.getCell(3);
-                if (cell4 != null) {
-                    if (cell4.getCellType() == CellType.STRING) {
-                       Chandoan = cell4.getStringCellValue().trim();
-                    } else if (cell4.getCellType() == CellType.NUMERIC) {
-                        Chandoan = cell4.getStringCellValue().trim();
-                    }
-                }
-                String map = "";
-                Cell cell5 = row.getCell(4);
-                if (cell5 != null) {
-                    if (cell5.getCellType() == CellType.STRING) {
-                        map = cell5.getStringCellValue().trim();
-                    } else if (cell5.getCellType() == CellType.NUMERIC) {
-                        map = String.valueOf((int) cell5.getNumericCellValue()).trim();
-                    }
-                }
-                String mag = "";
-                Cell cell6 = row.getCell(5);
-                if (cell6 != null) {
-                    if (cell6.getCellType() == CellType.STRING) {
-                        mag = cell6.getStringCellValue().trim();
-                    } else if (cell6.getCellType() == CellType.NUMERIC) {
-                        mag = String.valueOf((int) cell6.getNumericCellValue()).trim();
-                    }
-                }
-                String maKhoa = "";
-                Cell cell7 = row.getCell(6);
-                if (cell7 != null) {
-                    if (cell7.getCellType() == CellType.STRING) {
-                        maKhoa = cell7.getStringCellValue().trim();
-                    } else if (cell7.getCellType() == CellType.NUMERIC) {
-                        maKhoa = String.valueOf((int) cell7.getNumericCellValue()).trim();
-                    }
-                }
-
-                String tenKhoa = "";
-                Cell cell8 = row.getCell(7);
-                if (cell8 != null) {
-                    if (cell8.getCellType() == CellType.STRING) {
-                        tenKhoa = cell8.getStringCellValue().trim();
-                    } else if (cell8.getCellType() == CellType.NUMERIC) {
-                        tenKhoa = cell8.getStringCellValue().trim();
-                    }
-                }
-
-                
-
-                // Gọi phương thức thêm hồ sơ xuất viện
-                Themhoso(mhs, maBenhNhan, ngayNhapVien, Chandoan, map, mag, maKhoa, tenKhoa);
+    while (itr.hasNext()) {
+        Row row = itr.next();
+        if (row_count > 0) { // Bỏ qua dòng tiêu đề
+            // Đọc mã hồ sơ
+            String mhs = getCellValueAsString(row.getCell(0));
+            if (mhs.isEmpty()) { 
+                row_count++;
+                continue; // Bỏ qua nếu mã hồ sơ rỗng
             }
-            row_count++;
+
+            String maBenhNhan = getCellValueAsString(row.getCell(1));
+            String tenBenhNhan = getCellValueAsString(row.getCell(2));
+
+            // Đọc và định dạng ngày nhập viện
+            String ngayNhapVien = "";
+            Cell cellNgay = row.getCell(3);
+            if (cellNgay != null) {
+                if (cellNgay.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cellNgay)) {
+                    // Nếu là kiểu ngày, format sang "yyyy-MM-dd"
+                    ngayNhapVien = new SimpleDateFormat("yyyy-MM-dd").format(cellNgay.getDateCellValue());
+                } else {
+                    ngayNhapVien = cellNgay.toString().trim(); // Trường hợp khác (chuỗi)
+                }
+            }
+
+            String chandoan = getCellValueAsString(row.getCell(4));
+            String map = getCellValueAsString(row.getCell(5));
+            String mag = getCellValueAsString(row.getCell(6));
+            String maKhoa = getCellValueAsString(row.getCell(7));
+            String tenKhoa = getCellValueAsString(row.getCell(8));
+
+            // Gọi phương thức thêm hồ sơ
+            Themhoso(mhs, maBenhNhan, tenBenhNhan, ngayNhapVien, chandoan, map, mag, maKhoa, tenKhoa);
         }
-        JOptionPane.showMessageDialog(this, "Thêm hồ sơ xuất viện bằng file thành công");
-        load_hsnv();
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi khi đọc file: " + e.getMessage());
+        row_count++;
+    }
+
+    JOptionPane.showMessageDialog(this, "Thêm hồ sơ nhập  viện bằng file thành công");
+    load_hsnv(); // Tải lại dữ liệu
+} catch (Exception e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Lỗi khi đọc file: " + e.getMessage());
+}
+         }
+// Hàm tiện ích để lấy giá trị của ô dưới dạng chuỗi
+         private String getCellValueAsString(Cell cell) {
+    if (cell == null) {
+        return "";
+    }
+    switch (cell.getCellType()) {
+        case STRING:
+            return cell.getStringCellValue().trim();
+        case NUMERIC:
+            // Kiểm tra nếu là số nguyên (thay vì số thực)
+            if (DateUtil.isCellDateFormatted(cell)) {
+                return new SimpleDateFormat("yyyy-MM-dd").format(cell.getDateCellValue());
+            } else {
+                return String.valueOf((int) cell.getNumericCellValue()).trim();
+            }
+        default:
+            return cell.toString().trim();
     }
 }
+
          
+         Map<String,String> benhnhan = new HashMap<>();
+         public void load_bn(){
+             try{
+            con = Connect.KetnoiDB();
+            String sql = "Select * From BenhNhan";
+            Statement st=con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            //Đổ dữ liệu vào combobox
+            while(rs.next()){
+                cbmbn.addItem(rs.getString("MaBenhNhan"));
+                benhnhan.put(rs.getString("MaBenhNhan"), rs.getString("HoTenBenhNhan"));
+            }
+//            con.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+         }
          public void loadcbo() throws ClassNotFoundException {
     try {
         con = Connect.KetnoiDB();
-        String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
-        Statement statement = con.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()) {
-            cbmbn.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
-        }
+//        String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
+//        Statement statement = con.createStatement();
+//        ResultSet rs = statement.executeQuery(query);
+//        while (rs.next()) {
+//            cbmbn.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
+//        }
         
     // Lấy TenKhoa từ bảng Khoa
     String queryKhoa = "SELECT MaKhoa FROM Khoa";
@@ -343,6 +331,11 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -367,6 +360,8 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtcd = new javax.swing.JTextField();
         cbmbn = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        txtten = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         tkmbn = new javax.swing.JTextField();
@@ -381,7 +376,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         btthoat = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(980, 600));
+        setPreferredSize(new java.awt.Dimension(1010, 600));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin hồ sơ nhập viện"));
 
@@ -399,6 +394,8 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Mã Phòng:");
 
+        dcnnv.setDateFormatString("yyyy-MM-dd");
+
         tbhs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -407,7 +404,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Hồ Sơ", "Mã Bệnh Nhân", "Ngày Nhập Viện", "Chẩn Đoán", "Mã Phòng", "Mã Giường", "Mã Khoa", "Tên Khoa", "Tên Bệnh Nhân"
+                "Mã Hồ Sơ", "Mã Bệnh Nhân", "Tên Bệnh Nhân", "Ngày Nhập Viện", "Chẩn Đoán", "Mã Phòng", "Mã Giường", "Mã Khoa", "Tên Khoa"
             }
         ));
         tbhs.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -460,6 +457,19 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
             }
         });
 
+        cbmbn.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbmbnItemStateChanged(evt);
+            }
+        });
+        cbmbn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbmbnActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Họ Tên:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -475,9 +485,9 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel4))
                                 .addGap(37, 37, 37)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbmp, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbmp, 0, 177, Short.MAX_VALUE)
+                                    .addComponent(txtmhs)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -489,19 +499,19 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbmbn, 0, 180, Short.MAX_VALUE)
-                                    .addComponent(cbmg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addGap(45, 45, 45)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbmk, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbtk, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtcd))))
+                            .addComponent(cbmbn, 0, 180, Short.MAX_VALUE)
+                            .addComponent(cbmg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtcd))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbmk, 0, 185, Short.MAX_VALUE)
+                            .addComponent(cbtk, 0, 185, Short.MAX_VALUE)
+                            .addComponent(txtten))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -531,13 +541,21 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                             .addComponent(cbmg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
                             .addComponent(cbtk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(dcnnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(dcnnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtcd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11))
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -582,23 +600,21 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Hồ Sơ Nhập Viện");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addGap(0, 10, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jButton5.setText("Xuất Excel");
@@ -727,19 +743,20 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         DefaultTableModel tb = (DefaultTableModel) tbhs.getModel();
         txtmhs.setText(tb.getValueAt(i, 0).toString()); //gán giá trị cho textfield mã hồ sơ
         cbmbn.setSelectedItem(tb.getValueAt(i, 1).toString());//gán giá trị cho combobox mã bệnh nhân
-        String nnv = tb.getValueAt(i, 2).toString();//gán giá trị cho datechooser ngày nhập viện
+        txtten.setText(tb.getValueAt(i, 2).toString());
+        String nnv = tb.getValueAt(i, 3).toString();//gán giá trị cho datechooser ngày nhập viện
         java.util.Date ng;
         try {
-            ng = new SimpleDateFormat("yyyy-MM-DD").parse(nnv);
+            ng = new SimpleDateFormat("yyyy-MM-dd").parse(nnv);
             dcnnv.setDate(ng);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-        txtcd.setText(tb.getValueAt(i, 3).toString());//gán giá trị cho tf chẩn đoán
-        cbmp.setSelectedItem(tb.getValueAt(i, 4).toString());//gán giá trị cho cbb mã phòng
-        cbmg.setSelectedItem(tb.getValueAt(i, 5).toString());//gán giá trị cho cbb mã giường
-        cbmk.setSelectedItem(tb.getValueAt(i, 6).toString());//gán giá trị cho cbb mã khoa
-        cbtk.setSelectedItem(tb.getValueAt(i, 7).toString());//gán giá trị cho cbb tên khoa
+        txtcd.setText(tb.getValueAt(i, 4).toString());//gán giá trị cho tf chẩn đoán
+        cbmp.setSelectedItem(tb.getValueAt(i, 5).toString());//gán giá trị cho cbb mã phòng
+        cbmg.setSelectedItem(tb.getValueAt(i, 6).toString());//gán giá trị cho cbb mã giường
+        cbmk.setSelectedItem(tb.getValueAt(i, 7).toString());//gán giá trị cho cbb mã khoa
+        cbtk.setSelectedItem(tb.getValueAt(i, 8).toString());//gán giá trị cho cbb tên khoa
         // Sua s = null;
         //        try {
             //            s = new Sua();
@@ -773,6 +790,15 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcdActionPerformed
 
+    private void cbmbnItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbmbnItemStateChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cbmbnItemStateChanged
+
+    private void cbmbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmbnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbmbnActionPerformed
+
     private void tkmbnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tkmbnMouseClicked
         // TODO add your handling code here:
         xoatrang();
@@ -797,7 +823,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
             // Thực hiện truy vấn
             ResultSet rs = st.executeQuery(sql);
-            String[] tieude = {"Mã Hồ Sơ", "Mã Bệnh Nhân", "Ngày Nhập Viện","Chẩn Đoán","Mã Phòng","Mã Giường","Mã Khoa","Tên Khoa"};
+            String[] tieude = {"Mã Hồ Sơ", "Mã Bệnh Nhân","Tên Bệnh Nhân", "Ngày Nhập Viện","Chẩn Đoán","Mã Phòng","Mã Giường","Mã Khoa","Tên Khoa"};
             DefaultTableModel tb = new DefaultTableModel(tieude, 0);
             tb.setRowCount(0);
 
@@ -806,6 +832,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                 Vector<String> v = new Vector<>();
                 v.add(rs.getString("MaHoSoNhapVien")); // Mã hồ sơ nhập viện
                 v.add(rs.getString("MaBenhNhan"));    // Mã bệnh nhân
+                v.add(rs.getString("HoTenBenhNhan"));
                 v.add(rs.getString("NgayNhapVien"));   // ngày nhập viện
                 v.add(rs.getString("ChanDoan"));       // Chẩn đoán bệnh
                 v.add(rs.getString("MaPhong")); //mã phòng bệnh
@@ -823,7 +850,25 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Tìm kiếm không thành công !");
         }
     }//GEN-LAST:event_tkmbnKeyReleased
+    private static CellStyle DinhdangHeader(XSSFSheet sheet) {
+        // Create font
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12); // font size
+        font.setColor(IndexedColors.WHITE.getIndex()); // text color
 
+        // Create CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
+        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setWrapText(true);
+        return cellStyle;
+    }
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //         TODO add your handling code here:
         try {
@@ -859,25 +904,29 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
             cell = row.createCell(3, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Ngày nhập viện");
+            cell.setCellValue("Tên bệnh nhân");
 
             cell = row.createCell(4, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Chẩn đoán");
+            cell.setCellValue("Ngày nhập viện");
 
             cell = row.createCell(5, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã phòng");
+            cell.setCellValue("Chẩn đoán");
 
             cell = row.createCell(6, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã giường");
+            cell.setCellValue("Mã phòng");
 
             cell = row.createCell(7, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
-            cell.setCellValue("Mã khoa");
+            cell.setCellValue("Mã giường");
 
             cell = row.createCell(8, CellType.STRING);
+            cell.setCellStyle(cellStyle_Head);
+            cell.setCellValue("Mã khoa");
+
+            cell = row.createCell(9, CellType.STRING);
             cell.setCellStyle(cellStyle_Head);
             cell.setCellValue("Tên khoa");
 
@@ -915,25 +964,29 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
                 cell = row.createCell(3);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("NgayNhapVien"));
+                cell.setCellValue(rs.getString("HoTenBenhNhan"));
 
                 cell = row.createCell(4);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("ChanDoan"));
+                cell.setCellValue(rs.getString("NgayNhapVien"));
 
                 cell = row.createCell(5);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaPhong"));
+                cell.setCellValue(rs.getString("ChanDoan"));
 
                 cell = row.createCell(6);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaGiuong"));
+                cell.setCellValue(rs.getString("MaPhong"));
 
                 cell = row.createCell(7);
                 cell.setCellStyle(cellStyle_data);
-                cell.setCellValue(rs.getString("MaKhoa"));
+                cell.setCellValue(rs.getString("MaGiuong"));
 
                 cell = row.createCell(8);
+                cell.setCellStyle(cellStyle_data);
+                cell.setCellValue(rs.getString("MaKhoa"));
+
+                cell = row.createCell(9);
                 cell.setCellStyle(cellStyle_data);
                 cell.setCellValue(rs.getString("TenKhoa"));
 
@@ -944,7 +997,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\HSNV.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Van\\HSNV.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -961,7 +1014,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
         try {
             an = new NewJFrame();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HSNV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HSNVinternal.class.getName()).log(Level.SEVERE, null, ex);
         }
         an.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -974,7 +1027,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
             Connection con = Connect.KetnoiDB();
 
-            JasperDesign jdesign=JRXmlLoader.load("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\hsnv.jrxml");
+            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Van\\hsnv.jrxml");
 
             String sql = "Select * From HoSoNhapVien Where MaHoSoNhapVien like N'%"+mhs+"%'";
             JRDesignQuery updateQuery=new JRDesignQuery();
@@ -1014,6 +1067,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         load_hsnv();
+        xoatrang();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1044,14 +1098,22 @@ public static void main(String args[]) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HSNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HSNVinternal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HSNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HSNVinternal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HSNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HSNVinternal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HSNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HSNVinternal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1088,6 +1150,7 @@ public static void main(String args[]) {
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1106,28 +1169,6 @@ public static void main(String args[]) {
     private javax.swing.JTextField tkmbn;
     private javax.swing.JTextField txtcd;
     private javax.swing.JTextField txtmhs;
+    private javax.swing.JTextField txtten;
     // End of variables declaration//GEN-END:variables
-private static CellStyle DinhdangHeader(XSSFSheet sheet) {
-        // Create font
-        Font font = sheet.getWorkbook().createFont();
-        font.setFontName("Times New Roman");
-        font.setBold(true);
-        font.setFontHeightInPoints((short) 12); // font size
-        font.setColor(IndexedColors.WHITE.getIndex()); // text color
-
-        // Create CellStyle
-        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
-        cellStyle.setFont(font);
-        cellStyle.setAlignment(HorizontalAlignment.CENTER);
-        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
-        cellStyle.setFillForegroundColor(IndexedColors.DARK_GREEN.getIndex());
-        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        cellStyle.setBorderBottom(BorderStyle.THIN);
-        cellStyle.setWrapText(true);
-        return cellStyle;
-    }
-    
-
-    
-    
 }

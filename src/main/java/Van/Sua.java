@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +38,7 @@ public class Sua extends javax.swing.JFrame {
         loadcbo();
         txtmhs3.setEnabled(false);
         cbmbn3.setEnabled(false);
+        load_bn();
     }
     Connection con;
     public void load_hsnv(){
@@ -52,7 +55,7 @@ public class Sua extends javax.swing.JFrame {
     ResultSet rs = st.executeQuery(sql);
 
     // Định nghĩa tiêu đề cho bảng
-    String[] tieude = { "Mã hồ sơ", "Mã bệnh nhân", "Ngày nhập viện", "Chẩn đoán", "Mã phòng", "Mã giường", "Mã khoa", "Tên khoa" };
+    String[] tieude = { "Mã hồ sơ", "Mã bệnh nhân", "Tên Bệnh Nhân", "Ngày nhập viện", "Chẩn đoán", "Mã phòng", "Mã giường", "Mã khoa", "Tên khoa" };
 
     // Tạo DefaultTableModel
     DefaultTableModel tb=new DefaultTableModel(tieude,0)    {           
@@ -68,7 +71,7 @@ public class Sua extends javax.swing.JFrame {
         Vector<String> v = new Vector<>();
         v.add(rs.getString("MaHoSoNhapVien"));        // Mã hồ sơ
         v.add(rs.getString("MaBenhNhan"));             // Mã bệnh nhân
-//        v.add(rs.getString("HoTenBenhNhan"));   // Họ Tên Bệnh Nhân
+        v.add(rs.getString("HoTenBenhNhan"));   // Họ Tên Bệnh Nhân
         v.add(rs.getDate("NgayNhapVien").toString()); // Ngày nhập viện        
         v.add(rs.getString("ChanDoan")); //chẩn đoán bệnh
         v.add(rs.getString("MaPhong"));                  // Mã phòng
@@ -92,15 +95,32 @@ public class Sua extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage());
         }
 }
+    Map<String,String> benhnhan = new HashMap<>();
+         public void load_bn(){
+             try{
+            con = Connect.KetnoiDB();
+            String sql = "Select * From BenhNhan";
+            Statement st=con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            //Đổ dữ liệu vào combobox
+            while(rs.next()){
+                cbmbn3.addItem(rs.getString("MaBenhNhan"));
+                benhnhan.put(rs.getString("MaBenhNhan"), rs.getString("HoTenBenhNhan"));
+            }
+//            con.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+         }
     public void loadcbo() throws ClassNotFoundException {
     try {
         con = Connect.KetnoiDB();
-        String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
-        Statement statement = con.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()) {
-            cbmbn3.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
-        }
+//        String query = "SELECT MaBenhNhan FROM BenhNhan"; // Thay đổi truy vấn để lấy mã bệnh nhân
+//        Statement statement = con.createStatement();
+//        ResultSet rs = statement.executeQuery(query);
+//        while (rs.next()) {
+//            cbmbn3.addItem(rs.getString("MaBenhNhan")); // Thêm mã bệnh nhân vào ComboBox
+//        }
         
     // Lấy TenKhoa từ bảng Khoa
     String queryKhoa = "SELECT MaKhoa FROM Khoa";
@@ -144,12 +164,6 @@ public class Sua extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton4 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
-        btluu = new javax.swing.JButton();
-        btcapnhat = new javax.swing.JButton();
-        btxoa = new javax.swing.JButton();
-        btthoat = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
@@ -171,6 +185,8 @@ public class Sua extends javax.swing.JFrame {
         txtcd3 = new javax.swing.JTextField();
         cbmbn3 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtten = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
 
@@ -183,70 +199,6 @@ public class Sua extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btluu.setText("Lưu");
-        btluu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btluuActionPerformed(evt);
-            }
-        });
-
-        btcapnhat.setText("Sửa");
-        btcapnhat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btcapnhatActionPerformed(evt);
-            }
-        });
-
-        btxoa.setText("Xóa");
-        btxoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btxoaActionPerformed(evt);
-            }
-        });
-
-        btthoat.setText("Trở lại");
-        btthoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btthoatActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Thêm");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(btluu, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btcapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btthoat)
-                .addContainerGap(250, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btluu)
-                    .addComponent(btcapnhat)
-                    .addComponent(btxoa)
-                    .addComponent(btthoat)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Cập nhật thông tin chi tiết"));
 
         jLabel27.setText("Mã hồ sơ:");
@@ -257,6 +209,8 @@ public class Sua extends javax.swing.JFrame {
 
         jLabel30.setText("Mã Phòng:");
 
+        dcnnv3.setDateFormatString("yyyy-MM-dd");
+
         tbhs3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -265,7 +219,7 @@ public class Sua extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Hồ Sơ", "Mã Bệnh Nhân", "Ngày Nhập Viện", "Chẩn Đoán", "Mã Phòng", "Mã Giường", "Mã Khoa", "Tên Khoa", "Tên Bệnh Nhân"
+                "Mã Hồ Sơ", "Mã Bệnh Nhân", "Tên Bệnh Nhân", "Ngày Nhập Viện", "Chẩn Đoán", "Mã Phòng", "Mã Giường", "Mã Khoa", "Tên Khoa"
             }
         ));
         tbhs3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -323,6 +277,11 @@ public class Sua extends javax.swing.JFrame {
         });
 
         cbmbn3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Mã Bệnh Nhân" }));
+        cbmbn3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbmbn3ItemStateChanged(evt);
+            }
+        });
         cbmbn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbmbn3ActionPerformed(evt);
@@ -330,6 +289,8 @@ public class Sua extends javax.swing.JFrame {
         });
 
         jButton1.setText("jButton1");
+
+        jLabel1.setText("Họ Tên:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -359,20 +320,20 @@ public class Sua extends javax.swing.JFrame {
                             .addComponent(jLabel28)
                             .addComponent(jLabel34))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbmbn3, 0, 180, Short.MAX_VALUE)
+                            .addComponent(cbmg3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtcd3))
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbmbn3, 0, 180, Short.MAX_VALUE)
-                                    .addComponent(cbmg3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel33))
-                                .addGap(45, 45, 45)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbmk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbtk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtcd3, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel1))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbmk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbtk3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtten, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -406,8 +367,11 @@ public class Sua extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
                     .addComponent(dcnnv3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcd3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel34))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtcd3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel34)
+                    .addComponent(txtten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -447,11 +411,6 @@ public class Sua extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,37 +420,11 @@ public class Sua extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 205, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 205, Short.MAX_VALUE)))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btluuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btluuActionPerformed
-        
-    }//GEN-LAST:event_btluuActionPerformed
-
-    private void btcapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcapnhatActionPerformed
-        
-    }//GEN-LAST:event_btcapnhatActionPerformed
-
-    private void btxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btxoaActionPerformed
-
-    }//GEN-LAST:event_btxoaActionPerformed
-
-    private void btthoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthoatActionPerformed
-        dispose();
-    }//GEN-LAST:event_btthoatActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        xoatrang();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tbhs3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhs3MouseClicked
         //Lấy chỉ số của dòng được click
@@ -502,7 +435,8 @@ public class Sua extends javax.swing.JFrame {
         //gán giá trị cho combobox mã bệnh nhân
         cbmbn3.setSelectedItem(tb.getValueAt(i, 1).toString());
         //gán giá trị cho datechooser ngày nhập viện
-        String nnv = tb.getValueAt(i, 2).toString();
+        txtten.setText(tb.getValueAt(i, 2).toString());
+        String nnv = tb.getValueAt(i, 3).toString();
         java.util.Date ng;
         try {
             ng = new SimpleDateFormat("yyyy-MM-DD").parse(nnv);
@@ -511,12 +445,13 @@ public class Sua extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         //gán giá trị cho tf chẩn đoán
-        txtcd3.setText(tb.getValueAt(i, 3).toString());
+        txtcd3.setText(tb.getValueAt(i, 4).toString());
         //gán giá trị cho cbb mã phòng
-        cbmp3.setSelectedItem(tb.getValueAt(i, 4).toString());
-        cbmg3.setSelectedItem(tb.getValueAt(i, 5).toString());
-        cbmk3.setSelectedItem(tb.getValueAt(i, 6).toString());
-        cbtk3.setSelectedItem(tb.getValueAt(i, 7).toString());
+        cbmp3.setSelectedItem(tb.getValueAt(i, 5).toString());
+        cbmg3.setSelectedItem(tb.getValueAt(i, 6).toString());
+        cbmk3.setSelectedItem(tb.getValueAt(i, 7).toString());
+        cbtk3.setSelectedItem(tb.getValueAt(i, 8).toString());
+        
     }//GEN-LAST:event_tbhs3MouseClicked
 
     private void tbhs3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbhs3MouseEntered
@@ -552,6 +487,7 @@ public class Sua extends javax.swing.JFrame {
         try {
             String mhs = txtmhs3.getText().trim();  // Mã hồ sơ
             String mbn = (String) cbmbn3.getSelectedItem(); // Mã bệnh nhân
+            String tbn = txtten.getText().trim(); //Tên bệnh nhân
             String mk = (String) cbmk3.getSelectedItem();  // Mã khoa
             String tk = (String) cbtk3.getSelectedItem();  // Tên khoa
             String mp = (String) cbmp3.getSelectedItem();  // Mã phòng
@@ -567,16 +503,17 @@ public class Sua extends javax.swing.JFrame {
             java.sql.Date sqlDateNhapVien = new java.sql.Date(dateValue.getTime());
 
             // Câu lệnh SQL để cập nhật bản ghi
-            String sql = "UPDATE HoSoNhapVien SET NgayNhapVien = ?, ChanDoan = ?, MaPhong = ?, MaGiuong = ?, MaKhoa = ?, TenKhoa = ? WHERE MaHoSoNhapVien = ? AND MaBenhNhan = ?";
+            String sql = "UPDATE HoSoNhapVien SET HoTenBenhNhan = ?, NgayNhapVien = ?, ChanDoan = ?, MaPhong = ?, MaGiuong = ?, MaKhoa = ?, TenKhoa = ? WHERE MaHoSoNhapVien = ? AND MaBenhNhan = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDate(1, sqlDateNhapVien);
-            ps.setString(2, cd);
-            ps.setString(3, mp);
-            ps.setString(4, mg);
-            ps.setString(5, mk);
-            ps.setString(6, tk);
-            ps.setString(7, mhs);
-            ps.setString(8, mbn);
+            ps.setString(1, tbn);
+            ps.setDate(2, sqlDateNhapVien);
+            ps.setString(3, cd);
+            ps.setString(4, mp);
+            ps.setString(5, mg);
+            ps.setString(6, mk);
+            ps.setString(7, tk);
+            ps.setString(8, mhs);
+            ps.setString(9, mbn);
 
             // Thực hiện câu lệnh cập nhật
             int rowsAffected = ps.executeUpdate();
@@ -603,6 +540,11 @@ public class Sua extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton4ActionPerformed
+    
+    private void cbmbn3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbmbn3ItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cbmbn3ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -630,6 +572,7 @@ public class Sua extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Sua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -644,10 +587,6 @@ public class Sua extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btcapnhat;
-    private javax.swing.JButton btluu;
-    private javax.swing.JButton btthoat;
-    private javax.swing.JButton btxoa;
     private javax.swing.JComboBox<String> cbmbn3;
     private javax.swing.JComboBox<String> cbmg3;
     private javax.swing.JComboBox<String> cbmk3;
@@ -655,9 +594,9 @@ public class Sua extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbtk3;
     private com.toedter.calendar.JDateChooser dcnnv3;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -668,12 +607,12 @@ public class Sua extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable tbhs3;
     private javax.swing.JTextField txtcd3;
     private javax.swing.JTextField txtmhs3;
+    private javax.swing.JTextField txtten;
     // End of variables declaration//GEN-END:variables
 
     
