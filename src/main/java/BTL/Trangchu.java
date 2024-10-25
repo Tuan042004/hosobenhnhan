@@ -215,6 +215,7 @@ public class Trangchu extends javax.swing.JFrame {
         });
         jToolBar1.add(bttt);
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Anh\\nutthoat.png")); // NOI18N
         jButton1.setText("Thoát");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
