@@ -1094,7 +1094,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Kien\\Quatrinhdieutri.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Kien\\Quatrinhdieutri.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();

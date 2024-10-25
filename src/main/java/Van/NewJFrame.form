@@ -416,10 +416,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btluu" min="-2" pref="69" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btxoa" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="btxoa" min="-2" pref="70" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btthoat" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="250" max="32767" attributes="0"/>
+                  <EmptySpace pref="230" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -997,7 +997,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\HSNV.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Van\\HSNV.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
@@ -1027,7 +1027,7 @@ public class HSNVinternal extends javax.swing.JInternalFrame {
 
             Connection con = Connect.KetnoiDB();
 
-            JasperDesign jdesign=JRXmlLoader.load("D:\\Java-Netbeans\\mavenproject1\\src\\main\\java\\folder\\hsnv.jrxml");
+            JasperDesign jdesign=JRXmlLoader.load("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Van\\hsnv.jrxml");
 
             String sql = "Select * From HoSoNhapVien Where MaHoSoNhapVien like N'%"+mhs+"%'";
             JRDesignQuery updateQuery=new JRDesignQuery();
