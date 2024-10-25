@@ -714,7 +714,7 @@ public class ThuocThang extends javax.swing.JInternalFrame {
                 spreadsheet.autoSizeColumn(col);
             }
 
-            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhan\\src\\main\\java\\Kien\\Thuoc.xlsx");
+            File f = new File("C:\\Users\\Admin\\Documents\\NetBeansProjects\\hosobenhnhann\\src\\main\\java\\Kien\\Thuoc.xlsx");
             FileOutputStream out = new FileOutputStream(f);
             workbook.write(out);
             out.close();
