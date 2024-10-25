@@ -55,22 +55,22 @@ public class themphong extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-private void load_CCB() {
-    try {
-        con = BTL.Connect.KetnoiDB();
-        String query = "SELECT TenKhoa FROM Khoa"; // Thay đổi truy vấn để lấy mã bệnh nhân
-        Statement statement = con.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()) {
-            tenk.addItem(rs.getString("TenKhoa")); // Thêm mã bệnh nhân vào ComboBox
-        }
-} catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }   catch (ClassNotFoundException ex) {
-            Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}
+    private void load_CCB() {
+        try {
+            con = BTL.Connect.KetnoiDB();
+            String query = "SELECT TenKhoa FROM Khoa"; // Thay đổi truy vấn để lấy mã bệnh nhân
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                tenk.addItem(rs.getString("TenKhoa")); // Thêm mã bệnh nhân vào ComboBox
+            }
+    } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }   catch (ClassNotFoundException ex) {
+                Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 
 
 

@@ -137,13 +137,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="tk_mg">
           <Events>
-<<<<<<< HEAD
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tk_mgKeyReleased"/>
-=======
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tk_mcdMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tk_mcdActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tk_mcdKeyReleased"/>
->>>>>>> a3f394e90c40ef5fa9524bf7c9b12a68fdfefc59
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="timkiem">
@@ -209,13 +203,12 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="ma_g" max="32767" attributes="0"/>
+                          <Component id="ma_g" pref="444" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="map" min="-2" pref="205" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="suaxoa" min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="ma_p" min="-2" pref="205" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -231,16 +224,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="map" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ma_g" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="suaxoa" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ma_p" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ma_g" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tt" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -266,7 +256,7 @@
             <Property name="text" type="java.lang.String" value="Tr&#x1ea1;ng th&#xe1;i:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="map">
+        <Component class="javax.swing.JComboBox" name="ma_p">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
@@ -281,14 +271,6 @@
         <Component class="javax.swing.JTextField" name="ma_g">
         </Component>
         <Component class="javax.swing.JTextField" name="tt">
-        </Component>
-        <Component class="javax.swing.JButton" name="suaxoa">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=".."/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="suaxoaActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

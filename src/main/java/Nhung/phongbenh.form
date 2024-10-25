@@ -49,7 +49,7 @@
                               <Component id="jScrollPane2" min="-2" pref="650" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -260,26 +260,14 @@
         <Component class="javax.swing.JComboBox" name="tenk">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="16">
+              <StringArray count="1">
                 <StringItem index="0" value="-- Nh&#x1ead;p t&#xea;n Khoa --"/>
-                <StringItem index="1" value="Khoa N&#x1ed9;i"/>
-                <StringItem index="2" value="Khoa Ngo&#x1ea1;i"/>
-                <StringItem index="3" value="Khoa Nhi"/>
-                <StringItem index="4" value="Khoa S&#x1ea3;n"/>
-                <StringItem index="5" value="Khoa C&#x1ea5;p c&#x1ee9;u"/>
-                <StringItem index="6" value="Khoa Da li&#x1ec5;u"/>
-                <StringItem index="7" value="Khoa Tim m&#x1ea1;ch"/>
-                <StringItem index="8" value="Khoa H&#xf4; h&#x1ea5;p"/>
-                <StringItem index="9" value="Khoa Th&#x1ea7;n kinh"/>
-                <StringItem index="10" value="Khoa X&#xe9;t nghi&#x1ec7;m"/>
-                <StringItem index="11" value="Khoa Ch&#x1ea9;n &#x111;o&#xe1;n h&#xec;nh &#x1ea3;nh"/>
-                <StringItem index="12" value="Khoa Ph&#x1ee5;c h&#x1ed3;i ch&#x1ee9;c n&#x103;ng"/>
-                <StringItem index="13" value="Khoa Dinh d&#x1b0;&#x1ee1;ng"/>
-                <StringItem index="14" value="Khoa Y h&#x1ecd;c c&#x1ed5; truy&#x1ec1;n"/>
-                <StringItem index="15" value="Khoa T&#xe2;m l&#xfd;"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tenkActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
