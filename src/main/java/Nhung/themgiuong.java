@@ -57,58 +57,23 @@ public class themgiuong extends javax.swing.JFrame {
         }
     }
     
-    private  void load_Combobox(){
-        String sql ="select MaPhong From PhongBenh";
-        try {
-            con =BTL.Connect.KetnoiDB();
-
-            Statement st = con.createStatement();
-            ResultSet rs= st.executeQuery(sql);
-            while (rs.next()) {
-            ma_p.addItem(rs.getString("MaPhong"));
-            
-        } 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    //cập nhật ds mã phòng trong combobox
-    private void updateMaPhongComboBox(String maGiuong) {
-        ma_p.removeAllItems(); // Xóa tất cả các mục hiện có trong JComboBox
-        Connection con = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
+    private void load_Combobox() {
         try {
             con = BTL.Connect.KetnoiDB();
-            String sql = "SELECT MaPhong FROM Giuong WHERE MaGiuong = ?";
-            pst = con.prepareStatement(sql);
-            pst.setString(1, maGiuong);
-            rs = pst.executeQuery();
-            // Thêm mãphòng vào JComboBox
+            String query = "SELECT MaPhong FROM PhongBenh"; 
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 ma_p.addItem(rs.getString("MaPhong"));
             }
-            // Nếu không có mã phòng nào, thêm lựa chọn mặc định
-            if (ma_p.getItemCount() == 0) {
-                ma_p.addItem("-- Không có phòng nào --");
-            }
-
-        } catch (SQLException e) {
+    } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi tải danh sách phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Lỗi tải danh mục: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }   catch (ClassNotFoundException ex) {
-                Logger.getLogger(themgiuong.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-            // Đảm bảo đóng tài nguyên
-            try {
-                if (rs != null) rs.close();
-                if (pst != null) pst.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-}
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -150,6 +115,11 @@ public class themgiuong extends javax.swing.JFrame {
         jLabel5.setText("Trạng thái:");
 
         ma_p.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã phòng --" }));
+        ma_p.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ma_pActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -446,7 +416,7 @@ public class themgiuong extends javax.swing.JFrame {
     }//GEN-LAST:event_xoaActionPerformed
 
     private void tbGiuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGiuongMouseClicked
-int i = tbGiuong.getSelectedRow();
+        int i = tbGiuong.getSelectedRow();
         if (i == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một mã phòng để xem thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
             return;
@@ -462,68 +432,74 @@ int i = tbGiuong.getSelectedRow();
     }//GEN-LAST:event_tbGiuongMouseClicked
 
     private void capnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capnhatActionPerformed
-        String mg = ma_g.getText().trim();
-        String mp = ma_p.getSelectedItem().toString().trim(); 
-        String tthai = tt.getText().trim(); 
-        if (mp.equals("-- Nhập mã phòng --")) {
-            JOptionPane.showMessageDialog(this, "Mã phòng không hợp lệ!");
-            ma_p.requestFocus();
-            return;
-        }
-        if (tthai.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phải nhập trạng thái!");
+    String mg = ma_g.getText().trim();
+    String mp = ma_p.getSelectedItem().toString().trim(); 
+    String tthai = tt.getText().trim(); 
+    
+    // Kiểm tra tính hợp lệ của các trường nhập
+    if (mp.equals("-- Nhập mã phòng --")) {
+        JOptionPane.showMessageDialog(this, "Mã phòng không hợp lệ!");
+        ma_p.requestFocus();
+        return;
+    }
+    if (tthai.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Phải nhập trạng thái!");
+        return;
+    }
+
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    try {
+        // Kết nối cơ sở dữ liệu
+        con = BTL.Connect.KetnoiDB();
+        if (con == null) {
+            JOptionPane.showMessageDialog(this, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        PreparedStatement pst = null;
-        ResultSet rs = null;
+        // Kiểm tra xem mã giường có tồn tại không
+        String checkSql = "SELECT * FROM Giuong WHERE MaGiuong = ?";
+        pst = con.prepareStatement(checkSql);
+        pst.setString(1, mg);
+        rs = pst.executeQuery();
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy giường bệnh với mã: " + mg, "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Cập nhật mã phòng và trạng thái giường
+        String updateSql = "UPDATE Giuong SET MaPhong = ?, TrangThaiGiuong = ? WHERE MaGiuong = ?";
+        pst = con.prepareStatement(updateSql);
+        pst.setString(1, mp); 
+        pst.setString(2, tthai); 
+        pst.setString(3, mg); 
+
+        int rowsUpdated = pst.executeUpdate();
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Hồ sơ giường bệnh đã được cập nhật thành công!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Không thể cập nhật hồ sơ giường bệnh.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+
+        // Tải lại dữ liệu sau khi cập nhật
+        load_Combobox();
+        load_Gb();
+        ma_g.setText(""); 
+        ma_p.setSelectedItem("-- Nhập mã phòng --");
+        tt.setText(""); 
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình cập nhật hồ sơ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    } finally {
         try {
-            con = BTL.Connect.KetnoiDB();
-            if (con == null) {
-                JOptionPane.showMessageDialog(this, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            String checkSql = "SELECT * FROM Giuong WHERE MaGiuong = ? AND MaPhong = ?";
-            pst = con.prepareStatement(checkSql);
-            pst.setString(1, mg); 
-            pst.setString(2, mp); 
-            rs = pst.executeQuery();
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy giường bệnh với mã: " + mg + " trong phòng: " + mp, "Thông báo", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            // Cập nhật mã phòng và trạng thái
-            String updateSql = "UPDATE Giuong SET MaPhong = ?, TrangThaiGiuong = ? WHERE MaGiuong = ? AND MaPhong = ?";
-            pst = con.prepareStatement(updateSql);
-            pst.setString(1, mp); 
-            pst.setString(2, tthai); 
-            pst.setString(3, mg); 
-            pst.setString(4, rs.getString("MaPhong")); 
-
-            int rowsUpdated = pst.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Hồ sơ giường bệnh đã được cập nhật thành công!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy giường bệnh với mã: " + mg + " trong phòng: " + mp, "Thông báo", JOptionPane.WARNING_MESSAGE);
-            }
-            // Tải lại dữ liệu sau khi cập nhật
-            load_Combobox();
-            load_Gb();
-            ma_g.setText(""); 
-            ma_p.setSelectedItem("-- Nhập mã phòng --");
-            tt.setText(""); 
-        } catch (Exception e) {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình cập nhật hồ sơ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (pst != null) pst.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+    }
     }//GEN-LAST:event_capnhatActionPerformed
 
     private void theMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_theMActionPerformed
@@ -619,6 +595,11 @@ int i = tbGiuong.getSelectedRow();
             }
         }
     }//GEN-LAST:event_theMActionPerformed
+
+    private void ma_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ma_pActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_ma_pActionPerformed
 
     /**
      * @param args the command line arguments

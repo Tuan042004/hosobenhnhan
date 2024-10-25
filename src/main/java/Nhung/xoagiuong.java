@@ -29,8 +29,10 @@ public class xoagiuong extends javax.swing.JFrame {
     //contrustor không tham số
     public xoagiuong() throws SQLException, ClassNotFoundException {
         initComponents(); 
-        load_Gb();      
-        loadTableData(); 
+        load_ccb();      
+        //load_CCB();
+        loadTableData();
+        
 
         // Lắng nghe sự kiện khi chọn mã phòng
         ma_p.addActionListener(new ActionListener() {
@@ -51,19 +53,21 @@ public class xoagiuong extends javax.swing.JFrame {
         this.ma_g = ma_g;
         this.ma_p = ma_p;
         setFields(ma_g, ma_g);
-        load_Gb();
+        load_ccb();
     }
 
-    // Hàm tải dữ liệu bảng
+    //  tải dữ liệu từ bảng Giuong trong cơ sở dữ liệu và hiển thị Table
     private void loadTableData() throws SQLException {
+        //Lấy mô hình dữ liệu của tbGiuong để có thể thêm dữ liệu vào
         DefaultTableModel model = (DefaultTableModel) tbGiuong.getModel();
         model.setRowCount(0); // Xóa tất cả các hàng hiện có
 
         try (Connection con = BTL.Connect.KetnoiDB()) {
             String sql = "SELECT * FROM Giuong"; 
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
+            PreparedStatement stmt = con.prepareStatement(sql);//thưc thi truy vấn an toàn
+            ResultSet rs = stmt.executeQuery(); //Thực thi truy vấn và lưu kết quả
+            
+            //duyệt kết quả của truy vấn để lấy dl mới 
             while (rs.next()) {
                 String maGiuong = rs.getString("MaGiuong");
                 String maPhong = rs.getString("MaPhong");
@@ -77,15 +81,15 @@ public class xoagiuong extends javax.swing.JFrame {
         }
     }
 
-// Nạp danh sách mã giường và mã phòng
-    private void load_Gb() throws ClassNotFoundException {
+// nạp dữ liệu từ cơ sở dữ liệu vào  JComboBox
+    private void load_ccb() throws ClassNotFoundException {
         // Làm sạch JComboBox trước khi nạp lại dữ liệu
         ma_g.removeAllItems();
         ma_p.removeAllItems();
 
         // Nạp lại mã giường
         try (Connection con = BTL.Connect.KetnoiDB()) {
-            String sql = "SELECT MaGiuong FROM Giuong"; // Câu lệnh SQL lấy mã giường
+            String sql = "SELECT MaGiuong FROM Giuong"; 
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -98,8 +102,9 @@ public class xoagiuong extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi nạp danh sách mã giường!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
 
+        // Nạp lại mã phòng 
         try (Connection con = BTL.Connect.KetnoiDB()) {
-            String sql = "SELECT MaPhong FROM PhongBenh"; // Câu lệnh SQL lấy mã phòng
+            String sql = "SELECT MaPhong FROM PhongBenh";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -112,7 +117,7 @@ public class xoagiuong extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi nạp danh sách mã phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
-    // Hàm chung để nạp dữ liệu vào ComboBox
+    // tải dữ liệu từ cơ sở dữ liệu vào combobox
     private void loadComboBoxData(JComboBox<String> comboBox, String query, String defaultItem) {
         comboBox.removeAllItems();  // Xóa các mục hiện tại
         comboBox.addItem(defaultItem); // Thêm mục mặc định
@@ -135,7 +140,8 @@ public class xoagiuong extends javax.swing.JFrame {
             Logger.getLogger(xoagiuong.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-// Kiểm tra xem mục đã tồn tại trong ComboBox hay chưa
+/// Kiểm tra xem mục đã tồn tại trong ComboBox hay chưa
+    //tránh thêm trùng lặp khi nạp dữ liệu vào cbb
     private boolean itemExistsInComboBox(JComboBox<String> comboBox, String item) {
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             if (comboBox.getItemAt(i).equals(item)) {
@@ -156,6 +162,7 @@ public class xoagiuong extends javax.swing.JFrame {
         ma_g.setSelectedItem(maGiuong); // Đặt mã giường đã chọn
     }
 
+    //năng cập nhật ds mã giường trong cbb dựa trên mã phòng được truyền vào
     private void updateGiuongByPhong(String mp) {
             // Nếu mã phòng là null hoặc rỗng, không làm gì cả
         if (mp == null || mp.isEmpty()) {
@@ -323,9 +330,19 @@ public class xoagiuong extends javax.swing.JFrame {
 
         jLabel4.setText("Mã phòng:");
 
-        ma_p.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã phòng --", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "201", "202", "203", "204", "205", "206", "207", "208", "209", "210", "211", "212", "213", "214", "215", "301", "302", "303", "304", "305", "306", "307", "308", "309", "310", "311", "312", "313", "314", "315", " " }));
+        ma_p.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã phòng --", " " }));
+        ma_p.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ma_pActionPerformed(evt);
+            }
+        });
 
-        ma_g.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã giường --", " " }));
+        ma_g.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã giường --" }));
+        ma_g.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ma_gActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -399,8 +416,9 @@ public class xoagiuong extends javax.swing.JFrame {
     private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
         // TODO add your handling code here:
         try {
-            load_Gb();
+            load_ccb();
             ma_g.setEnabled(true);  // Đảm bảo có thể nhập Mã phòng
+            ma_p.setEnabled(true);
             ma_g.setSelectedItem("-- Nhập mã giường --");
             ma_p.setSelectedItem("-- Nhập mã phòng --");
             JOptionPane.showMessageDialog(this, "Thông tin đã được làm mới!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -429,7 +447,6 @@ public class xoagiuong extends javax.swing.JFrame {
         try {
             con =BTL.Connect.KetnoiDB();
 
-            // Câu lệnh SQL để kiểm tra sự tồn tại của giường
             String checkSQL = "SELECT COUNT(*) FROM Giuong WHERE MaGiuong = ? AND MaPhong = ?";
             PreparedStatement checkStmt = con.prepareStatement(checkSQL);
             checkStmt.setString(1, mg);
@@ -451,7 +468,7 @@ public class xoagiuong extends javax.swing.JFrame {
 
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công mã giường: " + mg + " trong phòng: " + mp);
-                load_Gb(); 
+                load_ccb(); 
                 updateGiuongByPhong(mp); // Cập nhật mã giường cho phòng đã chọn
             } else {
                 JOptionPane.showMessageDialog(this, "Không có giường nào được xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -486,31 +503,23 @@ public class xoagiuong extends javax.swing.JFrame {
 
     private void tbGiuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGiuongMouseClicked
         // TODO add your handling code here:
-        int i = tbGiuong.getSelectedRow();
-        if (i == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một mã giường để xem thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
+        int i = tbGiuong.getSelectedRow();   
         DefaultTableModel model = (DefaultTableModel) tbGiuong.getModel();
-
-        Object magValue = model.getValueAt(i, 0);
-        Object mapValue = model.getValueAt(i, 1);
-        Object ttgValue = model.getValueAt(i, 2);
-
-        ma_g.setSelectedItem(magValue != null ? magValue.toString() : "");
-        ma_p.setSelectedItem(mapValue != null ? mapValue.toString() : "");
+         ma_p.setSelectedItem(getValueOrEmpty(model.getValueAt(i, 1)));
+        ma_g.setSelectedItem(getValueOrEmpty(model.getValueAt(i, 0)));
         ma_g.setEnabled(false); // Vô hiệu hóa JTextField nếu cần
+        ma_p.setEnabled(false);
+    }
+        private String getValueOrEmpty(Object value) {
+            return value != null ? value.toString() : "";
     }//GEN-LAST:event_tbGiuongMouseClicked
 
     private void thoátActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thoátActionPerformed
-        // TODO add your handling code here:
         int confirm = JOptionPane.showConfirmDialog(this,
             "Bạn có chắc chắn muốn thoát không?",
             "Xác nhận thoát",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.QUESTION_MESSAGE);
-
         // Kiểm tra kết quả xác nhận
         if (confirm == JOptionPane.OK_OPTION) {
             // Nếu người dùng chọn OK, thực hiện lệnh thoát
@@ -520,6 +529,26 @@ public class xoagiuong extends javax.swing.JFrame {
             // Hộp thoại đóng và không thoát
         }
     }//GEN-LAST:event_thoátActionPerformed
+
+    private void ma_gActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ma_gActionPerformed
+        // TODO add your handling code here:
+        // Lấy tên khoa đã chọn
+    String tenKhoa = (String) ma_g.getSelectedItem();
+        try {
+            // Tạo kết nối với cơ sở dữ liệu
+            con = BTL.Connect.KetnoiDB();
+            // Nếu bạn cần xử lý thêm thông tin nào đó với tên khoa ở đây, bạn có thể làm điều đó
+            // Hiện tại không cần thêm truy vấn nào khác, chỉ đơn giản là bạn đã có tên khoa
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(themphong.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ma_gActionPerformed
+
+    private void ma_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ma_pActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ma_pActionPerformed
 
     /**
      * @param args the command line arguments

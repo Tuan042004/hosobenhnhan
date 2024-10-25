@@ -54,7 +54,8 @@ public class giuongbenh extends javax.swing.JInternalFrame {
         
         initComponents();
         load_Gb();
-  //sự kiện nút combobox mp trong tìm kiếm
+        load_Combobox();
+    //sự kiện nút combobox mp trong tìm kiếm
     tk_mg.getDocument().addDocumentListener(new DocumentListener() {
     @Override
     public void insertUpdate(DocumentEvent e) {
@@ -82,6 +83,22 @@ public class giuongbenh extends javax.swing.JInternalFrame {
     }
     });
     }
+         private  void load_Combobox(){
+        String sql ="select MaPhong From PhongBenh";
+        try {
+            con =BTL.Connect.KetnoiDB();
+
+            Statement st = con.createStatement();
+            ResultSet rs= st.executeQuery(sql);
+            while (rs.next()) {
+            ma_p.addItem(rs.getString("MaPhong"));
+            
+        } 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     //hiển thị duy nhất 1 thông tin vừa tìm kiếm ở table
     private void load_tt(String maGiuong) {
         if (maGiuong == null || maGiuong.isEmpty()) {
@@ -181,7 +198,7 @@ public class giuongbenh extends javax.swing.JInternalFrame {
     // thiết lập các giá trị cho các trường trong giao diện người dùng
     public void setFields(String maGiuong, String maPhong, String trangThai) {
         ma_g.setText(maGiuong);
-        map.setSelectedItem(maPhong);
+        ma_p.setSelectedItem(maPhong);
         tt.setText(trangThai);
     }
 
@@ -220,10 +237,9 @@ public class giuongbenh extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        map = new javax.swing.JComboBox<>();
+        ma_p = new javax.swing.JComboBox<>();
         ma_g = new javax.swing.JTextField();
         tt = new javax.swing.JTextField();
-        suaxoa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -307,14 +323,7 @@ public class giuongbenh extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Trạng thái:");
 
-        map.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã phòng --" }));
-
-        suaxoa.setText("..");
-        suaxoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                suaxoaActionPerformed(evt);
-            }
-        });
+        ma_p.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập mã phòng --" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -326,13 +335,12 @@ public class giuongbenh extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ma_g, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                        .addComponent(ma_g, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(map, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(suaxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ma_p, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -343,14 +351,12 @@ public class giuongbenh extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4)
-                        .addComponent(map, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ma_g, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(suaxoa))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(ma_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ma_g, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(tt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -556,9 +562,9 @@ public class giuongbenh extends javax.swing.JInternalFrame {
             if (rs.next()) {
                 // Hiển thị thông tin giường và phòng
                 ma_g.setText(rs.getString("MaGiuong"));
-                map.removeAllItems(); // Xóa các mục cũ trong JComboBox
-                map.addItem(rs.getString("MaPhong"));
-                map.setSelectedItem(rs.getString("MaPhong"));
+                ma_p.removeAllItems(); // Xóa các mục cũ trong JComboBox
+                ma_p.addItem(rs.getString("MaPhong"));
+                ma_p.setSelectedItem(rs.getString("MaPhong"));
                 tt.setText(rs.getString("TrangThaiGiuong")); 
                 load_Gb(); // Tải lại dữ liệu bảng
 
@@ -712,6 +718,18 @@ public class giuongbenh extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_xuatexActionPerformed
+    private void Themgb(String mg, String mp, String tt) {
+        try {
+            con = BTL.Connect.KetnoiDB();
+            String sql = "INSERT INTO Giuong ( MaGiuong, MaPhong, TrangThaiGiuong) "
+                       + "VALUES (N'" + mg + "', N'" + mp + "', N'" + tt + "')";
+
+            Statement st = con.createStatement();
+            st.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }  
     private void ReadExcel(String tenFilepath){
         try {
             // Sử dụng tenFilepath đã được truyền vào phương thức
@@ -761,7 +779,7 @@ public class giuongbenh extends javax.swing.JInternalFrame {
 
 
                     // Gọi phương thức thêm giường bệnh
-                    themg( mg,mp, tt);
+                    Themgb(mg, mp, tt);
                 }
                 row_count++;
             }
@@ -806,7 +824,7 @@ public class giuongbenh extends javax.swing.JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) tbGiuong.getModel();
 
         // Cập nhật các trường nhập liệu
-        map.setSelectedItem(getValueOrEmpty(model.getValueAt(i, 1)));
+        ma_p.setSelectedItem(getValueOrEmpty(model.getValueAt(i, 1)));
         ma_g.setText(getValueOrEmpty(model.getValueAt(i, 0)));
         tt.setText(getValueOrEmpty(model.getValueAt(i, 2)));
         ma_g.setEnabled(false); // Vô hiệu hóa JTextField nếu cần
@@ -848,22 +866,9 @@ public class giuongbenh extends javax.swing.JInternalFrame {
         load_Gb();
         ma_g.setEnabled(true);  // Đảm bảo có thể nhập Mã phòng
         ma_g.setText("");
-        map.setSelectedItem("-- Nhập mã phòng --");
+        ma_p.setSelectedItem("-- Nhập mã phòng --");
         tt.setText("");
     }//GEN-LAST:event_refActionPerformed
-
-    private void suaxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suaxoaActionPerformed
-        // TODO add your handling code here:
-       xoagiuong themg = null;
-        try {
-            themg = new xoagiuong();
-        } catch (SQLException ex) {
-            Logger.getLogger(giuongbenh.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(giuongbenh.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        themg.setVisible(true);
-    }//GEN-LAST:event_suaxoaActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -911,10 +916,9 @@ public class giuongbenh extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField ma_g;
-    private javax.swing.JComboBox<String> map;
+    private javax.swing.JComboBox<String> ma_p;
     private javax.swing.JButton nhapex;
     private javax.swing.JButton ref;
-    private javax.swing.JButton suaxoa;
     private javax.swing.JTable tbGiuong;
     private javax.swing.JButton themmoi;
     private javax.swing.JButton thoát;

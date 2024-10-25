@@ -186,6 +186,11 @@ public class phongbenh extends javax.swing.JInternalFrame {
         jLabel5.setText("Loại phòng:");
 
         tenk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Nhập tên Khoa --" }));
+        tenk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tenkActionPerformed(evt);
+            }
+        });
 
         jLabel16.setText("Số giường:");
 
@@ -337,8 +342,15 @@ public class phongbenh extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(thoát))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(212, 212, 212)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 3, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -366,7 +378,7 @@ public class phongbenh extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
     Connection con;
     private void tk_mpKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tk_mpKeyReleased
-        try {
+         try {
             String mp = tk_mp.getText().trim();
             con = BTL.Connect.KetnoiDB();
             Statement st = con.createStatement();
@@ -397,6 +409,7 @@ public class phongbenh extends javax.swing.JInternalFrame {
 
     private void timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timkiemActionPerformed
         String maPhong = tk_mp.getText().trim();
+
         if (maPhong.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mã phòng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             return;
@@ -405,15 +418,12 @@ public class phongbenh extends javax.swing.JInternalFrame {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            try {
-                con = BTL.Connect.KetnoiDB();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(phongbenh.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            con =  BTL.Connect.KetnoiDB();
             String checkMaPhongSQL = "SELECT MaPhong, TenKhoa, LoaiPhong, SoGiuong, TrangThai FROM PhongBenh WHERE MaPhong = ?";
             pst = con.prepareStatement(checkMaPhongSQL);
             pst.setString(1, maPhong);
             rs = pst.executeQuery(); 
+
             if (rs.next()) {
                 // Lấy dữ liệu từ ResultSet
                 String tenKhoa = rs.getString("TenKhoa");
@@ -433,6 +443,8 @@ public class phongbenh extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Lỗi SQL: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(phongbenh.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -600,6 +612,18 @@ public class phongbenh extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_xuatexActionPerformed
+            private void Thempb(String mp, String tk, String lp, String sg, String tt) {
+    try {
+        con = BTL.Connect.KetnoiDB();
+        String sql = "INSERT INTO PhongBenh ( MaPhong,TenKhoa, LoaiPhong, SoGiuong, TrangThai) "
+                   + "VALUES (N'" + mp + "', N'" + tk + "', '" + lp + "', N'" + sg + "', N'" + tt + "')";
+
+        Statement st = con.createStatement();
+        st.executeUpdate(sql);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}  
     private void ReadExcel(String tenFilepath){
         try {
            // Sử dụng tenFilepath đã được truyền vào phương thức
@@ -612,17 +636,17 @@ public class phongbenh extends javax.swing.JInternalFrame {
            while (itr.hasNext()) {
                Row row = itr.next();
                if (row_count > 0) { // Bỏ qua dòng tiêu đề
-                   String map = "";
+                   String mp = "";
                    Cell cell1 = row.getCell(0);
                    if (cell1 != null) {
                        if (cell1.getCellType() == CellType.STRING) {
-                           map = cell1.getStringCellValue().trim();
+                           mp = cell1.getStringCellValue().trim();
                        } else if (cell1.getCellType() == CellType.NUMERIC) {
-                           map = String.valueOf((int) cell1.getNumericCellValue());
+                           mp = String.valueOf((int) cell1.getNumericCellValue());
                        }
                    }
 
-                   if (map.isEmpty()) {
+                   if (mp.isEmpty()) {
                        row_count++;
                        continue; // Bỏ qua dòng này
                    }
@@ -667,8 +691,8 @@ public class phongbenh extends javax.swing.JInternalFrame {
                        }
                    }
 
-                   // Gọi phương thức thêm giường bệnh
-                   Themmoipb(map, tk, lp, sg, tt);
+                   // Gọi phương thức thêm phòng bệnh
+                   Thempb(mp, tk, lp, sg, tt);
                }
                row_count++;
            }
@@ -719,7 +743,6 @@ public class phongbenh extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_thoátActionPerformed
 
     private void TbPhongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbPhongMouseClicked
-        // TODO add your handling code here:
         int i = TbPhong.getSelectedRow();
         if (i == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một mã phòng để xem thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -739,6 +762,56 @@ public class phongbenh extends javax.swing.JInternalFrame {
         ttp.setText(ttValue != null ? ttValue.toString() : null);
         map.setEnabled(false); // Vô hiệu hóa JTextField nếu cần
     }//GEN-LAST:event_TbPhongMouseClicked
+
+    private void tenkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenkActionPerformed
+        // TODO add your handling code here:
+           String maPhong = tk_mp.getText().trim();
+
+        if (maPhong.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã phòng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = BTL.Connect.KetnoiDB();
+            String checkMaPhongSQL = "SELECT MaPhong, TenKhoa, LoaiPhong, SoGiuong, TrangThai FROM PhongBenh WHERE MaPhong = ?";
+            pst = con.prepareStatement(checkMaPhongSQL);
+            pst.setString(1, maPhong);
+            rs = pst.executeQuery(); 
+
+            if (rs.next()) {
+                // Lấy dữ liệu từ ResultSet
+                String tenKhoa = rs.getString("TenKhoa");
+                String loaiPhong = rs.getString("LoaiPhong");
+                int soGiuongDB = rs.getInt("SoGiuong");
+                String trangThai = rs.getString("TrangThai");
+                // Hiển thị dữ liệu lên các trường
+                map.setText(maPhong); 
+                tenk.setSelectedItem(tenKhoa); 
+                loaip.setText(loaiPhong); 
+                soGiuong.setText(String.valueOf(soGiuongDB)); 
+                ttp.setText(trangThai); 
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy phòng với mã phòng đã nhập!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi SQL: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(phongbenh.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_tenkActionPerformed
         public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
