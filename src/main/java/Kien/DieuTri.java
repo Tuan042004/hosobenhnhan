@@ -523,6 +523,22 @@ public class DieuTri extends javax.swing.JInternalFrame {
         }
     }
     
+    private boolean Checktrung(String ma){
+        boolean kq = false;
+        try{
+            con = BTL.Connect.KetnoiDB();
+            String sql = "Select * From QuaTrinhDieuTri Where MaDieuTri='"+ ma +"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(!rs.next()){
+                kq=true;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return kq;
+    }
+    
      public void xoatrang(){
             txtMadt.setText("");
             txtKqbn.setText("");
@@ -546,7 +562,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
     Map<String,String> thuoc = new HashMap<>();
     private void load_cboBenhnhan(){
         try{
-            con = Connect.KetnoiDB();
+            con = BTL.Connect.KetnoiDB();
             String sql = "Select * From BenhNhan";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -562,7 +578,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
     }
     private void load_cboNhanvien(){
         try{
-            con = Connect.KetnoiDB();
+            con = BTL.Connect.KetnoiDB();
             String sql = "Select * From NhanVienYTe";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -660,7 +676,7 @@ public class DieuTri extends javax.swing.JInternalFrame {
             //lấy dữ liệu từ compoment đưa vài biến
             String tk = txtTimkiem.getText().trim();
             con = BTL.Connect.KetnoiDB();
-            String sql = "Select * From QuaTrinhDieuTri Where MaDieuTri like'%"+tk+"%'"; //and HoTenBenhNhan like N'%"+tk+"%' and BacSiDieuTri like N'%"+tk+"%' and ChanDoanDieuTri like N'%"+tk+"%' and PhuongPhapDieuTri like N'%"+tk+"%'"; 
+            String sql = "Select * From QuaTrinhDieuTri Where MaDieuTri like'%"+tk+"%'"; //or HoTenBenhNhan like N'%"+tk+"%' or BacSiDieuTri like N'%"+tk+"%'";
             Statement st=con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             String[] tieude={"Mã Điều Trị", "Họ Tên Bệnh Nhân","Bác Sĩ Điều Trị","Ngày Điều Trị","Chuẩn Đoán Điều Trị","Phương Pháp Điều Trị","Tên Khoa","Tên Thuốc"};
@@ -831,6 +847,10 @@ public class DieuTri extends javax.swing.JInternalFrame {
             return;
         }
 
+        if(!Checktrung(ma)){
+            JOptionPane.showMessageDialog(this, "Trùng mã điều trị!");
+            return;
+        }
         //B2: Kết nối Database
         try {
             Connection con = BTL.Connect.KetnoiDB();
