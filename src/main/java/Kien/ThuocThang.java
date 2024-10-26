@@ -423,6 +423,22 @@ public class ThuocThang extends javax.swing.JInternalFrame {
             txtNsx.setText("");
 
     }
+     
+     private boolean Checktrung(String ma){
+        boolean kq = false;
+        try{
+            con = BTL.Connect.KetnoiDB();
+            String sql = "Select * From Thuoc Where MaThuoc='"+ ma +"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(!rs.next()){
+                kq=true;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return kq;
+    }
     private void btthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthemActionPerformed
         // B1: lấy dữ liệu các compents đưa vào biến
         String ma = txtMat.getText().trim();
@@ -476,6 +492,11 @@ public class ThuocThang extends javax.swing.JInternalFrame {
         if (nsx.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhà sản xuất không được để trống.");
             txtNsx.requestFocus();
+            return;
+        }
+        
+        if(!Checktrung(ma)){
+            JOptionPane.showMessageDialog(this, "Trùng mã thuốc!");
             return;
         }
 
